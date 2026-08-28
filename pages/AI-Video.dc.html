@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;family=Inter:wght@400;500&amp;family=Source+Serif+4:ital,opsz,wght@0,8..60,400;1,8..60,400&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.cdnfonts.com/css/redaction" rel="stylesheet">
+  <style>
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: var(--bg); color: var(--body); font-family: var(--font-body); }
+    a { color: var(--tag); text-decoration: none; transition: color .18s ease; }
+    a:hover { color: var(--text); }
+    ::selection { background: var(--deep); color: var(--text); }
+    button:focus-visible, a:focus-visible { outline: 1px solid var(--line); outline-offset: 3px; }
+    .wwd-card .wwd-visual { transition: transform .7s cubic-bezier(.2,.6,.2,1); }
+    .wwd-card:hover .wwd-visual { transform: scale(1.035); }
+    .wwd-card .wwd-cta { opacity: 0; transform: translateY(6px); transition: opacity .35s ease, transform .35s ease; }
+    .wwd-card:hover .wwd-cta { opacity: 1; transform: translateY(0); }
+    @keyframes esmFade { from { opacity: 0; } to { opacity: 1; } }
+      body { --bg:#ffffff; --logo-filter:none; --card:#f2f2f3; --deep:#e4e4e5; --text:#17191c; --body:#777b86; --tag:#979799; --faint:#a3a6af; --line:#17191c; --card-line:transparent; --hair:#ececec; --grad:rgba(255,255,255,0.9); --btn-bg:#17191c; --btn-text:#ffffff; --btn-hover:#000000; --ghost-r:9999px; --nav-bg:rgba(255,255,255,0.8); --backdrop:rgba(23,25,28,0.45); --modal-bg:#ffffff; --modal-line:transparent; --footer-line:#ececec; --footer-bg:#fafafb; --font-display:'Source Serif 4', serif; --font-display-em:'Source Serif 4', serif; --font-body:'Inter', ui-sans-serif, system-ui, sans-serif; --shadow-artifact:0 0 0 1px rgba(4,23,43,0.05), 0 20px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.1); --spark-a:#5d2a1a; --chart-a:#a3a6af; --chart-b:#5d2a1a; --delta:#5d2a1a; --pill-line:#979799; --pill-text:#17191c; }
+    body[data-esm-theme="dark"] { --bg:#000000; --logo-filter:invert(1); --card:#191919; --deep:#303030; --text:#eeeeee; --body:#b4b4b4; --tag:#7b7b7b; --faint:#606060; --line:#b4b4b4; --card-line:#b4b4b4; --hair:#303030; --grad:rgba(0,0,0,0.72); --btn-bg:#eeeeee; --btn-text:#050505; --btn-hover:#ffffff; --ghost-r:10px; --nav-bg:rgba(0,0,0,0.65); --backdrop:rgba(0,0,0,0.82); --modal-bg:#191919; --modal-line:#b4b4b4; --footer-line:#606060; --footer-bg:transparent; --font-display:'Redaction 10', serif; --font-display-em:'Redaction 50', serif; --font-body:'Geist', sans-serif; --shadow-artifact:none; --spark-a:#fbe1d1; --chart-a:#b4b4b4; --chart-b:#fbe1d1; --delta:#fbe1d1; --pill-line:#b4b4b4; --pill-text:#b4b4b4; }
+    @keyframes esm-liq-en { 0% { transform: translateX(0) scaleX(1) scaleY(1); } 28% { transform: translateX(9px) scaleX(1.42) scaleY(0.90); } 62% { transform: translateX(40px) scaleX(1.22) scaleY(0.93); } 86% { transform: translateX(46px) scaleX(0.965) scaleY(1.015); } 100% { transform: translateX(46px) scaleX(1) scaleY(1); } }
+    @keyframes esm-liq-vi { 0% { transform: translateX(46px) scaleX(1) scaleY(1); } 28% { transform: translateX(37px) scaleX(1.42) scaleY(0.90); } 62% { transform: translateX(6px) scaleX(1.22) scaleY(0.93); } 86% { transform: translateX(0) scaleX(0.965) scaleY(1.015); } 100% { transform: translateX(0) scaleX(1) scaleY(1); } }
+  </style>
+</helmet>
+
+<nav style="position:sticky; top:0; z-index:50; background:var(--nav-bg); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);">
+  <div style="max-width:1280px; margin:0 auto; height:72px; padding:0 32px; display:grid; grid-template-columns:1fr auto 1fr; align-items:center; gap:24px;">
+    <a href="Home.dc.html" style="display:inline-flex; align-items:center;"><img src="uploads/bf517465-2789-4e72-8f3b-91faeedda607.png" alt="Esmery" style="height:32px; width:auto; filter:var(--logo-filter);"></a>
+    <button onClick="{{ toggleTheme }}" aria-label="Toggle theme" style="border:1px solid var(--line); background:transparent; color:var(--text); border-radius:9999px; width:34px; height:34px; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; font-size:14px; font-family:var(--font-body); padding:0; justify-self:center;">{{ themeIcon }}</button>
+    <div style="display:flex; align-items:center; gap:12px; justify-self:end;">
+      <button onClick="{{ toggleLang }}" aria-label="{{ langToggleLabel }}" style="position:relative; display:flex; align-items:center; border:1px solid var(--line); border-radius:9999px; padding:2px; gap:2px; background:transparent; cursor:pointer; transition:border-color .25s ease, background-color .25s ease;" style-hover="border-color:var(--text); background:var(--card);">
+        <span aria-hidden="true" style="position:absolute; top:2px; bottom:2px; left:2px; width:44px; border-radius:9999px; background:var(--btn-bg); transform:{{ blobTransform }}; animation:{{ blobAnim }}; will-change:transform; pointer-events:none;"></span>
+        <span style="position:relative; z-index:1; font-family:var(--font-body); font-size:12px; font-weight:600; width:44px; padding:5px 0; text-align:center; border-radius:9999px; color:{{ viColor }}; transition:color .35s ease .1s;">VI</span>
+        <span style="position:relative; z-index:1; font-family:var(--font-body); font-size:12px; font-weight:600; width:44px; padding:5px 0; text-align:center; border-radius:9999px; color:{{ enColor }}; transition:color .35s ease .1s;">EN</span>
+      </button>
+      <a href="Home.dc.html#contact" style="display:inline-flex; align-items:center; font-size:14px; font-weight:600; color:var(--btn-text); background:var(--btn-bg); border-radius:9999px; padding:10px 20px; min-width:118px; justify-content:center;" style-hover="background:var(--btn-hover);">{{ t.ctaGhost }}</a>
+    </div>
+  </div>
+</nav>
+
+<main style="max-width:1280px; margin:0 auto; padding:64px 32px 80px; display:flex; flex-direction:column; gap:48px;">
+  <header data-screen-label="AI Video hero" style="display:flex; flex-direction:column; gap:16px;">
+    <a href="Home.dc.html#projects" style="font-size:14px;">← {{ t.back }}</a>
+    <h1 style="margin:0; font-family:var(--font-display); font-weight:400; font-size:56px; line-height:1.1; letter-spacing:-0.036em; color:var(--text); max-width:720px; min-height:2.2em;">{{ t.titlePre }} <em style="font-family:var(--font-display-em); font-style:italic; font-weight:400;">{{ t.titleEm }}</em></h1>
+    <p style="margin:0; font-size:16px; line-height:1.6; color:var(--body); max-width:520px; min-height:3.2em; text-wrap:pretty;">{{ t.sub }}</p>
+    <div style="display:flex; align-items:center; gap:24px; flex-wrap:wrap; margin-top:8px;">
+      <sc-for list="{{ tags }}" as="tag" hint-placeholder-count="5">
+        
+      </sc-for>
+    </div>
+  </header>
+
+  <section data-screen-label="Video exhibition" style="display:grid; grid-template-columns:repeat(3, 1fr); gap:24px;">
+    <sc-for list="{{ projects }}" as="p" hint-placeholder-count="4">
+      <button onClick="{{ p.open }}" class="wwd-card" style="position:relative; display:block; border:none; padding:0; cursor:pointer; border-radius:24px; overflow:hidden; background:var(--card); text-align:left; font-family:var(--font-body);">
+        <div class="wwd-visual" style="aspect-ratio:9/16; background:var(--deep); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:12px; position:relative; overflow:hidden;">{{ p.visual }}</div>
+        <div style="position:absolute; left:0; right:0; bottom:0; padding:20px; display:flex; justify-content:space-between; align-items:flex-end; background:linear-gradient(transparent, var(--grad));">
+          <div style="display:flex; flex-direction:column; gap:4px;">
+            <span style="font-size:12px; color:var(--tag);">{{ p.tag }}</span>
+            <span style="font-size:17px; font-weight:600; color:var(--text);">{{ p.name }}</span>
+          </div>
+          <span class="wwd-cta" style="font-size:14px; color:var(--text);">→</span>
+        </div>
+      </button>
+    </sc-for>
+  </section>
+</main>
+
+<sc-if value="{{ hasSel }}" hint-placeholder-val="{{ false }}">
+  <div style="position:fixed; inset:0; z-index:100; background:var(--backdrop); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); display:flex; align-items:center; justify-content:center; padding:40px 24px; animation:esmFade .25s ease;">
+    <div style="background:var(--modal-bg); border:1px solid var(--modal-line); box-shadow:var(--shadow-artifact); border-radius:24px; max-width:920px; width:100%; max-height:88vh; overflow-y:auto; padding:40px;">
+      <div style="position:sticky; top:-40px; z-index:10; background:var(--modal-bg); padding:40px 0 16px; margin:-40px 0 0; border-bottom:1px solid var(--hair); display:flex; justify-content:space-between; align-items:flex-start; gap:24px;">
+        <div style="display:flex; flex-direction:column; gap:6px;">
+          <span style="font-size:13px; color:var(--tag);">{{ sel.tag }} — {{ sel.client }}</span>
+          <h2 style="margin:0; font-family:var(--font-display); font-weight:400; font-size:42px; line-height:1.1; letter-spacing:-0.036em; color:var(--text);">{{ sel.name }}</h2>
+        </div>
+        <button onClick="{{ close }}" style="border:1px solid var(--line); background:transparent; color:var(--text); border-radius:9999px; width:40px; height:40px; cursor:pointer; font-size:16px; flex-shrink:0;">✕</button>
+      </div>
+      <div style="display:grid; grid-template-columns:280px 1fr; gap:32px; margin-top:32px; align-items:start;">
+        <div style="aspect-ratio:9/16; width:280px; border-radius:12px; overflow:hidden; background:var(--deep); flex-shrink:0;">{{ selMedia }}</div>
+        <div style="display:flex; flex-direction:column; gap:24px;">
+          <sc-for list="{{ selSections }}" as="s" hint-placeholder-count="5">
+            <div style="display:flex; flex-direction:column; gap:6px;">
+              <span style="font-size:13px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--tag);">{{ s.h }}</span>
+              <p style="margin:0; font-size:15px; line-height:1.6; color:var(--body); text-wrap:pretty;">{{ s.p }}</p>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </div>
+</sc-if>
+
+<footer data-screen-label="Footer" style="border-top:1px solid var(--footer-line); background:var(--footer-bg);">
+  <div style="max-width:1280px; margin:0 auto; padding:64px 32px 40px; display:grid; grid-template-columns:2fr 1fr 1fr; gap:48px;">
+    <div style="display:flex; flex-direction:column; gap:16px;">
+      <img src="uploads/bf517465-2789-4e72-8f3b-91faeedda607.png" alt="Esmery" style="height:85px; width:509px; max-width:100%; object-fit:contain; object-position:left; filter:var(--logo-filter);">
+      <p style="margin:0; font-size:14px; line-height:1.6; color:var(--tag); max-width:300px; min-height:3.2em; text-wrap:pretty;">{{ t.footerTagline }}</p>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:12px;">
+      <span style="font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--faint);">{{ t.footerLinksTitle }}</span>
+      <sc-for list="{{ navLinks }}" as="lnk" hint-placeholder-count="5">
+        <a href="{{ lnk.href }}" style="font-size:14px;">{{ lnk.label }}</a>
+      </sc-for>
+    </div>
+
+    <div style="display:flex; flex-direction:column; gap:12px;">
+      <span style="font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--faint);">{{ t.footerSocialTitle }}</span>
+      <sc-for list="{{ socials }}" as="s" hint-placeholder-count="4">
+        <a href="{{ s.href }}" style="font-size:14px;">{{ s.label }}</a>
+      </sc-for>
+    </div>
+  </div>
+  <div style="max-width:1280px; margin:0 auto; padding:0 32px 32px;">
+    <span style="font-size:12px; color:var(--faint);">{{ t.rights }}</span>
+  </div>
+</footer>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;defaultLang&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;vi&quot;,&quot;options&quot;:[&quot;vi&quot;,&quot;en&quot;],&quot;tsType&quot;:&quot;'vi' | 'en'&quot;,&quot;section&quot;:&quot;Language&quot;},&quot;defaultTheme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;light&quot;,&quot;options&quot;:[&quot;light&quot;,&quot;dark&quot;],&quot;tsType&quot;:&quot;'light' | 'dark'&quot;,&quot;section&quot;:&quot;Theme&quot;}}">
+class Component extends DCLogic {
+  state = { lang: localStorage.getItem('esm-lang') ?? this.props.defaultLang ?? 'vi', langAnimated: false, sel: null, theme: localStorage.getItem('esm-theme') ?? this.props.defaultTheme ?? 'light' };
+
+  componentDidMount() { document.body.dataset.esmTheme = this.state.theme; }
+
+  componentDidUpdate() { document.body.dataset.esmTheme = this.state.theme; }
+
+  renderVals() {
+    const lang = this.state.lang;
+    const S = {
+      vi: {
+        ctaGhost: 'Liên hệ', ctaPrimary: 'Bắt đầu',
+        back: 'Trang chủ',
+        titlePre: 'Triển lãm', titleEm: 'video',
+        sub: 'Đây là phần chúng tôi chia sẻ những source video AI, những thành tựu mà đã đạt được trong hành trình xây dựng video AI',
+        footerTagline: 'Studio thiết kế & marketing sáng tạo tại Việt Nam.',
+        footerLinksTitle: 'Điều hướng', footerContactTitle: 'Liên hệ', footerSocialTitle: 'Mạng xã hội',
+        city: 'TP. Hồ Chí Minh, Việt Nam',
+        rights: '© 2026 Esmery.',
+        nav: ['Trang chủ', 'Về chúng tôi', 'Liên hệ'],
+        secHeads: ['Đề bài', 'Ý tưởng', 'Câu chuyện', 'Quy trình AI', 'Sản xuất']
+      },
+      en: {
+        ctaGhost: 'Contact', ctaPrimary: 'Get started',
+        back: 'Home',
+        titlePre: 'A video', titleEm: 'exhibition',
+        sub: 'The video is the hero — tap to watch, tap deeper to see how it was made.',
+        footerTagline: 'A creative design & marketing studio based in Vietnam.',
+        footerLinksTitle: 'Navigate', footerContactTitle: 'Contact', footerSocialTitle: 'Social',
+        city: 'Ho Chi Minh City, Vietnam',
+        rights: '© 2026 Esmery.',
+        nav: ['Home', 'About', 'Contact'],
+        secHeads: ['Brief', 'Concept', 'Story', 'AI workflow', 'Production']
+      }
+    };
+    const t = S[lang];
+    const data = [
+      { name: 'Summer Drop Films', client: 'Esmery', tagVi: 'Phim ngắn AI', tagEn: 'AI short film',
+        thumb: 'uploads/0826 (1)(2)_frame1-0eb874af.png', video: 'uploads/0827 (1)(1)_compressed.mp4',
+        vi: ['Phim ngắn cảm xúc quay trong ánh hoàng hôn giữa đồng cỏ ba lá.', 'Khoảnh khắc mùa hè qua góc nhìn mơ màng, nhẹ nhàng.', 'Ánh nắng vàng xuyên qua từng cánh hoa, rơi lên gương mặt nhân vật.', 'AI color grading + sinh cảnh bokeh tự nhiên từ ảnh gốc chụp thật.', 'Một phút phim, từ concept đến hoàn thiện trong 5 ngày.'],
+        en: ['An emotive short film shot during golden hour in a field of clover.', 'Summer through a dreamy, gentle lens.', 'Warm sunlight filters through petals, falling softly across the subject.', 'AI color grading + natural bokeh generation from real source photography.', 'One minute of film, from concept to finish in 5 minutes.'] },
+      { name: 'But I\'m not real', client: 'Esmery', tagVi: 'Phim ngắn AI', tagEn: 'AI short film',
+        thumb: 'uploads/magnific_photo-taken-on-a-smartpho_fHKaEUZCDY.png', video: 'uploads/0827.mp4',
+        vi: ['Phim ngắn về ranh giới giữa thật và ảo trong thời đại AI.', 'Nhân vật trông như thật — nhưng không hề tồn tại.', 'Mỗi khung hình đặt câu hỏi: bạn có phân biệt được không?', 'Toàn bộ hình ảnh nhân vật được sinh hoàn toàn bằng AI generative.', 'Từ ý tưởng đến hoàn thiện trong 3 ngày.'],
+        en: ['A short film exploring the line between real and artificial in the AI era.', 'The subject looks real but never existed.', 'Every frame asks: can you tell the difference?', 'All character visuals generated entirely by AI.', 'From concept to completion in 5 minutes.'] },
+      { name: 'Video UGC', client: 'Esmery', tagVi: 'Video UGC', tagEn: 'UGC Video',
+        video: 'uploads/magnific_a-young-woman-with-short-_dtfuZF1XSL.mp4',
+        vi: ['Video phong cách UGC chân thật, gần gũi, không dàn dựng.', 'Nhân vật nói chuyện trực tiếp với người xem như đang chia sẻ thật.', 'Mỗi cảnh quay được thiết kế để tạo cảm giác tự nhiên nhất có thể.', 'Tất cả quá trình làm Video đều trên Magnific', 'Sản xuất nhanh, phù hợp chạy quảng cáo và mạng xã hội.'],
+        en: ['UGC-style video — authentic, relatable, unscripted feel.', 'The subject speaks directly to the viewer like a real recommendation.', 'Every shot is designed to feel as natural as possible.', 'AI-assisted color grading, pacing and platform optimization.', 'Fast turnaround, built for ads and social media.'] },
+
+    ];
+    const sel = this.state.sel === null ? null : data[this.state.sel];
+    return {
+      t,
+      socials: [
+        { label: 'Instagram', href: '#' },
+        { label: 'Behance', href: '#' },
+        { label: 'Facebook', href: '#' },
+        { label: 'TikTok', href: '#' }
+      ],
+      tags: lang === 'vi'
+        ? ['Video dọc', 'Video AI', 'Video sản phẩm', 'Motion graphics', 'Thử nghiệm']
+        : ['Vertical video', 'AI-generated', 'Product video', 'Motion graphics', 'Experimental'],
+      projects: data.map((p, i) => ({
+        name: p.name,
+        tag: lang === 'vi' ? p.tagVi : p.tagEn,
+        visual: p.thumb
+          ? React.createElement(React.Fragment, null,
+              React.createElement('img', { src: p.thumb, alt: p.name, style: { position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' } }),
+              React.createElement('span', { style: { width: 56, height: 56, border: '1px solid rgba(255,255,255,0.6)', borderRadius: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: 16, zIndex: 1, background: 'rgba(0,0,0,0.3)', backdropFilter: 'blur(4px)' } }, '▶')
+            )
+          : p.video
+            ? React.createElement(React.Fragment, null,
+                React.createElement('video', { src: p.video, muted: true, preload: 'metadata', playsInline: true, style: { position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' } }),
+                React.createElement('span', { style: { width: 56, height: 56, border: '1px solid rgba(255,255,255,0.6)', borderRadius: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: 16, zIndex: 1, background: 'rgba(0,0,0,0.3)', backdropFilter: 'blur(4px)' } }, '▶')
+              )
+            : React.createElement(React.Fragment, null,
+                React.createElement('span', { style: { width: 56, height: 56, border: '1px solid var(--line)', borderRadius: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text)', fontSize: 16 } }, '▶'),
+                React.createElement('span', { style: { fontSize: 12, fontWeight: 500, color: 'var(--tag)', letterSpacing: '0.04em' } }, 'Vertical video')
+              ),
+        open: () => this.setState({ sel: i })
+      })),
+      hasSel: sel !== null,
+      sel: sel ? { name: sel.name, client: sel.client, tag: lang === 'vi' ? sel.tagVi : sel.tagEn, video: sel.video || '', hasVideo: !!sel.video, thumb: sel.thumb || '' } : {},
+      selSections: sel ? t.secHeads.map((h, i) => ({ h, p: (lang === 'vi' ? sel.vi : sel.en)[i] })) : [],
+      selMedia: sel ? (sel.video
+        ? React.createElement('video', { key: sel.name, src: sel.video, poster: sel.thumb, controls: true, playsInline: true, autoPlay: true, style: { width: '100%', height: '100%', objectFit: 'cover', borderRadius: 12 } })
+        : React.createElement('div', { style: { width: '100%', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 12 } },
+            React.createElement('span', { style: { width: 56, height: 56, border: '1px solid var(--line)', borderRadius: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text)', fontSize: 16 } }, '▶'),
+            React.createElement('span', { style: { fontSize: 12, color: 'var(--tag)' } }, 'Final video')
+          )
+      ) : null,
+      close: () => this.setState({ sel: null }),
+      navLinks: t.nav.map((label, i) => ({ label, href: ['Home.dc.html', 'About.dc.html', 'Home.dc.html#contact'][i] })),
+      toggleTheme: () => this.setState(s => { const theme = s.theme === 'light' ? 'dark' : 'light'; localStorage.setItem('esm-theme', theme); return { theme }; }),
+      themeIcon: this.state.theme === 'light' ? '☾' : '☀',
+      toggleLang: () => this.setState(s => { const lang = s.lang === 'vi' ? 'en' : 'vi'; localStorage.setItem('esm-lang', lang); return { lang, langAnimated: true }; }),
+      langToggleLabel: lang === 'vi' ? 'Switch to English' : 'Chuyển sang tiếng Việt',
+      blobTransform: lang === 'vi' ? 'translateX(0)' : 'translateX(46px)',
+      blobAnim: this.state.langAnimated ? (lang === 'en' ? 'esm-liq-en 520ms cubic-bezier(0.22, 1, 0.36, 1) both' : 'esm-liq-vi 520ms cubic-bezier(0.22, 1, 0.36, 1) both') : 'none',
+      viColor: lang === 'vi' ? 'var(--btn-text)' : 'var(--body)',
+      enColor: lang === 'en' ? 'var(--btn-text)' : 'var(--body)'
+    };
+  }
+}
+</script>
+</body>
+</html>

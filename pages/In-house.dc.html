@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+
+<helmet>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;family=Inter:wght@400;500&amp;family=Source+Serif+4:ital,opsz,wght@0,8..60,400;1,8..60,400&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.cdnfonts.com/css/redaction" rel="stylesheet">
+  <style>
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: var(--bg); color: var(--body); font-family: var(--font-body); }
+    a { color: var(--tag); text-decoration: none; transition: color .18s ease; }
+    a:hover { color: var(--text); }
+    ::selection { background: var(--deep); color: var(--text); }
+    button:focus-visible, a:focus-visible { outline: 1px solid var(--line); outline-offset: 3px; }
+    @keyframes esmFade { from { opacity: 0; } to { opacity: 1; } }
+    body { --bg:#ffffff; --logo-filter:none; --card:#f2f2f3; --deep:#e4e4e5; --text:#17191c; --body:#777b86; --tag:#979799; --faint:#a3a6af; --line:#17191c; --card-line:transparent; --hair:#ececec; --grad:rgba(255,255,255,0.9); --btn-bg:#17191c; --btn-text:#ffffff; --btn-hover:#000000; --ghost-r:9999px; --nav-bg:rgba(255,255,255,0.8); --backdrop:rgba(23,25,28,0.45); --modal-bg:#ffffff; --modal-line:transparent; --footer-line:#ececec; --footer-bg:#fafafb; --font-display:'Source Serif 4', serif; --font-display-em:'Source Serif 4', serif; --font-body:'Inter', ui-sans-serif, system-ui, sans-serif; --shadow-artifact:0 0 0 1px rgba(4,23,43,0.05), 0 20px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.1); }
+    body[data-esm-theme="dark"] { --bg:#000000; --logo-filter:invert(1); --card:#191919; --deep:#303030; --text:#eeeeee; --body:#b4b4b4; --tag:#7b7b7b; --faint:#606060; --line:#b4b4b4; --card-line:#b4b4b4; --hair:#303030; --grad:rgba(0,0,0,0.72); --btn-bg:#eeeeee; --btn-text:#050505; --btn-hover:#ffffff; --ghost-r:10px; --nav-bg:rgba(0,0,0,0.65); --backdrop:rgba(0,0,0,0.82); --modal-bg:#191919; --modal-line:#b4b4b4; --footer-line:#606060; --footer-bg:transparent; --font-display:'Redaction 10', serif; --font-display-em:'Redaction 50', serif; --font-body:'Geist', sans-serif; --shadow-artifact:none; }
+    @keyframes esm-liq-en { 0% { transform: translateX(0) scaleX(1) scaleY(1); } 28% { transform: translateX(9px) scaleX(1.42) scaleY(0.90); } 62% { transform: translateX(40px) scaleX(1.22) scaleY(0.93); } 86% { transform: translateX(46px) scaleX(0.965) scaleY(1.015); } 100% { transform: translateX(46px) scaleX(1) scaleY(1); } }
+    @keyframes esm-liq-vi { 0% { transform: translateX(46px) scaleX(1) scaleY(1); } 28% { transform: translateX(37px) scaleX(1.42) scaleY(0.90); } 62% { transform: translateX(6px) scaleX(1.22) scaleY(0.93); } 86% { transform: translateX(0) scaleX(0.965) scaleY(1.015); } 100% { transform: translateX(0) scaleX(1) scaleY(1); } }
+  </style>
+</helmet>
+
+<nav style="position:sticky; top:0; z-index:50; background:var(--nav-bg); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);">
+  <div style="max-width:1280px; margin:0 auto; height:72px; padding:0 32px; display:grid; grid-template-columns:1fr auto 1fr; align-items:center; gap:24px;">
+    <a href="Home.dc.html" style="display:inline-flex; align-items:center;"><img src="uploads/bf517465-2789-4e72-8f3b-91faeedda607.png" alt="Esmery" style="height:32px; width:auto; filter:var(--logo-filter);"></a>
+    <button onClick="{{ toggleTheme }}" aria-label="Toggle theme" style="border:1px solid var(--line); background:transparent; color:var(--text); border-radius:9999px; width:34px; height:34px; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; font-size:14px; font-family:var(--font-body); padding:0; justify-self:center;">{{ themeIcon }}</button>
+    <div style="display:flex; align-items:center; gap:12px; justify-self:end;">
+      <button onClick="{{ toggleLang }}" aria-label="{{ langToggleLabel }}" style="position:relative; display:flex; align-items:center; border:1px solid var(--line); border-radius:9999px; padding:2px; gap:2px; background:transparent; cursor:pointer; transition:border-color .25s ease, background-color .25s ease;" style-hover="border-color:var(--text); background:var(--card);">
+        <span aria-hidden="true" style="position:absolute; top:2px; bottom:2px; left:2px; width:44px; border-radius:9999px; background:var(--btn-bg); transform:{{ blobTransform }}; animation:{{ blobAnim }}; will-change:transform; pointer-events:none;"></span>
+        <span style="position:relative; z-index:1; font-family:var(--font-body); font-size:12px; font-weight:600; width:44px; padding:5px 0; text-align:center; border-radius:9999px; color:{{ viColor }}; transition:color .35s ease .1s;">VI</span>
+        <span style="position:relative; z-index:1; font-family:var(--font-body); font-size:12px; font-weight:600; width:44px; padding:5px 0; text-align:center; border-radius:9999px; color:{{ enColor }}; transition:color .35s ease .1s;">EN</span>
+      </button>
+      <a href="Home.dc.html#contact" style="display:inline-flex; align-items:center; font-size:14px; font-weight:600; color:var(--btn-text); background:var(--btn-bg); border-radius:9999px; padding:10px 20px; min-width:118px; justify-content:center;" style-hover="background:var(--btn-hover);">{{ t.ctaGhost }}</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section data-screen-label="Hero" style="position:relative; width:100%; height:85vh; min-height:520px; overflow:hidden;">
+  <img src="uploads/VUS_9155.JPG" alt="In-house production" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center 20%;">
+  <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.15) 50%, transparent 100%);"></div>
+  <div style="position:absolute; bottom:0; left:0; right:0; padding:64px 32px; max-width:1280px; margin:0 auto;">
+    <a href="Ads.dc.html" style="font-size:14px; color:rgba(255,255,255,0.7); margin-bottom:16px; display:inline-block;">← {{ t.back }}</a>
+    <h1 style="margin:0 0 12px; font-family:var(--font-display); font-weight:400; font-size:64px; line-height:1.05; letter-spacing:-0.04em; color:#ffffff;">In-house <em style="font-family:var(--font-display-em); font-style:italic; font-weight:400;">Production</em></h1>
+    <p style="margin:0; font-size:18px; line-height:1.5; color:rgba(255,255,255,0.8); max-width:480px;">{{ t.heroSub }}</p>
+  </div>
+</section>
+
+<main style="max-width:1280px; margin:0 auto; padding:0 32px;">
+
+  <!-- CAPABILITIES -->
+  <section data-screen-label="Capabilities" style="padding:80px 0 64px; display:flex; flex-direction:column; gap:40px;">
+    <h2 style="margin:0; font-family:var(--font-display); font-weight:400; font-size:42px; line-height:1.1; letter-spacing:-0.03em; color:var(--text);">{{ t.capTitle }}</h2>
+    <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:24px;">
+      <sc-for list="{{ capabilities }}" as="cap" hint-placeholder-count="3">
+        <div style="padding:32px; background:var(--card); border-radius:24px; display:flex; flex-direction:column; gap:12px;">
+          <span style="font-size:13px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--faint);">{{ cap.num }}</span>
+          <h3 style="margin:0; font-family:var(--font-display); font-weight:400; font-size:24px; line-height:1.2; letter-spacing:-0.02em; color:var(--text);">{{ cap.title }}</h3>
+          <p style="margin:0; font-size:15px; line-height:1.6; color:var(--body); text-wrap:pretty;">{{ cap.desc }}</p>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section data-screen-label="Gallery" style="padding:0 0 80px; display:flex; flex-direction:column; gap:32px;">
+    <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px;">
+      <h2 style="margin:0; font-family:var(--font-display); font-weight:400; font-size:42px; line-height:1.1; letter-spacing:-0.03em; color:var(--text);">Portfolio</h2>
+      <div style="display:flex; gap:8px;">
+        <sc-for list="{{ filters }}" as="f" hint-placeholder-count="4">
+          <button onClick="{{ f.action }}" style="border:1px solid {{ f.borderColor }}; background:{{ f.bg }}; color:{{ f.color }}; font-family:var(--font-body); font-size:13px; font-weight:500; padding:8px 20px; border-radius:9999px; cursor:pointer; transition:all .2s ease;">{{ f.label }}</button>
+        </sc-for>
+      </div>
+    </div>
+    <div style="columns:3; column-gap:16px;">
+      <sc-for list="{{ gallery }}" as="img" hint-placeholder-count="8">
+        <button onClick="{{ img.openLb }}" style="display:block; width:100%; border:none; padding:0; margin:0 0 16px; cursor:pointer; background:none; break-inside:avoid;">
+          <div style="position:relative; border-radius:16px; overflow:hidden; background:var(--deep);">
+            <img loading="lazy" decoding="async" src="{{ img.src }}" alt="{{ img.alt }}" style="display:block; width:100%; height:auto; object-fit:cover; transition:transform .5s cubic-bezier(.2,.6,.2,1), opacity .3s ease;" style-hover="transform:scale(1.04);">
+            <div style="position:absolute; bottom:0; left:0; right:0; padding:12px 16px; background:linear-gradient(transparent, rgba(0,0,0,0.5)); opacity:0; transition:opacity .3s ease;" style-hover="opacity:1;">
+              <span style="font-size:12px; font-weight:500; color:rgba(255,255,255,0.9); letter-spacing:0.04em; text-transform:uppercase;">{{ img.tag }}</span>
+            </div>
+          </div>
+        </button>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- BEHIND THE SCENES -->
+  <section data-screen-label="BTS" style="padding:0 0 80px; display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:center;">
+    <div style="display:flex; flex-direction:column; gap:20px;">
+      <span style="font-size:13px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--faint);">{{ t.btsLabel }}</span>
+      <h2 style="margin:0; font-family:var(--font-display); font-weight:400; font-size:36px; line-height:1.15; letter-spacing:-0.03em; color:var(--text);">{{ t.btsTitle }}</h2>
+      <p style="margin:0; font-size:15px; line-height:1.7; color:var(--body); text-wrap:pretty;">{{ t.btsBody }}</p>
+    </div>
+    <div style="border-radius:24px; overflow:hidden; aspect-ratio:4/5;">
+      <img loading="lazy" decoding="async" src="uploads/VUS_9166.PNG" alt="Behind the scenes" style="width:100%; height:100%; object-fit:cover; object-position:center;">
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section data-screen-label="CTA" style="padding:0 0 96px; text-align:center; display:flex; flex-direction:column; align-items:center; gap:24px;">
+    <h2 style="margin:0; font-family:var(--font-display); font-weight:400; font-size:42px; line-height:1.1; letter-spacing:-0.03em; color:var(--text);">{{ t.ctaHeading }}</h2>
+    <div style="display:flex; gap:16px;">
+      <a href="Home.dc.html#projects" style="display:inline-flex; align-items:center; font-size:14px; font-weight:500; color:var(--text); background:transparent; border:1px solid var(--line); border-radius:var(--ghost-r); padding:12px 28px;" style-hover="opacity:0.75;">{{ t.ctaPortfolio }}</a>
+      <a href="Home.dc.html#contact" style="display:inline-flex; align-items:center; font-size:14px; font-weight:600; color:var(--btn-text); background:var(--btn-bg); border-radius:9999px; padding:12px 28px;" style-hover="background:var(--btn-hover);">{{ t.ctaBook }}</a>
+    </div>
+  </section>
+
+</main>
+
+<!-- LIGHTBOX -->
+<sc-if value="{{ lbOpen }}" hint-placeholder-val="{{ false }}">
+  <div style="position:fixed; inset:0; z-index:200; background:rgba(0,0,0,0.92); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); display:flex; align-items:center; justify-content:center; animation:esmFade .2s ease;">
+    <button onClick="{{ lbClose }}" style="position:absolute; top:24px; right:24px; border:1px solid rgba(255,255,255,0.3); background:transparent; color:#fff; border-radius:9999px; width:44px; height:44px; cursor:pointer; font-size:18px; z-index:10;">✕</button>
+    <button onClick="{{ lbPrev }}" style="position:absolute; left:24px; top:50%; transform:translateY(-50%); border:1px solid rgba(255,255,255,0.3); background:transparent; color:#fff; border-radius:9999px; width:44px; height:44px; cursor:pointer; font-size:18px;">←</button>
+    <button onClick="{{ lbNext }}" style="position:absolute; right:24px; top:50%; transform:translateY(-50%); border:1px solid rgba(255,255,255,0.3); background:transparent; color:#fff; border-radius:9999px; width:44px; height:44px; cursor:pointer; font-size:18px;">→</button>
+    <img loading="lazy" decoding="async" src="{{ lbSrc }}" alt="" style="max-width:85vw; max-height:85vh; object-fit:contain; border-radius:8px;">
+    <span style="position:absolute; bottom:24px; left:50%; transform:translateX(-50%); font-size:13px; color:rgba(255,255,255,0.6);">{{ lbCounter }}</span>
+  </div>
+</sc-if>
+
+<footer data-screen-label="Footer" style="border-top:1px solid var(--footer-line); background:var(--footer-bg);">
+  <div style="max-width:1280px; margin:0 auto; padding:64px 32px 40px; display:grid; grid-template-columns:2fr 1fr 1fr; gap:48px;">
+    <div style="display:flex; flex-direction:column; gap:16px;">
+      <img src="uploads/bf517465-2789-4e72-8f3b-91faeedda607.png" alt="Esmery" style="height:85px; width:509px; max-width:100%; object-fit:contain; object-position:left; filter:var(--logo-filter);">
+      <p style="margin:0; font-size:14px; line-height:1.6; color:var(--tag); max-width:300px; text-wrap:pretty;">{{ t.footerTagline }}</p>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:12px;">
+      <span style="font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--faint);">{{ t.footerLinksTitle }}</span>
+      <sc-for list="{{ navLinks }}" as="lnk" hint-placeholder-count="4">
+        <a href="{{ lnk.href }}" style="font-size:14px;">{{ lnk.label }}</a>
+      </sc-for>
+    </div>
+
+    <div style="display:flex; flex-direction:column; gap:12px;">
+      <span style="font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--faint);">{{ t.footerSocialTitle }}</span>
+      <sc-for list="{{ socials }}" as="s" hint-placeholder-count="4">
+        <a href="{{ s.href }}" style="font-size:14px;">{{ s.label }}</a>
+      </sc-for>
+    </div>
+  </div>
+  <div style="max-width:1280px; margin:0 auto; padding:0 32px 32px;">
+    <span style="font-size:12px; color:var(--faint);">© 2026 Esmery.</span>
+  </div>
+</footer>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;defaultLang&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;vi&quot;,&quot;options&quot;:[&quot;vi&quot;,&quot;en&quot;],&quot;tsType&quot;:&quot;'vi' | 'en'&quot;,&quot;section&quot;:&quot;Language&quot;},&quot;defaultTheme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;light&quot;,&quot;options&quot;:[&quot;light&quot;,&quot;dark&quot;],&quot;tsType&quot;:&quot;'light' | 'dark'&quot;,&quot;section&quot;:&quot;Theme&quot;}}">
+
+class Component extends DCLogic {
+  state = {
+    lang: localStorage.getItem('esm-lang') ?? this.props.defaultLang ?? 'vi', langAnimated: false,
+    theme: localStorage.getItem('esm-theme') ?? this.props.defaultTheme ?? 'light',
+    filter: 'all',
+    lb: null
+  };
+
+  componentDidMount() { document.body.dataset.esmTheme = this.state.theme; }
+  componentDidUpdate() { document.body.dataset.esmTheme = this.state.theme; }
+
+  renderVals() {
+    const lang = this.state.lang;
+    const S = {
+      vi: {
+        back: 'Ads & Marketing',
+        heroSub: 'Từ ý tưởng đến khung hình - mọi thứ đều được sản xuất tại studio',
+        capTitle: 'Năng lực sản xuất',
+        cap1: 'Fashion & Editorial', cap1d: 'Chụp ảnh thời trang tại studio với creative direction, styling và thiết kế ánh sáng chuyên nghiệp.',
+        cap2: 'Brand & Product', cap2d: 'Chụp ảnh sản phẩm cho thương hiệu khách hàng, từ chi tiết bao bì đến bối cảnh lifestyle.',
+        cap3: 'On-location / Documentary', cap3d: 'Chụp thực địa ghi lại quy trình sản xuất thực tế và câu chuyện thương hiệu chân thực.',
+        filterAll: 'Tất cả', filterFashion: 'Fashion', filterBrand: 'Brand', filterLocation: 'On-location',
+        btsLabel: 'Hậu trường', btsTitle: 'Quy trình sản xuất',
+        btsBody: 'Mỗi dự án bắt đầu từ concept và moodboard, qua giai đoạn thiết kế ánh sáng và setup, đến ngày chụp chính thức và hậu kỳ. Chúng tôi kiểm soát toàn bộ quy trình để đảm bảo mỗi khung hình đều truyền tải đúng câu chuyện thương hiệu.',
+        ctaHeading: 'Muốn xem thêm?',
+        ctaPortfolio: 'Xem portfolio', ctaBook: 'Đặt lịch chụp',
+        footerTagline: 'Studio thiết kế & marketing sáng tạo tại Việt Nam.',
+        ctaGhost: 'Liên hệ', ctaPrimary: 'Bắt đầu',
+        footerLinksTitle: 'Điều hướng', footerContactTitle: 'Liên hệ', footerSocialTitle: 'Mạng xã hội',
+        city: 'TP. Hồ Chí Minh, Việt Nam',
+        nav: ['Trang chủ', 'Về chúng tôi', 'Liên hệ']
+      },
+      en: {
+        back: 'Ads & Marketing',
+        heroSub: 'From concept to frame — everything shot in-house',
+        capTitle: 'Capabilities',
+        cap1: 'Fashion & Editorial', cap1d: 'Studio fashion shoots with full creative direction, styling, and lighting design.',
+        cap2: 'Brand & Product', cap2d: 'Product photography for client brands, from packaging detail shots to lifestyle context.',
+        cap3: 'On-location / Documentary', cap3d: 'Field shoots capturing real production processes and authentic brand storytelling.',
+        filterAll: 'All', filterFashion: 'Fashion', filterBrand: 'Brand', filterLocation: 'On-location',
+        btsLabel: 'Behind the scenes', btsTitle: 'Our Process',
+        btsBody: 'Every project begins with concept development and moodboarding, moves through lighting design and setup, into the main shoot day and post-production. We control the entire pipeline to ensure every frame tells the right brand story.',
+        ctaHeading: 'Want to see more of our work?',
+        ctaPortfolio: 'View Full Portfolio', ctaBook: 'Book a Shoot',
+        footerTagline: 'A creative design & marketing studio based in Vietnam.',
+        ctaGhost: 'Contact', ctaPrimary: 'Get started',
+        footerLinksTitle: 'Navigate', footerContactTitle: 'Contact', footerSocialTitle: 'Social',
+        city: 'Ho Chi Minh City, Vietnam',
+        nav: ['Home', 'About', 'Contact']
+      }
+    };
+    const t = S[lang];
+    const allImgs = [
+      { src: 'uploads/VUS_9039.JPEG', tag: 'Fashion', alt: 'Seated portrait with round sunglasses' },
+      { src: 'uploads/VUS_9155.JPG', tag: 'Fashion', alt: 'Balancing on chair, dynamic pose' },
+      { src: 'uploads/VUS_9147.JPEG', tag: 'Fashion', alt: 'Side profile looking up' },
+      { src: 'uploads/VUS_9156.PNG', tag: 'Fashion', alt: 'Close-up kneeling pose' },
+      { src: 'uploads/VUS_9166.PNG', tag: 'Fashion', alt: 'Back view with printed fabric detail' },
+      { src: 'uploads/magnific_them-bang-djirian-007-cua_6AA7eK5iJO.png', tag: 'On-location', alt: 'Djirian 007 durian on tree' },
+      { src: 'uploads/BINJ2442.JPG', tag: 'On-location', alt: 'Thành Đạt 005 durian on tree' },
+      { src: 'uploads/BINJ2410.JPG', tag: 'Brand', alt: 'Farmer portrait with durian' }
+    ];
+    const filter = this.state.filter;
+    const filtered = filter === 'all' ? allImgs : allImgs.filter(img => img.tag.toLowerCase() === filter);
+    const filterKeys = ['all', 'fashion', 'brand', 'on-location'];
+    const filterLabels = [t.filterAll, t.filterFashion, t.filterBrand, t.filterLocation];
+    const lb = this.state.lb;
+    const lbList = filtered;
+    return {
+      t,
+      capabilities: [
+        { num: '01', title: t.cap1, desc: t.cap1d },
+        { num: '02', title: t.cap2, desc: t.cap2d },
+        { num: '03', title: t.cap3, desc: t.cap3d }
+      ],
+      filters: filterKeys.map((k, i) => ({
+        label: filterLabels[i],
+        action: () => this.setState({ filter: k, lb: null }),
+        bg: filter === k ? 'var(--btn-bg)' : 'transparent',
+        color: filter === k ? 'var(--btn-text)' : 'var(--body)',
+        borderColor: filter === k ? 'var(--btn-bg)' : 'var(--hair)'
+      })),
+      gallery: filtered.map((img, i) => ({
+        ...img,
+        openLb: () => this.setState({ lb: i })
+      })),
+      lbOpen: lb !== null,
+      lbSrc: lb !== null && lbList[lb] ? lbList[lb].src : '',
+      lbCounter: lb !== null ? `${lb + 1} / ${lbList.length}` : '',
+      lbClose: () => this.setState({ lb: null }),
+      lbPrev: () => this.setState(s => ({ lb: s.lb !== null ? (s.lb - 1 + lbList.length) % lbList.length : null })),
+      lbNext: () => this.setState(s => ({ lb: s.lb !== null ? (s.lb + 1) % lbList.length : null })),
+      navLinks: t.nav.map((label, i) => ({ label, href: ['Home.dc.html', 'About.dc.html', 'Home.dc.html#contact'][i] })),
+      socials: [
+        { label: 'Instagram', href: '#' },
+        { label: 'Behance', href: '#' },
+        { label: 'Facebook', href: '#' },
+        { label: 'TikTok', href: '#' }
+      ],
+      toggleTheme: () => this.setState(s => { const theme = s.theme === 'light' ? 'dark' : 'light'; localStorage.setItem('esm-theme', theme); return { theme }; }),
+      themeIcon: this.state.theme === 'light' ? '☾' : '☀',
+      toggleLang: () => this.setState(s => { const lang = s.lang === 'vi' ? 'en' : 'vi'; localStorage.setItem('esm-lang', lang); return { lang, langAnimated: true }; }),
+      langToggleLabel: lang === 'vi' ? 'Switch to English' : 'Chuyển sang tiếng Việt',
+      blobTransform: lang === 'vi' ? 'translateX(0)' : 'translateX(46px)',
+      blobAnim: this.state.langAnimated ? (lang === 'en' ? 'esm-liq-en 520ms cubic-bezier(0.22, 1, 0.36, 1) both' : 'esm-liq-vi 520ms cubic-bezier(0.22, 1, 0.36, 1) both') : 'none',
+      viColor: lang === 'vi' ? 'var(--btn-text)' : 'var(--body)',
+      enColor: lang === 'en' ? 'var(--btn-text)' : 'var(--body)'
+    };
+  }
+}
+
+</script>
+</body>
+</html>

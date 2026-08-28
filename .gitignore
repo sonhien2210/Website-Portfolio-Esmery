@@ -1,0 +1,12 @@
+# Ignore zip and archive files
+*.zip
+*.ZIP
+Esmery Dark Gallery.zip
+
+# Ignore backup and config
+_backup_original/
+_backup_dc_original/
+.claude/
+.gemini/
+.thumbnail
+reorganize.ps1

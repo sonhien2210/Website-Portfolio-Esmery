@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Inter:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;1,8..60,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.cdnfonts.com/css/redaction" rel="stylesheet">
+  <style>
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: var(--bg); color: var(--body); font-family: var(--font-body); }
+    a { color: var(--tag); text-decoration: none; transition: color .18s ease; }
+    a:hover { color: var(--text); text-decoration: underline; }
+    ::selection { background: #fbe1d1; color: #5d2a1a; }
+    button:focus-visible, a:focus-visible { outline: 2px solid var(--line); outline-offset: 3px; }
+      body { --bg:#ffffff; --logo-filter:none; --card:#f2f2f3; --deep:#e4e4e5; --text:#17191c; --body:#777b86; --tag:#979799; --faint:#a3a6af; --line:#17191c; --card-line:transparent; --hair:#ececec; --grad:rgba(255,255,255,0.9); --btn-bg:#17191c; --btn-text:#ffffff; --btn-hover:#000000; --ghost-r:9999px; --nav-bg:rgba(255,255,255,0.8); --backdrop:rgba(23,25,28,0.45); --modal-bg:#ffffff; --modal-line:transparent; --footer-line:#ececec; --footer-bg:#fafafb; --font-display:'Source Serif 4', serif; --font-display-em:'Source Serif 4', serif; --font-body:'Inter', ui-sans-serif, system-ui, sans-serif; --shadow-artifact:0 0 0 1px rgba(4,23,43,0.05), 0 20px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.1); --spark-a:#5d2a1a; --chart-a:#a3a6af; --chart-b:#5d2a1a; --delta:#5d2a1a; --pill-line:#979799; --pill-text:#17191c; }
+    body[data-esm-theme="dark"] { --bg:#000000; --logo-filter:invert(1); --card:#191919; --deep:#303030; --text:#eeeeee; --body:#b4b4b4; --tag:#7b7b7b; --faint:#606060; --line:#b4b4b4; --card-line:#b4b4b4; --hair:#303030; --grad:rgba(0,0,0,0.72); --btn-bg:#eeeeee; --btn-text:#050505; --btn-hover:#ffffff; --ghost-r:10px; --nav-bg:rgba(0,0,0,0.65); --backdrop:rgba(0,0,0,0.82); --modal-bg:#191919; --modal-line:#b4b4b4; --footer-line:#606060; --footer-bg:transparent; --font-display:'Redaction 10', serif; --font-display-em:'Redaction 50', serif; --font-body:'Geist', sans-serif; --shadow-artifact:none; --spark-a:#fbe1d1; --chart-a:#b4b4b4; --chart-b:#fbe1d1; --delta:#fbe1d1; --pill-line:#b4b4b4; --pill-text:#b4b4b4; }
+    @keyframes esm-liq-en { 0% { transform: translateX(0) scaleX(1) scaleY(1); } 28% { transform: translateX(9px) scaleX(1.42) scaleY(0.90); } 62% { transform: translateX(40px) scaleX(1.22) scaleY(0.93); } 86% { transform: translateX(46px) scaleX(0.965) scaleY(1.015); } 100% { transform: translateX(46px) scaleX(1) scaleY(1); } }
+    @keyframes esm-liq-vi { 0% { transform: translateX(46px) scaleX(1) scaleY(1); } 28% { transform: translateX(37px) scaleX(1.42) scaleY(0.90); } 62% { transform: translateX(6px) scaleX(1.22) scaleY(0.93); } 86% { transform: translateX(0) scaleX(0.965) scaleY(1.015); } 100% { transform: translateX(0) scaleX(1) scaleY(1); } }
+  </style>
+</helmet>
+
+<nav style="position:sticky; top:0; z-index:50; background:var(--nav-bg); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);">
+  <div style="max-width:1200px; margin:0 auto; height:72px; padding:0 32px; display:grid; grid-template-columns:1fr auto 1fr; align-items:center; gap:24px;">
+    <a href="Home.dc.html" style="display:inline-flex; align-items:center;"><img src="uploads/bf517465-2789-4e72-8f3b-91faeedda607.png" alt="Esmery" style="height:32px; width:auto; filter:var(--logo-filter);"></a>
+    <button onClick="{{ toggleTheme }}" aria-label="Toggle theme" style="border:1px solid var(--line); background:transparent; color:var(--text); border-radius:9999px; width:34px; height:34px; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; font-size:14px; font-family:var(--font-body); padding:0; justify-self:center;">{{ themeIcon }}</button>
+    <div style="display:flex; align-items:center; gap:12px; justify-self:end;">
+      <button onClick="{{ toggleLang }}" aria-label="{{ langToggleLabel }}" style="position:relative; display:flex; align-items:center; border:1px solid var(--line); border-radius:9999px; padding:2px; gap:2px; background:transparent; cursor:pointer; transition:border-color .25s ease, background-color .25s ease;" style-hover="border-color:var(--text); background:var(--card);">
+        <span aria-hidden="true" style="position:absolute; top:2px; bottom:2px; left:2px; width:44px; border-radius:9999px; background:var(--btn-bg); transform:{{ blobTransform }}; animation:{{ blobAnim }}; will-change:transform; pointer-events:none;"></span>
+        <span style="position:relative; z-index:1; font-family:var(--font-body); font-size:12px; font-weight:600; width:44px; padding:5px 0; text-align:center; border-radius:9999px; color:{{ viColor }}; transition:color .35s ease .1s;">VI</span>
+        <span style="position:relative; z-index:1; font-family:var(--font-body); font-size:12px; font-weight:600; width:44px; padding:5px 0; text-align:center; border-radius:9999px; color:{{ enColor }}; transition:color .35s ease .1s;">EN</span>
+      </button>
+      <a href="Home.dc.html#contact" style="display:inline-flex; align-items:center; font-size:15px; font-weight:400; color:var(--btn-text); background:var(--btn-bg); border-radius:9999px; padding:10px 20px; min-width:118px; justify-content:center; text-decoration:none;" style-hover="background:var(--btn-hover); text-decoration:none;">{{ t.ctaGhost }}</a>
+    </div>
+  </div>
+</nav>
+
+<main style="max-width:1200px; margin:0 auto; padding:80px 32px; display:flex; flex-direction:column; gap:80px;">
+
+  <header data-screen-label="Report header" style="display:flex; flex-direction:column; gap:16px;">
+    <div style="display:flex; align-items:baseline; justify-content:space-between; gap:24px; flex-wrap:wrap;">
+      <h1 style="margin:0; font-family:var(--font-display); font-weight:400; font-size:64px; line-height:1.3; letter-spacing:-0.96px; color:var(--text);">{{ t.titlePre }} <em style="font-family:var(--font-display-em); font-style:italic; font-weight:400;">{{ t.titleEm }}</em></h1>
+      <span style="font-size:14px; font-weight:400; color:var(--tag);">Jan – Aug 2026</span>
+    </div>
+    <p style="margin:0; font-size:17px; line-height:1.35; color:var(--body); max-width:560px; min-height:2.7em; text-wrap:pretty;">{{ t.subhead }}</p>
+    <div style="display:flex; align-items:center; gap:24px; flex-wrap:wrap; margin-top:8px;">
+      <sc-for list="{{ filters }}" as="f" hint-placeholder-count="5">
+        <span style="font-size:14px; font-weight:400; color:{{ f.color }}; cursor:default;">{{ f.label }}</span>
+      </sc-for>
+    </div>
+  </header>
+
+  <section data-screen-label="KPI overview" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:24px;">
+    <sc-for list="{{ kpis }}" as="k" hint-placeholder-count="8">
+      <article style="background:var(--modal-bg); border:1px solid var(--card-line); border-radius:20px; padding:20px; display:flex; flex-direction:column; gap:8px; box-shadow:var(--shadow-artifact);">
+        <span style="font-size:14px; font-weight:400; color:var(--tag);">{{ k.label }}</span>
+        <span style="font-size:20px; font-weight:500; color:var(--text); letter-spacing:-0.01em;">{{ k.value }}</span>
+        <span style="font-size:14px; color:var(--body);"><span style="color:{{ k.arrowColor }};">{{ k.arrow }}</span> {{ k.delta }}</span>
+        <svg viewBox="0 0 120 36" preserveAspectRatio="none" style="width:100%; height:36px; display:block; margin-top:4px;">
+          <path d="{{ k.d }}" fill="none" stroke="var(--spark-a)" stroke-width="1.5" stroke-linecap="round"></path>
+        </svg>
+      </article>
+    </sc-for>
+  </section>
+
+  <section data-screen-label="Highlight callout" style="background:#fbe1d1; border-radius:24px; padding:40px; display:flex; flex-direction:column; gap:12px;">
+    <span style="font-size:14px; font-weight:400; color:#5d2a1a;">{{ t.calloutKicker }}</span>
+    <p style="margin:0; font-family:var(--font-display); font-size:26px; font-weight:400; line-height:1.3; letter-spacing:-0.23px; color:#5d2a1a; max-width:760px; text-wrap:pretty;">{{ t.calloutBody }}</p>
+    <p style="margin:0; font-size:15px; color:#5d2a1a; opacity:0.8;">{{ t.calloutQuote }}</p>
+  </section>
+
+  <section data-screen-label="Trend chart" style="background:var(--card); border:1px solid var(--card-line); border-radius:24px; padding:32px; display:flex; flex-direction:column; gap:20px;">
+    <h2 style="margin:0; font-size:22px; font-weight:500; color:var(--text); letter-spacing:-0.16px;">{{ t.trendTitle }}</h2>
+    <svg viewBox="0 0 800 220" preserveAspectRatio="none" style="width:100%; height:220px; display:block;">
+      <path d="M10 170 C 80 160, 130 175, 200 150 S 320 100, 400 110 S 540 70, 630 55 S 740 35, 790 28" fill="none" stroke="var(--chart-a)" stroke-width="1.5" stroke-linecap="round"></path>
+      <path d="M10 195 C 90 190, 150 180, 230 185 S 360 150, 440 140 S 570 125, 650 100 S 750 80, 790 72" fill="none" stroke="var(--chart-b)" stroke-width="1.5" stroke-linecap="round"></path>
+    </svg>
+    <div style="display:flex; align-items:center; gap:24px;">
+      <span style="display:inline-flex; align-items:center; gap:8px; font-size:14px; color:var(--body);"><span style="width:16px; height:2px; background:var(--chart-a); display:inline-block;"></span>{{ t.legendReach }}</span>
+      <span style="display:inline-flex; align-items:center; gap:8px; font-size:14px; color:var(--body);"><span style="width:16px; height:2px; background:var(--chart-b); display:inline-block;"></span>{{ t.legendEng }}</span>
+    </div>
+  </section>
+
+  <section data-screen-label="Channel breakdown" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:24px;">
+    <sc-for list="{{ channels }}" as="ch" hint-placeholder-count="4">
+      <article style="background:var(--card); border:1px solid var(--card-line); border-radius:24px; padding:24px; display:flex; flex-direction:column; gap:16px;">
+        <h3 style="margin:0; font-size:16px; font-weight:500; color:var(--text);">{{ ch.name }}</h3>
+        <div style="display:flex; flex-direction:column; gap:8px;">
+          <div style="display:flex; justify-content:space-between; font-size:15px;"><span style="color:var(--body);">{{ t.stSpend }}</span><span style="color:var(--text);">{{ ch.spend }}</span></div>
+          <div style="display:flex; justify-content:space-between; font-size:15px;"><span style="color:var(--body);">{{ t.stReach }}</span><span style="color:var(--text);">{{ ch.reach }}</span></div>
+          <div style="display:flex; justify-content:space-between; font-size:15px;"><span style="color:var(--body);">CPA</span><span style="color:var(--text);">{{ ch.cpa }}</span></div>
+        </div>
+      </article>
+    </sc-for>
+  </section>
+
+  <section data-screen-label="Campaign table" style="display:flex; flex-direction:column; gap:16px;">
+    <div style="display:flex; align-items:center; gap:24px; flex-wrap:wrap;">
+      <span style="font-size:14px; font-weight:400; color:var(--tag);">Social Ads</span>
+      <span style="font-size:14px; font-weight:400; color:var(--tag);">PR &amp; Comms</span>
+      <span style="font-size:14px; font-weight:400; color:var(--tag);">Video</span>
+      <span style="font-size:14px; font-weight:400; color:var(--tag);">Web</span>
+    </div>
+    <div style="background:var(--modal-bg); border:1px solid var(--card-line); border-radius:20px; padding:8px 24px; overflow-x:auto; box-shadow:var(--shadow-artifact);">
+      <table style="width:100%; border-collapse:collapse; min-width:960px;">
+        <thead>
+          <tr>
+            <sc-for list="{{ tableHeads }}" as="h" hint-placeholder-count="10">
+              <th style="text-align:left; font-size:12px; font-weight:500; letter-spacing:0.06em; text-transform:uppercase; color:var(--tag); padding:16px 12px 12px 0; border-bottom:1px solid var(--hair);">{{ h }}</th>
+            </sc-for>
+          </tr>
+        </thead>
+        <tbody>
+          <sc-for list="{{ rows }}" as="r" hint-placeholder-count="6">
+            <tr>
+              <td style="font-size:15px; color:var(--text); padding:14px 12px 14px 0; border-bottom:1px solid var(--hair); white-space:nowrap;">{{ r.client }}</td>
+              <td style="font-size:15px; color:var(--text); padding:14px 12px 14px 0; border-bottom:1px solid var(--hair); white-space:nowrap;">{{ r.campaign }}</td>
+              <td style="font-size:15px; color:var(--body); padding:14px 12px 14px 0; border-bottom:1px solid var(--hair); white-space:nowrap;">{{ r.channel }}</td>
+              <td style="font-size:15px; color:var(--body); padding:14px 12px 14px 0; border-bottom:1px solid var(--hair); white-space:nowrap;">{{ r.period }}</td>
+              <td style="font-size:15px; color:var(--text); padding:14px 12px 14px 0; border-bottom:1px solid var(--hair);">{{ r.spend }}</td>
+              <td style="font-size:15px; color:var(--text); padding:14px 12px 14px 0; border-bottom:1px solid var(--hair);">{{ r.reach }}</td>
+              <td style="font-size:15px; color:var(--text); padding:14px 12px 14px 0; border-bottom:1px solid var(--hair);">{{ r.eng }}</td>
+              <td style="font-size:15px; color:var(--text); padding:14px 12px 14px 0; border-bottom:1px solid var(--hair);">{{ r.conv }}</td>
+              <td style="font-size:15px; color:var(--text); padding:14px 12px 14px 0; border-bottom:1px solid var(--hair);">{{ r.roas }}</td>
+              <td style="padding:14px 0 14px 0; border-bottom:1px solid var(--hair); white-space:nowrap;"><span style="display:inline-block; font-size:12px; font-weight:500; padding:4px 12px; border-radius:9999px; border:1px solid {{ r.stBorder }}; color:{{ r.stColor }};">{{ r.status }}</span></td>
+            </tr>
+          </sc-for>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</main>
+
+<footer data-screen-label="Footer" style="border-top:1px solid var(--footer-line); background:var(--footer-bg);">
+  <div style="max-width:1280px; margin:0 auto; padding:64px 32px 40px; display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:48px;">
+    <div style="display:flex; flex-direction:column; gap:16px;">
+      <img src="uploads/bf517465-2789-4e72-8f3b-91faeedda607.png" alt="Esmery" style="height:85px; width:509px; max-width:100%; object-fit:contain; object-position:left; filter:var(--logo-filter);">
+      <p style="margin:0; font-size:14px; line-height:1.6; color:var(--tag); max-width:300px; min-height:3.2em; text-wrap:pretty;">{{ t.footerTagline }}</p>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:12px;">
+      <span style="font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--faint);">{{ t.footerLinksTitle }}</span>
+      <sc-for list="{{ navLinks }}" as="lnk" hint-placeholder-count="5">
+        <a href="{{ lnk.href }}" style="font-size:14px;">{{ lnk.label }}</a>
+      </sc-for>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:12px;">
+      <span style="font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--faint);">{{ t.footerContactTitle }}</span>
+      <a href="mailto:esmery22102004@gmail.com" style="font-size:14px;">esmery22102004@gmail.com</a>
+      <a href="tel:+84375765912" style="font-size:14px;">+84 375 765 912</a>
+      <span style="font-size:14px; color:var(--tag);">{{ t.city }}</span>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:12px;">
+      <span style="font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--faint);">{{ t.footerSocialTitle }}</span>
+      <sc-for list="{{ socials }}" as="s" hint-placeholder-count="4">
+        <a href="{{ s.href }}" style="font-size:14px;">{{ s.label }}</a>
+      </sc-for>
+    </div>
+  </div>
+  <div style="max-width:1280px; margin:0 auto; padding:0 32px 32px;">
+    <span style="font-size:12px; color:var(--faint);">{{ t.rights }}</span>
+  </div>
+</footer>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;defaultLang&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;vi&quot;,&quot;options&quot;:[&quot;vi&quot;,&quot;en&quot;],&quot;tsType&quot;:&quot;'vi' | 'en'&quot;,&quot;section&quot;:&quot;Language&quot;},&quot;defaultTheme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;light&quot;,&quot;options&quot;:[&quot;light&quot;,&quot;dark&quot;],&quot;tsType&quot;:&quot;'light' | 'dark'&quot;,&quot;section&quot;:&quot;Theme&quot;}}">
+class Component extends DCLogic {
+  state = { lang: localStorage.getItem('esm-lang') ?? this.props.defaultLang ?? 'vi', langAnimated: false, theme: localStorage.getItem('esm-theme') ?? this.props.defaultTheme ?? 'light' };
+
+  componentDidMount() { document.body.dataset.esmTheme = this.state.theme; }
+
+  componentDidUpdate() { document.body.dataset.esmTheme = this.state.theme; }
+
+  renderVals() {
+    const lang = this.state.lang;
+    const S = {
+      vi: {
+        ctaGhost: 'Liên hệ', ctaPrimary: 'Bắt đầu',
+        titlePre: 'Báo cáo', titleEm: 'chiến dịch',
+        subhead: 'Tổng hợp hiệu suất các chiến dịch Marketing đã thực hiện — dữ liệu minh họa, sẽ cập nhật số liệu thực.',
+        calloutKicker: 'Nổi bật trong kỳ',
+        calloutBody: 'Chiến dịch “Summer Drop” đạt ROAS cao nhất: 6.8x',
+        calloutQuote: '“Đội ngũ Esmery phản hồi nhanh và hình ảnh vượt kỳ vọng.” — Nắng Coffee',
+        trendTitle: 'Reach & Engagement theo thời gian',
+        legendReach: 'Reach', legendEng: 'Engagement',
+        stSpend: 'Chi phí', stReach: 'Tiếp cận',
+        filterAll: 'Tất cả',
+        heads: ['Khách hàng', 'Chiến dịch', 'Kênh', 'Thời gian', 'Chi phí', 'Tiếp cận', 'Tương tác', 'Chuyển đổi', 'ROAS', 'Trạng thái'],
+        stActive: 'Đang chạy', stDone: 'Hoàn tất',
+        vsLast: 'so với quý trước', flat: 'không đổi',
+        kpiLabels: ['Tổng tiếp cận', 'Tổng hiển thị', 'Tỷ lệ tương tác', 'CTR', 'Chuyển đổi', 'Chi phí quảng cáo', 'ROAS', 'Tăng người theo dõi'],
+        footerTagline: 'Studio thiết kế & marketing sáng tạo tại Việt Nam.',
+        footerLinksTitle: 'Điều hướng', footerContactTitle: 'Liên hệ', footerSocialTitle: 'Mạng xã hội',
+        city: 'TP. Hồ Chí Minh, Việt Nam',
+        rights: '© 2026 Esmery. Bảo lưu mọi quyền.',
+        nav: ['Trang chủ', 'Về chúng tôi', 'Báo cáo', 'Liên hệ']
+      },
+      en: {
+        ctaGhost: 'Contact', ctaPrimary: 'Get started',
+        titlePre: 'Campaign', titleEm: 'Report',
+        subhead: 'Summary of marketing campaign performance — mock data, real numbers coming later.',
+        calloutKicker: 'Highlight of the period',
+        calloutBody: 'Campaign “Summer Drop” hit the highest ROAS: 6.8x',
+        calloutQuote: '“The Esmery team moved fast and the visuals exceeded expectations.” — Nắng Coffee',
+        trendTitle: 'Reach & Engagement over time',
+        legendReach: 'Reach', legendEng: 'Engagement',
+        stSpend: 'Spend', stReach: 'Reach',
+        filterAll: 'All',
+        heads: ['Client', 'Campaign', 'Channel', 'Period', 'Spend', 'Reach', 'Engagement', 'Conversions', 'ROAS', 'Status'],
+        stActive: 'Active', stDone: 'Completed',
+        vsLast: 'vs last quarter', flat: 'flat',
+        kpiLabels: ['Total Reach', 'Total Impressions', 'Engagement Rate', 'CTR', 'Conversions', 'Ad Spend', 'ROAS', 'Follower Growth'],
+        footerTagline: 'A creative design & marketing studio based in Vietnam.',
+        footerLinksTitle: 'Navigate', footerContactTitle: 'Contact', footerSocialTitle: 'Social',
+        city: 'Ho Chi Minh City, Vietnam',
+        rights: '© 2026 Esmery. All rights reserved.',
+        nav: ['Home', 'About', 'Report', 'Contact']
+      }
+    };
+    const t = S[lang];
+    const kpiData = [
+      { value: '2.4M', delta: '18% ' + t.vsLast, up: true, d: 'M2 30 C 18 28, 28 31, 42 24 S 74 14, 94 12 S 112 7, 118 5' },
+      { value: '6.1M', delta: '22%', up: true, d: 'M2 28 C 20 30, 32 22, 48 23 S 80 12, 98 10 S 112 8, 118 6' },
+      { value: '5.8%', delta: '1.2pt', up: true, d: 'M2 26 C 16 30, 30 26, 44 27 S 72 18, 90 16 S 110 10, 118 8' },
+      { value: '2.3%', delta: '0.4pt', up: true, d: 'M2 24 C 18 28, 34 20, 50 22 S 78 16, 96 14 S 112 9, 118 7' },
+      { value: '3,240', delta: '31%', up: true, d: 'M2 31 C 20 29, 34 30, 50 24 S 78 15, 96 10 S 112 6, 118 4' },
+      { value: '$18,500', delta: t.flat, up: false, d: 'M2 18 C 24 17, 48 19, 70 18 S 100 17, 118 18' },
+      { value: '4.2x', delta: '0.6x', up: true, d: 'M2 27 C 18 25, 32 28, 48 22 S 76 14, 94 13 S 112 8, 118 6' },
+      { value: '+12,900', delta: '9%', up: true, d: 'M2 29 C 16 27, 30 29, 46 25 S 74 17, 92 15 S 110 9, 118 7' }
+    ];
+    const rowData = [
+      { client: 'Nắng Coffee', campaign: 'Summer Drop', channel: 'Social Ads', period: 'Jun – Aug 2026', spend: '$4,200', reach: '890K', eng: '6.4%', conv: '1,120', roas: '6.8x', active: true },
+      { client: 'Mộc Interior', campaign: 'Brand Refresh PR', channel: 'PR & Comms', period: 'Mar – May 2026', spend: '$2,800', reach: '310K', eng: '3.1%', conv: '240', roas: '2.9x', active: false },
+      { client: 'LumaFit', campaign: 'AI Launch Film', channel: 'Video', period: 'Apr 2026', spend: '$3,600', reach: '1.2M', eng: '7.2%', conv: '860', roas: '4.6x', active: false },
+      { client: 'Saigon Craft', campaign: 'Tết Gifting', channel: 'Social Ads', period: 'Jan – Feb 2026', spend: '$2,400', reach: '640K', eng: '5.5%', conv: '510', roas: '3.8x', active: false },
+      { client: 'Vela Travel', campaign: 'Booking Site Relaunch', channel: 'Web', period: 'May – Aug 2026', spend: '$3,100', reach: '420K', eng: '2.8%', conv: '390', roas: '3.2x', active: true },
+      { client: 'Hikari Skin', campaign: 'Always-on Ads', channel: 'Social Ads', period: 'Jan – Aug 2026', spend: '$2,400', reach: '780K', eng: '4.9%', conv: '120', roas: '2.4x', active: true }
+    ];
+    return {
+      t,
+      tableHeads: t.heads,
+      filters: [t.filterAll, 'Social Ads', 'PR & Comms', 'Video', 'Web'].map((label, i) => ({ label, color: i === 0 ? 'var(--text)' : 'var(--tag)' })),
+      kpis: kpiData.map((k, i) => ({
+        label: t.kpiLabels[i], value: k.value, delta: k.delta, d: k.d,
+        arrow: k.up ? '↑' : '—', arrowColor: k.up ? 'var(--delta)' : 'var(--tag)'
+      })),
+      channels: [
+        { name: 'Facebook / Instagram Ads', spend: '$8,900', reach: '1.6M', cpa: '$5.40' },
+        { name: 'Google Ads', spend: '$5,200', reach: '740K', cpa: '$7.10' },
+        { name: 'TikTok', spend: '$3,100', reach: '1.1M', cpa: '$4.20' },
+        { name: 'PR / Earned Media', spend: '$1,300', reach: '520K', cpa: '—' }
+      ],
+      rows: rowData.map(r => ({
+        ...r,
+        status: r.active ? t.stActive : t.stDone,
+        stBorder: r.active ? 'var(--pill-line)' : 'transparent',
+        stColor: r.active ? 'var(--pill-text)' : 'var(--tag)'
+      })),
+      navLinks: t.nav.map((label, i) => ({ label, href: ['Home.dc.html', 'About.dc.html', 'Report.dc.html', 'Home.dc.html#contact'][i] })),
+      socials: [
+        { label: 'Instagram', href: '#' },
+        { label: 'Behance', href: '#' },
+        { label: 'Facebook', href: '#' },
+        { label: 'TikTok', href: '#' }
+      ],
+      toggleTheme: () => this.setState(s => { const theme = s.theme === 'light' ? 'dark' : 'light'; localStorage.setItem('esm-theme', theme); return { theme }; }),
+      themeIcon: this.state.theme === 'light' ? '☾' : '☀',
+      toggleLang: () => this.setState(s => { const lang = s.lang === 'vi' ? 'en' : 'vi'; localStorage.setItem('esm-lang', lang); return { lang, langAnimated: true }; }),
+      langToggleLabel: lang === 'vi' ? 'Switch to English' : 'Chuyển sang tiếng Việt',
+      blobTransform: lang === 'vi' ? 'translateX(0)' : 'translateX(46px)',
+      blobAnim: this.state.langAnimated ? (lang === 'en' ? 'esm-liq-en 520ms cubic-bezier(0.22, 1, 0.36, 1) both' : 'esm-liq-vi 520ms cubic-bezier(0.22, 1, 0.36, 1) both') : 'none',
+      viColor: lang === 'vi' ? 'var(--btn-text)' : 'var(--body)',
+      enColor: lang === 'en' ? 'var(--btn-text)' : 'var(--body)'
+    };
+  }
+}
+</script>
+</body>
+</html>

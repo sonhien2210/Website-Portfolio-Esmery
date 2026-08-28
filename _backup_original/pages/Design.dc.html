@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;family=Inter:wght@400;500&amp;family=Source+Serif+4:ital,opsz,wght@0,8..60,400;1,8..60,400&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.cdnfonts.com/css/redaction" rel="stylesheet">
+  <style>
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: var(--bg); color: var(--body); font-family: var(--font-body); }
+    a { color: var(--tag); text-decoration: none; transition: color .18s ease; }
+    a:hover { color: var(--text); }
+    ::selection { background: var(--deep); color: var(--text); }
+    button:focus-visible, a:focus-visible { outline: 1px solid var(--line); outline-offset: 3px; }
+    .wwd-card .wwd-visual { transition: transform .7s cubic-bezier(.2,.6,.2,1); }
+    .wwd-card:hover .wwd-visual { transform: scale(1.035); }
+    .wwd-card .wwd-cta { opacity: 0; transform: translateY(6px); transition: opacity .35s ease, transform .35s ease; }
+    .wwd-card:hover .wwd-cta { opacity: 1; transform: translateY(0); }
+    @keyframes esmFade { from { opacity: 0; } to { opacity: 1; } }
+      body { --bg:#ffffff; --logo-filter:none; --card:#f2f2f3; --deep:#e4e4e5; --text:#17191c; --body:#777b86; --tag:#979799; --faint:#a3a6af; --line:#17191c; --card-line:transparent; --hair:#ececec; --grad:rgba(255,255,255,0.9); --btn-bg:#17191c; --btn-text:#ffffff; --btn-hover:#000000; --ghost-r:9999px; --nav-bg:rgba(255,255,255,0.8); --backdrop:rgba(23,25,28,0.45); --modal-bg:#ffffff; --modal-line:transparent; --footer-line:#ececec; --footer-bg:#fafafb; --font-display:'Source Serif 4', serif; --font-display-em:'Source Serif 4', serif; --font-body:'Inter', ui-sans-serif, system-ui, sans-serif; --shadow-artifact:0 0 0 1px rgba(4,23,43,0.05), 0 20px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.1); --spark-a:#5d2a1a; --chart-a:#a3a6af; --chart-b:#5d2a1a; --delta:#5d2a1a; --pill-line:#979799; --pill-text:#17191c; }
+    body[data-esm-theme="dark"] { --bg:#000000; --logo-filter:invert(1); --card:#191919; --deep:#303030; --text:#eeeeee; --body:#b4b4b4; --tag:#7b7b7b; --faint:#606060; --line:#b4b4b4; --card-line:#b4b4b4; --hair:#303030; --grad:rgba(0,0,0,0.72); --btn-bg:#eeeeee; --btn-text:#050505; --btn-hover:#ffffff; --ghost-r:10px; --nav-bg:rgba(0,0,0,0.65); --backdrop:rgba(0,0,0,0.82); --modal-bg:#191919; --modal-line:#b4b4b4; --footer-line:#606060; --footer-bg:transparent; --font-display:'Redaction 10', serif; --font-display-em:'Redaction 50', serif; --font-body:'Geist', sans-serif; --shadow-artifact:none; --spark-a:#fbe1d1; --chart-a:#b4b4b4; --chart-b:#fbe1d1; --delta:#fbe1d1; --pill-line:#b4b4b4; --pill-text:#b4b4b4; }
+    @keyframes esm-liq-en { 0% { transform: translateX(0) scaleX(1) scaleY(1); } 28% { transform: translateX(9px) scaleX(1.42) scaleY(0.90); } 62% { transform: translateX(40px) scaleX(1.22) scaleY(0.93); } 86% { transform: translateX(46px) scaleX(0.965) scaleY(1.015); } 100% { transform: translateX(46px) scaleX(1) scaleY(1); } }
+    @keyframes esm-liq-vi { 0% { transform: translateX(46px) scaleX(1) scaleY(1); } 28% { transform: translateX(37px) scaleX(1.42) scaleY(0.90); } 62% { transform: translateX(6px) scaleX(1.22) scaleY(0.93); } 86% { transform: translateX(0) scaleX(0.965) scaleY(1.015); } 100% { transform: translateX(0) scaleX(1) scaleY(1); } }
+  </style>
+</helmet>
+
+<nav style="position:sticky; top:0; z-index:50; background:var(--nav-bg); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);">
+  <div style="max-width:1280px; margin:0 auto; height:72px; padding:0 32px; display:grid; grid-template-columns:1fr auto 1fr; align-items:center; gap:24px;">
+    <a href="Home.dc.html" style="display:inline-flex; align-items:center;"><img src="uploads/bf517465-2789-4e72-8f3b-91faeedda607.png" alt="Esmery" style="height:32px; width:auto; filter:var(--logo-filter);"></a>
+    <button onClick="{{ toggleTheme }}" aria-label="Toggle theme" style="border:1px solid var(--line); background:transparent; color:var(--text); border-radius:9999px; width:34px; height:34px; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; font-size:14px; font-family:var(--font-body); padding:0; justify-self:center;">{{ themeIcon }}</button>
+    <div style="display:flex; align-items:center; gap:12px; justify-self:end;">
+      <button onClick="{{ toggleLang }}" aria-label="{{ langToggleLabel }}" style="position:relative; display:flex; align-items:center; border:1px solid var(--line); border-radius:9999px; padding:2px; gap:2px; background:transparent; cursor:pointer; transition:border-color .25s ease, background-color .25s ease;" style-hover="border-color:var(--text); background:var(--card);">
+        <span aria-hidden="true" style="position:absolute; top:2px; bottom:2px; left:2px; width:44px; border-radius:9999px; background:var(--btn-bg); transform:{{ blobTransform }}; animation:{{ blobAnim }}; will-change:transform; pointer-events:none;"></span>
+        <span style="position:relative; z-index:1; font-family:var(--font-body); font-size:12px; font-weight:600; width:44px; padding:5px 0; text-align:center; border-radius:9999px; color:{{ viColor }}; transition:color .35s ease .1s;">VI</span>
+        <span style="position:relative; z-index:1; font-family:var(--font-body); font-size:12px; font-weight:600; width:44px; padding:5px 0; text-align:center; border-radius:9999px; color:{{ enColor }}; transition:color .35s ease .1s;">EN</span>
+      </button>
+      <a href="Home.dc.html#contact" style="display:inline-flex; align-items:center; font-size:14px; font-weight:600; color:var(--btn-text); background:var(--btn-bg); border-radius:9999px; padding:10px 20px; min-width:118px; justify-content:center;" style-hover="background:var(--btn-hover);">{{ t.ctaGhost }}</a>
+    </div>
+  </div>
+</nav>
+
+<main style="max-width:1280px; margin:0 auto; padding:64px 32px 80px; display:flex; flex-direction:column; gap:48px;">
+  <header data-screen-label="Design hero" style="display:flex; flex-direction:column; gap:16px;">
+    <a href="Home.dc.html#projects" style="font-size:14px;">← {{ t.back }}</a>
+    <h1 style="margin:0; font-family:var(--font-display); font-weight:400; font-size:56px; line-height:1.1; letter-spacing:-0.036em; color:var(--text); max-width:720px; min-height:2.2em;">{{ t.titlePre }} <em style="font-family:var(--font-display-em); font-style:italic; font-weight:400;">{{ t.titleEm }}</em></h1>
+    <p style="margin:0; font-size:16px; line-height:1.6; color:var(--body); max-width:520px; min-height:3.2em; text-wrap:pretty;">{{ t.sub }}</p>
+    <div style="display:flex; align-items:center; gap:24px; flex-wrap:wrap; margin-top:8px;">
+      <sc-for list="{{ tags }}" as="tag" hint-placeholder-count="6">
+        <span style="font-size:14px; color:var(--tag);">{{ tag }}</span>
+      </sc-for>
+    </div>
+  </header>
+
+  <section data-screen-label="Design gallery" style="display:grid; grid-template-columns:repeat(2, 1fr); gap:24px;">
+    <sc-for list="{{ projects }}" as="p" hint-placeholder-count="5">
+      <button onClick="{{ p.open }}" class="wwd-card" style="grid-column:{{ p.span }}; position:relative; display:block; border:none; padding:0; cursor:pointer; border-radius:24px; overflow:hidden; background:var(--card); text-align:left; font-family:var(--font-body);">
+        <sc-if value="{{ p.hasImg }}" hint-placeholder-val="{{ false }}">
+          <div class="wwd-visual" role="img" aria-label="{{ p.name }}" style="height:{{ p.h }}; width:100%; background-image:url('{{ p.img }}'); background-size:cover; background-position:{{ p.imgPos }};"></div>
+        </sc-if>
+        <sc-if value="{{ p.noImg }}" hint-placeholder-val="{{ false }}">
+          <div class="wwd-visual" style="height:{{ p.h }}; background:var(--deep); display:flex; align-items:center; justify-content:center;">
+            <span style="font-size:12px; font-weight:500; color:var(--tag); letter-spacing:0.04em;">Image / Video</span>
+          </div>
+        </sc-if>
+        <div style="position:absolute; left:0; right:0; bottom:0; padding:24px; display:flex; justify-content:space-between; align-items:flex-end; background:linear-gradient(transparent, var(--grad));">
+          <div style="display:flex; flex-direction:column; gap:4px;">
+            <span style="font-size:12px; color:var(--tag);">{{ p.tag }}</span>
+            <span style="font-size:20px; font-weight:600; color:var(--text); letter-spacing:-0.01em;">{{ p.name }}</span>
+          </div>
+          <span class="wwd-cta" style="font-size:14px; color:var(--text);">{{ t.view }} →</span>
+        </div>
+      </button>
+    </sc-for>
+  </section>
+</main>
+
+<sc-if value="{{ hasSel }}" hint-placeholder-val="{{ false }}">
+  <div style="position:fixed; inset:0; z-index:100; background:var(--backdrop); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); display:flex; align-items:center; justify-content:center; padding:40px 24px; animation:esmFade .25s ease;">
+    <div style="background:var(--modal-bg); border:1px solid var(--modal-line); box-shadow:var(--shadow-artifact); border-radius:24px; max-width:920px; width:100%; max-height:88vh; overflow-y:auto; padding:40px;">
+      <div style="position:sticky; top:-40px; z-index:10; background:var(--modal-bg); padding:40px 0 16px; margin:-40px 0 0; border-bottom:1px solid var(--hair); display:flex; justify-content:space-between; align-items:flex-start; gap:24px;">
+        <div style="display:flex; flex-direction:column; gap:6px;">
+          <span style="font-size:13px; color:var(--tag);">{{ sel.tag }} — {{ sel.client }}</span>
+          <h2 style="margin:0; font-family:var(--font-display); font-weight:400; font-size:42px; line-height:1.1; letter-spacing:-0.036em; color:var(--text);">{{ sel.name }}</h2>
+        </div>
+        <button onClick="{{ close }}" style="border:1px solid var(--line); background:transparent; color:var(--text); border-radius:9999px; width:40px; height:40px; cursor:pointer; font-size:16px; flex-shrink:0;">✕</button>
+      </div>
+      <sc-if value="{{ hasHero }}" hint-placeholder-val="{{ false }}">
+        <div onClick="{{ sel.heroClick }}" role="img" aria-label="{{ sel.name }}" style="height:320px; width:100%; background-image:url('{{ sel.hero }}'); background-size:cover; background-position:{{ sel.heroPos }}; border-radius:12px; margin:32px 0; cursor:zoom-in;"></div>
+      </sc-if>
+      <sc-if value="{{ noHero }}" hint-placeholder-val="{{ false }}">
+        <div style="height:320px; background:var(--deep); border-radius:12px; margin:32px 0; display:flex; align-items:center; justify-content:center;">
+          <span style="font-size:12px; font-weight:500; color:var(--tag); letter-spacing:0.04em;">Hero visual</span>
+        </div>
+      </sc-if>
+      <div style="display:flex; flex-direction:column; gap:28px;">
+        <sc-for list="{{ selSections }}" as="s" hint-placeholder-count="5">
+          <div style="display:grid; grid-template-columns:220px 1fr; gap:24px;">
+            <span style="font-size:13px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--tag);">{{ s.h }}</span>
+            <p style="margin:0; font-size:15px; line-height:1.6; color:var(--body); text-wrap:pretty;">{{ s.p }}</p>
+          </div>
+        </sc-for>
+        <div style="display:grid; grid-template-columns:220px 1fr; gap:24px;">
+          <span style="font-size:13px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--tag);">{{ t.ourWork }}</span>
+          <div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:12px;">
+            <sc-if value="{{ hasWork }}" hint-placeholder-val="{{ false }}">
+              <sc-for list="{{ selWork }}" as="w" hint-placeholder-count="4">
+                <div onClick="{{ w.click }}" role="img" style="height:180px; width:100%; background-image:url('{{ w.src }}'); background-size:cover; background-position:{{ w.pos }}; border-radius:12px; cursor:zoom-in;"></div>
+              </sc-for>
+            </sc-if>
+            <sc-if value="{{ noWork }}" hint-placeholder-val="{{ false }}">
+              <div style="height:180px; background:var(--deep); border-radius:12px; display:flex; align-items:center; justify-content:center;"><span style="font-size:12px; color:var(--tag);">Image</span></div>
+              <div style="height:180px; background:var(--deep); border-radius:12px; display:flex; align-items:center; justify-content:center;"><span style="font-size:12px; color:var(--tag);">Image</span></div>
+              <div style="height:180px; background:var(--deep); border-radius:12px; display:flex; align-items:center; justify-content:center;"><span style="font-size:12px; color:var(--tag);">Image</span></div>
+              <div style="height:180px; background:var(--deep); border-radius:12px; display:flex; align-items:center; justify-content:center;"><span style="font-size:12px; color:var(--tag);">Image</span></div>
+            </sc-if>
+          </div>
+        </div>
+        <div style="display:grid; grid-template-columns:220px 1fr; gap:24px;">
+          <span style="font-size:13px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--tag);">{{ t.finalResult }}</span>
+          <div style="height:260px; background:var(--deep); border-radius:12px; display:flex; align-items:center; justify-content:center;"><span style="font-size:12px; color:var(--tag);">Final identity / deliverables</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</sc-if>
+
+<sc-if value="{{ hasLightbox }}" hint-placeholder-val="{{ false }}">
+  <div onClick="{{ closeLightbox }}" style="position:fixed; inset:0; z-index:200; background:rgba(0,0,0,0.9); display:flex; align-items:center; justify-content:center; padding:24px; cursor:zoom-out; animation:esmFade .2s ease;">
+    <img loading="lazy" decoding="async" src="{{ lightboxSrc }}" alt="" style="max-width:90vw; max-height:90vh; object-fit:contain; border-radius:8px; pointer-events:none;">
+  </div>
+</sc-if>
+
+<footer data-screen-label="Footer" style="border-top:1px solid var(--footer-line); background:var(--footer-bg);">
+  <div style="max-width:1280px; margin:0 auto; padding:64px 32px 40px; display:grid; grid-template-columns:2fr 1fr 1fr; gap:48px;">
+    <div style="display:flex; flex-direction:column; gap:16px;">
+      <img src="uploads/bf517465-2789-4e72-8f3b-91faeedda607.png" alt="Esmery" style="height:85px; width:509px; max-width:100%; object-fit:contain; object-position:left; filter:var(--logo-filter);">
+      <p style="margin:0; font-size:14px; line-height:1.6; color:var(--tag); max-width:300px; min-height:3.2em; text-wrap:pretty;">{{ t.footerTagline }}</p>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:12px;">
+      <span style="font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--faint);">{{ t.footerLinksTitle }}</span>
+      <sc-for list="{{ navLinks }}" as="lnk" hint-placeholder-count="5">
+        <a href="{{ lnk.href }}" style="font-size:14px;">{{ lnk.label }}</a>
+      </sc-for>
+    </div>
+
+    <div style="display:flex; flex-direction:column; gap:12px;">
+      <span style="font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--faint);">{{ t.footerSocialTitle }}</span>
+      <sc-for list="{{ socials }}" as="s" hint-placeholder-count="4">
+        <a href="{{ s.href }}" style="font-size:14px;">{{ s.label }}</a>
+      </sc-for>
+    </div>
+  </div>
+  <div style="max-width:1280px; margin:0 auto; padding:0 32px 32px;">
+    <span style="font-size:12px; color:var(--faint);">{{ t.rights }}</span>
+  </div>
+</footer>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;defaultLang&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;vi&quot;,&quot;options&quot;:[&quot;vi&quot;,&quot;en&quot;],&quot;tsType&quot;:&quot;'vi' | 'en'&quot;,&quot;section&quot;:&quot;Language&quot;},&quot;defaultTheme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;light&quot;,&quot;options&quot;:[&quot;light&quot;,&quot;dark&quot;],&quot;tsType&quot;:&quot;'light' | 'dark'&quot;,&quot;section&quot;:&quot;Theme&quot;}}">
+class Component extends DCLogic {
+  state = { lang: localStorage.getItem('esm-lang') ?? this.props.defaultLang ?? 'vi', langAnimated: false, sel: null, theme: localStorage.getItem('esm-theme') ?? this.props.defaultTheme ?? 'light', lightbox: null };
+
+  componentDidMount() { document.body.dataset.esmTheme = this.state.theme; }
+
+  componentDidUpdate() { document.body.dataset.esmTheme = this.state.theme; }
+
+  renderVals() {
+    const lang = this.state.lang;
+    const S = {
+      vi: {
+        ctaGhost: 'Liên hệ', ctaPrimary: 'Bắt đầu',
+        back: 'Trang chủ', view: 'Xem dự án', ourWork: 'Sản phẩm', finalResult: 'Kết quả',
+        titlePre: 'Thiết kế &', titleEm: 'Thương hiệu',
+        sub: 'Một kho lưu trữ thị giác. Mỗi dự án là một tác phẩm, mỗi tác phẩm đều có một câu chuyện riêng.',
+        footerTagline: 'Studio thiết kế & marketing sáng tạo tại Việt Nam.',
+        footerLinksTitle: 'Điều hướng', footerContactTitle: 'Liên hệ', footerSocialTitle: 'Mạng xã hội',
+        city: 'TP. Hồ Chí Minh, Việt Nam',
+        rights: '© 2026 Esmery.',
+        nav: ['Trang chủ', 'Về chúng tôi', 'Liên hệ'],
+        secHeads: ['Tổng quan', 'Đề bài', 'Ý tưởng', 'Thông điệp', 'Định hướng thị giác']
+      },
+      en: {
+        ctaGhost: 'Contact', ctaPrimary: 'Get started',
+        back: 'Home', view: 'View project', ourWork: 'Our work', finalResult: 'Final result',
+        titlePre: 'Design &', titleEm: 'Branding',
+        sub: 'A visual archive — every project is an artwork, and every artwork has its own story.',
+        footerTagline: 'A creative design & marketing studio based in Vietnam.',
+        footerLinksTitle: 'Navigate', footerContactTitle: 'Contact', footerSocialTitle: 'Social',
+        city: 'Ho Chi Minh City, Vietnam',
+        rights: '© 2026 Esmery.',
+        nav: ['Home', 'About', 'Contact'],
+        secHeads: ['Overview', 'The brief', 'The idea', 'The message', 'Visual direction']
+      }
+    };
+    const t = S[lang];
+    const data = [
+      { name: 'Djirian', client: 'Djirian', tagVi: 'Nhận diện & bao bì', tagEn: 'Brand identity & packaging', span: 'span 2', h: '520px',
+        img: 'uploads/hình 3.png', hero: 'uploads/magnific_product-mockup-photo-a-dj_ovhTI9K829.png',
+        work: ['uploads/hình 1.png', 'uploads/hình 2.png', 'uploads/hình 4.png', 'uploads/hình 5.png'],
+        vi: ['Nhận diện và bao bì cho thương hiệu sầu riêng sấy thăng hoa từ Di Linh, Lâm Đồng.', 'Đưa sầu riêng Việt lên kệ quốc tế với hình ảnh tự nhiên, đáng tin cậy.', 'Múi sầu riêng vàng ôm trong vỏ gai xanh — logo kể trọn câu chuyện của trái cây.', '100% tự nhiên — một loại trái, một vùng trồng.', 'Xanh lá đậm và vàng múi sầu, nhãn giấy kem, nhiếp ảnh sản phẩm giữa vườn sầu riêng.'],
+        en: ['Identity and packaging for a freeze-dried durian brand from Di Linh, Lam Dong.', 'Putting Vietnamese durian on international shelves with a natural, trustworthy look.', 'A golden durian pod cradled in a spiky green husk — the logo tells the fruit\u2019s whole story.', '100% natural — one fruit, one growing region.', 'Deep leaf green and durian yellow, cream paper labels, product photography set in the orchard.'] },
+      { name: 'Sena Milk', client: 'Sena Milk', tagVi: 'Thiết kế bao bì', tagEn: 'Packaging design', span: 'auto', h: '440px',
+        img: 'uploads/Untitled-11.PNG', hero: 'uploads/Untitled-8.PNG', heroPos: 'center 60%',
+        work: ['uploads/Untitled-1.PNG', 'uploads/Untitled-3.PNG', 'uploads/Untitled-6.jpg', 'uploads/Untitled-4.PNG'],
+        vi: ['Thiết kế bao bì cho thương hiệu sữa hạt sen Sena Milk.', 'Đưa sữa hạt sen đến gần hơn với người tiêu dùng trẻ.', 'Hình minh họa thủ công kết hợp tone màu tươi sáng theo từng vị.', 'Thiên nhiên trong từng hộp sữa.', 'Ba vị: Nguyên bản, Dâu tây, Socolate — mỗi vị một bảng màu riêng.'],
+        en: ['Packaging design for Sena Milk — a lotus seed milk brand.', 'Bringing lotus seed milk closer to young consumers.', 'Hand-drawn illustrations paired with vibrant flavor-coded colors.', 'Nature in every carton.', 'Three flavors: Original, Strawberry, Chocolate — each with its own color palette.'] },
+      { name: 'Tri Kien Spices', client: 'Tri Kien Spices', tagVi: 'Chụp ảnh sản phẩm', tagEn: 'Product photography', span: 'auto', h: '440px',
+        img: 'uploads/VUS_9319.JPG', imgPos: 'center 30%',
+        hero: 'uploads/VUS_9290.JPG', heroPos: 'center 40%',
+        work: ['uploads/VUS_9298.JPG', 'uploads/VUS_9241.JPG', 'uploads/VUS_9272.JPG', 'uploads/VUS_9264.JPG'],
+        vi: ['Chụp ảnh sản phẩm cho thương hiệu gia vị Tri Kien Spices.', 'Truyền tải chất lượng cao cấp cho dòng sa tế tôm.', 'Bố cục sản phẩm kết hợp nguyên liệu tự nhiên — ớt, tỏi, hành tím.', 'Hương vị truyền thống, chất lượng hiện đại.', 'Tone tối, ánh sáng ấm, nhấn mạnh chi tiết hũ sa tế và nguyên liệu.'],
+        en: ['Product photography for Tri Kien Spices brand.', 'Communicating premium quality for the shrimp satay line.', 'Product composition with natural ingredients — chili, garlic, shallots.', 'Traditional flavor, modern quality.', 'Dark tones, warm lighting, emphasis on jar details and ingredients.'] },
+      { name: 'The Fan', client: 'The Fan', tagVi: 'Chụp ảnh sản phẩm', tagEn: 'Product photography', span: 'auto', h: '440px',
+        img: 'uploads/1765948906591_187963989490343589_5430947014159569504_d31827b9bf84ef138398e7f3c18b24ec.jpg', imgPos: 'center 55%',
+        hero: 'uploads/1765948906607_187963989490343589_5430947014159569504_70b6856855c183ef0008d28a2aae3acb.jpg', heroPos: 'center 60%',
+        work: [
+          { src: 'uploads/1765948906582_187963989490343589_5430947014159569504_cc2a77e287bfa1eb2bcd13d88c69f919.jpg', pos: 'center 55%' },
+          { src: 'uploads/1765948906597_187963989490343589_5430947014159569504_0dadd1157aa5a13acab45c56cfe1125b.jpg', pos: 'center 50%' },
+          { src: 'uploads/1765948906602_187963989490343589_5430947014159569504_338f7379fff5107b28f09546f6fdbad8.jpg', pos: 'center 55%' },
+          { src: 'uploads/1765948906612_187963989490343589_5430947014159569504_df409b527e4ebf3522670bd136029587.jpg', pos: 'center 55%' }
+        ],
+        vi: ['Chụp ảnh món ăn cho nhà hàng The Fan — bộ sưu tập Giáng sinh.', 'Truyền tải sự tinh tế và sang trọng trong từng đĩa.', 'Bố cục đĩa kết hợp trang trí Giáng sinh — nhung xanh, ruy-băng đỏ, quế và thông.', 'Mỗi món ăn là một tác phẩm nghệ thuật trên bàn tiệc.', 'Tone tối, ánh sáng ấm, nhấn mạnh chi tiết và chất liệu món ăn.'],
+        en: ['Food photography for The Fan restaurant — Christmas collection.', 'Conveying elegance and luxury in every plate.', 'Plate composition with Christmas styling — green velvet, red ribbons, cinnamon and pine.', 'Every dish is a work of art on the dinner table.', 'Dark tones, warm lighting, emphasis on food texture and detail.'] },
+      { name: 'Way Up Station Coffee', client: 'Way Up Coffee', tagVi: 'Thiết kế social media', tagEn: 'Social media design', span: 'auto', h: '440px',
+        img: 'uploads/60555144-e649-4b91-b75d-cb4e66925614.png', imgPos: 'center 35%',
+        hero: 'uploads/Artboard 1 copy 28.png', heroPos: 'center 30%',
+        work: [
+          { src: 'uploads/Artboard 1 copy 26.png', pos: 'center' },
+          { src: 'uploads/Artboard 1 copy 25.png', pos: 'center' },
+          { src: 'uploads/Artboard 1 copy 29.png', pos: 'center' },
+          { src: 'uploads/Artboard 1 copy 27-5c28aa3c.png', pos: 'center' }
+        ],
+        vi: ['Thiết kế ấn phẩm social media cho Way Up Station Coffee.', 'Thu hút khách hàng trẻ với phong cách tươi mới, năng động.', 'Typography vui nhộn kết hợp hình ảnh sản phẩm thật — từ combo xíu mại đến croissant.', 'Mỗi poster một câu chuyện — best seller, kem mùa hè, lễ hội, combo mới.', 'Tone xanh dương chủ đạo, chữ viết tay, bố cục bắt mắt trên feed.'],
+        en: ['Social media design for Way Up Station Coffee.', 'Attracting young customers with a fresh, dynamic style.', 'Playful typography combined with real product photography — from xiu mai combos to croissants.', 'Every poster tells a story — best sellers, summer ice cream, holidays, new combos.', 'Signature blue tones, handwritten text, eye-catching feed layouts.'] }
+    ];
+    const sel = this.state.sel === null ? null : data[this.state.sel];
+    return {
+      t,
+      socials: [
+        { label: 'Instagram', href: '#' },
+        { label: 'Behance', href: '#' },
+        { label: 'Facebook', href: '#' },
+        { label: 'TikTok', href: '#' }
+      ],
+      tags: lang === 'vi'
+        ? ['Nhận diện thương hiệu', 'Logo', 'Bao bì', 'Ấn phẩm đồ họa', 'Social media', 'Key visual']
+        : ['Brand identity', 'Logo', 'Packaging', 'Graphic design', 'Social media', 'Key visuals'],
+      projects: data.map((p, i) => ({
+        name: p.name, span: p.span, h: p.h,
+        hasImg: !!p.img, noImg: !p.img, img: p.img || '', imgPos: p.imgPos || 'center',
+        tag: lang === 'vi' ? p.tagVi : p.tagEn,
+        open: () => this.setState({ sel: i })
+      })),
+      hasSel: sel !== null,
+      sel: sel ? { name: sel.name, client: sel.client, tag: lang === 'vi' ? sel.tagVi : sel.tagEn, hero: sel.hero || '', heroPos: sel.heroPos || 'center', heroClick: sel.hero ? () => this.setState({ lightbox: sel.hero }) : undefined } : {},
+      hasHero: !!(sel && sel.hero),
+      noHero: !(sel && sel.hero),
+      hasWork: !!(sel && sel.work),
+      noWork: !(sel && sel.work),
+      selWork: (sel && sel.work) ? sel.work.map(w => { const src = typeof w === 'string' ? w : w.src; const pos = typeof w === 'string' ? 'center' : (w.pos || 'center'); return { src, pos, click: () => this.setState({ lightbox: src }) }; }) : [],
+      selSections: sel ? t.secHeads.map((h, i) => ({ h, p: (lang === 'vi' ? sel.vi : sel.en)[i] })) : [],
+      close: () => this.setState({ sel: null, lightbox: null }),
+      hasLightbox: !!this.state.lightbox,
+      lightboxSrc: this.state.lightbox || '',
+      closeLightbox: () => this.setState({ lightbox: null }),
+      navLinks: t.nav.map((label, i) => ({ label, href: ['Home.dc.html', 'About.dc.html', 'Home.dc.html#contact'][i] })),
+      toggleTheme: () => this.setState(s => { const theme = s.theme === 'light' ? 'dark' : 'light'; localStorage.setItem('esm-theme', theme); return { theme }; }),
+      themeIcon: this.state.theme === 'light' ? '☾' : '☀',
+      toggleLang: () => this.setState(s => { const lang = s.lang === 'vi' ? 'en' : 'vi'; localStorage.setItem('esm-lang', lang); return { lang, langAnimated: true }; }),
+      langToggleLabel: lang === 'vi' ? 'Switch to English' : 'Chuyển sang tiếng Việt',
+      blobTransform: lang === 'vi' ? 'translateX(0)' : 'translateX(46px)',
+      blobAnim: this.state.langAnimated ? (lang === 'en' ? 'esm-liq-en 520ms cubic-bezier(0.22, 1, 0.36, 1) both' : 'esm-liq-vi 520ms cubic-bezier(0.22, 1, 0.36, 1) both') : 'none',
+      viColor: lang === 'vi' ? 'var(--btn-text)' : 'var(--body)',
+      enColor: lang === 'en' ? 'var(--btn-text)' : 'var(--body)'
+    };
+  }
+}
+</script>
+</body>
+</html>

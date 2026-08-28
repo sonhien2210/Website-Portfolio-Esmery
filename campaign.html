@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Thư viện chiến dịch | Esmery Studio</title>
+  <meta name="description" content="Những chiến dịch đã chạy và số liệu thu được từ insight đến kết quả đo được.">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <style>
+    @keyframes esmFade { from { opacity: 0; } to { opacity: 1; } }
+  </style>
+</head>
+<body data-esm-theme="light" data-esm-lang="vi">
+
+  <!-- UNIVERSAL NAVBAR -->
+  <nav class="esm-nav">
+    <div class="esm-nav-inner">
+      <a href="index.html" class="esm-nav-logo" aria-label="Esmery Home">
+        <img src="images/shared/bf517465-2789-4e72-8f3b-91faeedda607.png" alt="Esmery">
+      </a>
+      <button class="esm-theme-btn" aria-label="Toggle theme">☾</button>
+      <div class="esm-nav-actions">
+        <button class="esm-lang-toggle" aria-label="Toggle language">
+          <span class="esm-lang-blob" aria-hidden="true"></span>
+          <span class="esm-lang-item esm-lang-vi">VI</span>
+          <span class="esm-lang-item esm-lang-en">EN</span>
+        </button>
+        <button class="esm-cta-btn" data-open-modal="consultation" data-vi="Liên hệ" data-en="Contact">Liên hệ</button>
+      </div>
+    </div>
+  </nav>
+
+  <main style="max-width:1280px; margin:0 auto; padding:64px 32px 80px; display:flex; flex-direction:column; gap:48px;">
+
+    <!-- HEADER -->
+    <header style="display:flex; flex-direction:column; gap:16px;">
+      <a href="index.html#projects" style="font-size:14px; color:var(--tag);" data-vi="← Trang chủ" data-en="← Home">← Trang chủ</a>
+      <h1 style="font-size:clamp(36px, 5.5vw, 56px); line-height:1.1; letter-spacing:-0.036em; color:var(--text); max-width:720px;" data-vi="Thư viện <em>chiến dịch</em>" data-en="Campaign <em>library</em>">
+        Thư viện <em>chiến dịch</em>
+      </h1>
+      <p style="margin:0; font-size:16px; line-height:1.6; color:var(--body); max-width:520px; text-wrap:pretty;" data-vi="Những chiến dịch đã chạy và số liệu thu được từ insight đến kết quả đo được." data-en="Campaigns we have run and the numbers they delivered from insight to measured results.">
+        Những chiến dịch đã chạy và số liệu thu được từ insight đến kết quả đo được.
+      </p>
+      <div id="esm-campaign-tags" style="display:flex; align-items:center; gap:24px; flex-wrap:wrap; margin-top:8px;">
+      </div>
+    </header>
+
+    <!-- CAMPAIGN LIST -->
+    <section id="esm-campaign-list" style="display:flex; flex-direction:column; gap:24px;">
+    </section>
+
+  </main>
+
+  <!-- CAMPAIGN DETAIL MODAL -->
+  <div id="esm-campaign-modal" class="esm-modal-backdrop">
+    <div class="esm-modal-card" style="max-width:920px; padding:40px;" onclick="event.stopPropagation()">
+      <div style="position:sticky; top:-40px; z-index:10; background:var(--modal-bg); padding:40px 0 16px; margin:-40px 0 0; border-bottom:1px solid var(--hair); display:flex; justify-content:space-between; align-items:flex-start; gap:24px;">
+        <div style="display:flex; flex-direction:column; gap:6px;">
+          <span id="esm-cmodal-tag" style="font-size:13px; color:var(--tag);">—</span>
+          <h2 id="esm-cmodal-title" style="margin:0; font-family:var(--font-display); font-weight:400; font-size:42px; line-height:1.1; letter-spacing:-0.036em; color:var(--text);">—</h2>
+        </div>
+        <button onclick="closeCampaignDetail()" style="border:1px solid var(--line); background:transparent; color:var(--text); border-radius:9999px; width:40px; height:40px; cursor:pointer; font-size:16px; flex-shrink:0;">✕</button>
+      </div>
+      <div id="esm-cmodal-hero" style="margin:32px 0;"></div>
+      <div id="esm-cmodal-sections" style="display:flex; flex-direction:column; gap:28px;"></div>
+      <div style="display:grid; grid-template-columns:220px 1fr; gap:24px; margin-top:28px;">
+        <span style="font-size:13px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--tag);" data-vi="Triển khai" data-en="Execution">Triển khai</span>
+        <div id="esm-cmodal-exec" style="display:grid; grid-template-columns:repeat(2, 1fr); gap:12px;"></div>
+      </div>
+      <div style="display:grid; grid-template-columns:220px 1fr; gap:24px; margin-top:28px;">
+        <span style="font-size:13px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--tag);" data-vi="Kết quả" data-en="Results">Kết quả</span>
+        <div id="esm-cmodal-results"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LIGHTBOX -->
+  <div id="esm-lightbox" style="display:none; position:fixed; inset:0; z-index:200; background:rgba(0,0,0,0.9); align-items:center; justify-content:center; padding:24px; cursor:zoom-out; animation:esmFade .2s ease;" onclick="closeLightbox()">
+    <img id="esm-lightbox-img" src="" alt="" style="max-width:90vw; max-height:90vh; object-fit:contain; border-radius:8px; pointer-events:none;">
+  </div>
+
+  <!-- UNIVERSAL FOOTER -->
+  <footer class="esm-footer">
+    <div class="esm-footer-inner">
+      <div class="esm-footer-brand">
+        <img src="images/shared/bf517465-2789-4e72-8f3b-91faeedda607.png" alt="Esmery">
+        <p class="esm-footer-tagline" data-vi="Studio thiết kế &amp; marketing sáng tạo tại Việt Nam." data-en="A creative design &amp; marketing studio based in Vietnam.">Studio thiết kế &amp; marketing sáng tạo tại Việt Nam.</p>
+      </div>
+      <div class="esm-footer-col">
+        <span class="esm-footer-title" data-vi="Điều hướng" data-en="Navigate">Điều hướng</span>
+        <a href="index.html" data-vi="Trang chủ" data-en="Home">Trang chủ</a>
+        <a href="about.html" data-vi="Về chúng tôi" data-en="About us">Về chúng tôi</a>
+        <a href="design.html" data-vi="Thiết kế &amp; Thương hiệu" data-en="Design &amp; Branding">Thiết kế &amp; Thương hiệu</a>
+        <a href="ai-video.html" data-vi="Triển lãm Video AI" data-en="AI Video Exhibition">Triển lãm Video AI</a>
+        <a href="campaign.html" data-vi="Chiến dịch &amp; Truyền thông" data-en="Campaign &amp; Social">Chiến dịch &amp; Truyền thông</a>
+        <a href="report.html" data-vi="Báo cáo số liệu" data-en="Performance Report">Báo cáo số liệu</a>
+      </div>
+      <div class="esm-footer-col">
+        <span class="esm-footer-title" data-vi="Mạng xã hội" data-en="Social">Mạng xã hội</span>
+        <a href="https://instagram.com" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://behance.net" target="_blank" rel="noopener">Behance</a>
+        <a href="https://facebook.com" target="_blank" rel="noopener">Facebook</a>
+        <a href="https://tiktok.com" target="_blank" rel="noopener">TikTok</a>
+      </div>
+    </div>
+    <div class="esm-footer-bottom">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+        <span>© 2026 Esmery. <span data-vi="Bảo lưu mọi quyền." data-en="All rights reserved.">Bảo lưu mọi quyền.</span></span>
+        <span data-vi="TP. Hồ Chí Minh, Việt Nam" data-en="Ho Chi Minh City, Vietnam">TP. Hồ Chí Minh, Việt Nam</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- BACK TO TOP BUTTON -->
+  <button class="esm-fab-top" aria-label="Back to top">
+    <img src="images/home/71cefad5-a670-4497-a36a-2203fb32790f.png" alt="Top">
+  </button>
+
+  <!-- UNIVERSAL CONSULTATION MODAL -->
+  <div id="esm-consultation-modal" class="esm-modal-backdrop">
+    <div class="esm-modal-card" onclick="event.stopPropagation()">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:28px;">
+        <div style="display:flex; gap:20px;">
+          <span id="esm-modal-ind-1" style="font-size:12px; font-weight:600; letter-spacing:0.04em; color:var(--text);" data-vi="01. Thông tin" data-en="01. Information">01. Thông tin</span>
+          <span id="esm-modal-ind-2" style="font-size:12px; font-weight:600; letter-spacing:0.04em; color:var(--faint);" data-vi="02. Xác nhận" data-en="02. Confirm">02. Xác nhận</span>
+        </div>
+        <button data-close-modal aria-label="Close" style="border:1px solid var(--line); background:transparent; color:var(--text); border-radius:9999px; width:36px; height:36px; cursor:pointer; font-size:15px; display:flex; align-items:center; justify-content:center; padding:0; flex:none;">✕</button>
+      </div>
+      <div id="esm-modal-step-1" style="display:flex; flex-direction:column; gap:24px;">
+        <div style="display:flex; flex-direction:column; gap:8px;">
+          <h2 style="font-size:30px; line-height:1.2; letter-spacing:-0.02em;" data-vi="Hãy kể cho chúng tôi về dự án của bạn" data-en="Tell us about your project">Hãy kể cho chúng tôi về dự án của bạn</h2>
+          <p style="margin:0; font-size:14px; line-height:1.6; color:var(--body);" data-vi="Điền thông tin bên dưới, chúng tôi sẽ phản hồi trong vòng 24 giờ." data-en="Fill in the details below and we'll get back to you within 24 hours.">Điền thông tin bên dưới, chúng tôi sẽ phản hồi trong vòng 24 giờ.</p>
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
+          <div style="display:flex; flex-direction:column; gap:5px; grid-column:1 / -1;">
+            <label style="font-size:13px; font-weight:500; color:var(--text);" data-vi="Họ và tên *" data-en="Your Name *">Họ và tên *</label>
+            <input type="text" id="esm-form-name" placeholder="Nguyễn Văn A" data-vi="Nguyễn Văn A" data-en="Jane Doe" style="width:100%; background:var(--card); border:1px solid var(--hair); border-radius:16px; padding:12px 14px; font-size:14px; font-family:var(--font-body); color:var(--text); outline:none;">
+            <span id="esm-err-name" style="font-size:12px; color:var(--error); display:none;" data-vi="Vui lòng nhập họ và tên" data-en="Please enter your name">Vui lòng nhập họ và tên</span>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:5px;">
+            <label style="font-size:13px; font-weight:500; color:var(--text);">Email *</label>
+            <input type="email" id="esm-form-email" placeholder="you@example.com" style="width:100%; background:var(--card); border:1px solid var(--hair); border-radius:16px; padding:12px 14px; font-size:14px; font-family:var(--font-body); color:var(--text); outline:none;">
+            <span id="esm-err-email" style="font-size:12px; color:var(--error); display:none;" data-vi="Email không hợp lệ" data-en="Invalid email address">Email không hợp lệ</span>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:5px;">
+            <div style="display:flex; align-items:baseline; gap:5px;">
+              <label style="font-size:13px; font-weight:500; color:var(--text);" data-vi="Số điện thoại" data-en="Phone">Số điện thoại</label>
+              <span style="font-size:11px; color:var(--faint);" data-vi="(tùy chọn)" data-en="(optional)">(tùy chọn)</span>
+            </div>
+            <input type="tel" id="esm-form-phone" placeholder="+84 ..." style="width:100%; background:var(--card); border:1px solid var(--hair); border-radius:16px; padding:12px 14px; font-size:14px; font-family:var(--font-body); color:var(--text); outline:none;">
+          </div>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          <label style="font-size:13px; font-weight:500; color:var(--text);" data-vi="Dịch vụ bạn quan tâm" data-en="Services you need">Dịch vụ bạn quan tâm</label>
+          <div style="display:flex; flex-wrap:wrap; gap:6px;">
+            <button type="button" class="esm-service-chip" data-service="Branding">Branding</button>
+            <button type="button" class="esm-service-chip" data-service="Website">Website</button>
+            <button type="button" class="esm-service-chip" data-service="UI/UX">UI/UX</button>
+            <button type="button" class="esm-service-chip" data-service="Packaging">Packaging</button>
+            <button type="button" class="esm-service-chip" data-service="Marketing">Marketing</button>
+            <button type="button" class="esm-service-chip" data-service="AI / Automation">AI / Automation</button>
+            <button type="button" class="esm-service-chip" data-service="Khác / Other" data-vi="Khác" data-en="Other">Khác</button>
+          </div>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:8px;">
+          <div style="display:flex; align-items:baseline; gap:5px;">
+            <label style="font-size:13px; font-weight:500; color:var(--text);" data-vi="Mô tả dự án" data-en="Project description">Mô tả dự án</label>
+            <span style="font-size:11px; color:var(--faint);" data-vi="(tùy chọn)" data-en="(optional)">(tùy chọn)</span>
+          </div>
+          <textarea id="esm-form-desc" placeholder="Mục tiêu, ngân sách dự kiến, thời gian triển khai..." data-vi="Mục tiêu, ngân sách dự kiến, thời gian triển khai..." data-en="Goals, timeline, budget..." style="width:100%; background:var(--card); border:1px solid var(--hair); border-radius:16px; padding:12px 14px; font-size:14px; font-family:var(--font-body); color:var(--text); outline:none; resize:vertical; min-height:88px;"></textarea>
+        </div>
+        <button type="button" id="esm-form-next-btn" class="esm-cta-btn" style="align-self:flex-start; padding:12px 28px;" data-vi="Tiếp theo →" data-en="Next →">Tiếp theo →</button>
+      </div>
+      <div id="esm-modal-step-2" style="display:none; flex-direction:column; gap:24px;">
+        <div style="display:flex; flex-direction:column; gap:8px;">
+          <h2 style="font-size:30px; line-height:1.2; letter-spacing:-0.02em;" data-vi="Xác nhận thông tin" data-en="Review your details">Xác nhận thông tin</h2>
+          <p style="margin:0; font-size:14px; line-height:1.6; color:var(--body);" data-vi="Vui lòng kiểm tra lại trước khi gửi yêu cầu." data-en="Please verify your information before submitting.">Vui lòng kiểm tra lại trước khi gửi yêu cầu.</p>
+        </div>
+        <div style="background:var(--card); border:1px solid var(--card-line); border-radius:20px; padding:12px 20px; display:flex; flex-direction:column;">
+          <div style="display:grid; grid-template-columns:120px 1fr; gap:12px; padding:12px 0; border-bottom:1px solid var(--hair);">
+            <span style="font-size:12px; font-weight:600; text-transform:uppercase; color:var(--tag);" data-vi="Họ tên" data-en="Name">Họ tên</span>
+            <span id="esm-rev-name" style="font-size:14px; color:var(--text); font-weight:500;">—</span>
+          </div>
+          <div style="display:grid; grid-template-columns:120px 1fr; gap:12px; padding:12px 0; border-bottom:1px solid var(--hair);">
+            <span style="font-size:12px; font-weight:600; text-transform:uppercase; color:var(--tag);">Email</span>
+            <span id="esm-rev-email" style="font-size:14px; color:var(--text); font-weight:500;">—</span>
+          </div>
+          <div style="display:grid; grid-template-columns:120px 1fr; gap:12px; padding:12px 0; border-bottom:1px solid var(--hair);">
+            <span style="font-size:12px; font-weight:600; text-transform:uppercase; color:var(--tag);" data-vi="Điện thoại" data-en="Phone">Điện thoại</span>
+            <span id="esm-rev-phone" style="font-size:14px; color:var(--text);">—</span>
+          </div>
+          <div style="display:grid; grid-template-columns:120px 1fr; gap:12px; padding:12px 0; border-bottom:1px solid var(--hair);">
+            <span style="font-size:12px; font-weight:600; text-transform:uppercase; color:var(--tag);" data-vi="Dịch vụ" data-en="Services">Dịch vụ</span>
+            <span id="esm-rev-services" style="font-size:14px; color:var(--text);">—</span>
+          </div>
+          <div style="display:grid; grid-template-columns:120px 1fr; gap:12px; padding:12px 0;">
+            <span style="font-size:12px; font-weight:600; text-transform:uppercase; color:var(--tag);" data-vi="Mô tả" data-en="Notes">Mô tả</span>
+            <span id="esm-rev-desc" style="font-size:14px; color:var(--body); line-height:1.5;">—</span>
+          </div>
+        </div>
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <button type="button" id="esm-form-prev-btn" style="border:1px solid var(--line); background:transparent; color:var(--text); border-radius:9999px; padding:11px 22px; font-size:14px; font-family:var(--font-body); font-weight:500; cursor:pointer;" data-vi="← Quay lại" data-en="← Back">← Quay lại</button>
+          <button type="button" id="esm-form-submit-btn" class="esm-cta-btn" style="padding:12px 28px;" data-vi="Gửi yêu cầu →" data-en="Submit →">Gửi yêu cầu →</button>
+        </div>
+      </div>
+      <div id="esm-modal-step-success" style="display:none; flex-direction:column; align-items:center; text-align:center; gap:14px; padding:36px 0; animation:esmSlideL .4s cubic-bezier(0.22,1,0.36,1);">
+        <div style="width:56px; height:56px; border-radius:9999px; background:var(--card); display:flex; align-items:center; justify-content:center; font-size:24px; color:var(--text);">✓</div>
+        <h2 style="font-size:30px; line-height:1.2; letter-spacing:-0.02em;" data-vi="Đã gửi thành công!" data-en="Request Sent Successfully!">Đã gửi thành công!</h2>
+        <p style="margin:0; font-size:15px; line-height:1.6; color:var(--body); max-width:380px;" data-vi="Cảm ơn bạn đã liên hệ với Esmery. Đội ngũ của chúng tôi sẽ xem xét và phản hồi qua email sớm nhất." data-en="Thank you for reaching out to Esmery. Our team will review your message and reply via email shortly.">Cảm ơn bạn đã liên hệ với Esmery. Đội ngũ của chúng tôi sẽ xem xét và phản hồi qua email sớm nhất.</p>
+        <button type="button" id="esm-form-done-btn" class="esm-cta-btn" style="margin-top:8px;" data-vi="Hoàn tất" data-en="Done">Hoàn tất</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+  <script>
+    /* =========================================================
+       CAMPAIGN DATA — exact match from Campaign.dc.html
+       ========================================================= */
+    var campaignData = [
+      {
+        name: "Don Cipriani's",
+        client: "Don Cipriani's Restaurant",
+        tagVi: 'Quảng cáo & Marketing',
+        tagEn: 'Ads & Marketing',
+        period: '2026',
+        img: 'images/campaign/587546969_122118594849020957_12653131538916922_n.jpg',
+        heroImg: 'images/campaign/DSC_7894.png',
+        heroPos: 'center 40%',
+        execImgs: [
+          'images/campaign/(P)Pizza Combo.jpg',
+          'images/campaign/(P)combo 670.jpg',
+          'images/campaign/588818404_122119701675020957_2465746379474069434_n.jpg',
+          'images/campaign/1787752267839_135796295198072742_6661159549201092917_6a1a9afc2d15835f45774066245617e9 (1).jpg'
+        ],
+        m: ['5.2x', '1.1M', '$3,800', '720', '5.8%', '2.4%', '+5,100'],
+        vi: [
+          'Xây dựng nhận diện thương hiệu cho nhà hàng Ý cao cấp.',
+          'Tăng nhận diện thương hiệu và lượng đặt bàn online.',
+          'Người yêu ẩm thực 25–45, thu nhập trung-cao.',
+          'Ẩm thực Ý ở Việt Nam thiếu sự tinh tế và bản sắc riêng.',
+          'Italian flare with an intriguing twist.',
+          'Hương vị Ý đích thực, phong cách không đâu có.',
+          'Phong cách cổ điển Ý, tông ấm, typography vintage sang trọng.'
+        ],
+        en: [
+          'Brand identity campaign for a premium Italian restaurant.',
+          'Increase brand awareness and online reservations.',
+          'Food lovers aged 25–45, mid-to-high income.',
+          'Italian dining in Vietnam lacks sophistication and identity.',
+          'Italian flare with an intriguing twist.',
+          'Authentic Italian flavor, style like nowhere else.',
+          'Classic Italian aesthetic, warm tones, elegant vintage typography.'
+        ]
+      },
+      {
+        name: 'Djirian · Sầu riêng Di Linh',
+        client: 'Djirian',
+        tagVi: 'Thương hiệu & Thiết kế',
+        tagEn: 'Branding & Design',
+        period: '2026',
+        img: 'images/campaign/1787754106058_4224458604903737060_4224458604903737060_70719ff0ecd4de033b5b23190ab9971d.jpg',
+        heroImg: 'images/campaign/1787754106058_4224458604903737060_4224458604903737060_70719ff0ecd4de033b5b23190ab9971d.jpg',
+        heroPos: 'center',
+        execImgs: [
+          'uploads/hình 2-26b23b52.png',
+          'uploads/hình 4-8eeb0f56.png',
+          'images/campaign/Djirian 2.png',
+          'images/campaign/Djirian 3.png',
+          'images/campaign/magnific_two-pairs-of-hands-passin_lJ7b0D3gv9.png',
+          'images/campaign/magnific_three-djirian-freezedried_rgluMJPxtc.png'
+        ],
+        m: ['—', '—', '—', '—', '—', '—', '—'],
+        vi: [
+          'Xây dựng thương hiệu toàn diện cho Djirian (sầu riêng sấy thăng hoa từ Di Linh, Lâm Đồng). Bao gồm thiết kế logo, bao bì, website và định vị thương hiệu để đưa sản phẩm ra thị trường quốc tế.',
+          'Định vị Djirian là thương hiệu sầu riêng sấy thăng hoa cao cấp, đủ tiêu chuẩn tham gia triển lãm quốc tế và thu hút khách hàng B2B, B2C toàn cầu.',
+          'Nhà nhập khẩu thực phẩm quốc tế, người tiêu dùng yêu trái cây sấy cao cấp.',
+          'Sầu riêng Việt Nam chưa có thương hiệu đủ mạnh để cạnh tranh trên thị trường xuất khẩu.',
+          'Vietnamese Freeze-Dried Durian, hương vị Di Linh vươn tầm thế giới.',
+          'Sầu riêng Di Linh, chất lượng quốc tế.',
+          'Nhận diện xanh tươi, hiện đại, gợi thiên nhiên cao nguyên, logo, bao bì và website đồng bộ.'
+        ],
+        en: [
+          'Full branding for Djirian · Freeze-dried durian from Di Linh, Lâm Đồng. Scope includes logo design, packaging, website and brand positioning to bring the product to international markets.',
+          'Position Djirian as a premium freeze-dried durian brand, qualified for international exhibitions and attracting global B2B and B2C customers.',
+          'International food importers, premium dried-fruit consumers.',
+          'Vietnamese durian lacks a strong enough brand to compete in the export market.',
+          'Vietnamese Freeze-Dried Durian, Di Linh flavor, world-class quality.',
+          'Di Linh durian, international standard.',
+          'Fresh green identity evoking highland nature with cohesive logo, packaging and website.'
+        ],
+        resultVi: [
+          'Đủ điều kiện tham dự triển lãm Hong Kong Trade Development Council.',
+          'Thu hút hàng ngàn khách hàng B2B, B2C từ các nước tới trải nghiệm sản phẩm.'
+        ],
+        resultEn: [
+          'Qualified to exhibit at the Hong Kong Trade Development Council exhibition.',
+          'Attracted thousands of B2B and B2C customers from multiple countries to experience the product.'
+        ]
+      },
+      {
+        name: 'Sena · Sữa hạt sen',
+        client: 'Sena Milk',
+        tagVi: 'Thương hiệu & Thiết kế',
+        tagEn: 'Branding & Design',
+        period: '2026',
+        img: 'images/campaign/Untitled design-36c24498.png',
+        heroImg: 'images/campaign/Untitled-11-c8c502e3.PNG',
+        heroPos: 'center',
+        execImgs: [
+          'images/campaign/Untitled-2-4f66ba89.PNG',
+          'images/campaign/Untitled-4-47bc831b.PNG',
+          'images/campaign/Untitled-7-deb2e368.PNG',
+          'images/campaign/Untitled-8-46a700d6.PNG',
+          'images/campaign/Untitled-6-5e66fb71.jpg',
+          'images/campaign/Untitled-10-44682352.jpg'
+        ],
+        m: ['—', '—', '—', '—', '—', '—', '—'],
+        vi: [
+          'Xây dựng thương hiệu toàn diện cho Sena (sữa hạt sen tự nhiên). Bao gồm thiết kế logo, bao bì, website và định vị thương hiệu trên thị trường đồ uống healthy.',
+          'Định vị Sena là thương hiệu sữa hạt sen cao cấp, tự nhiên, hướng đến sức khỏe và phong cách sống lành mạnh.',
+          'Người tiêu dùng quan tâm sức khỏe, phụ nữ 22–40 tuổi, yêu thích đồ uống plant-based.',
+          'Thị trường sữa hạt Việt Nam thiếu một thương hiệu sữa sen với nhận diện trẻ trung, hiện đại.',
+          'Sena, tinh túy từ hạt sen Việt Nam.',
+          'Thanh khiết từ thiên nhiên, tốt lành cho sức khỏe.',
+          'Tông hồng pastel nhẹ nhàng, typography tròn trịa vui tươi, logo, bao bì và website đồng bộ.'
+        ],
+        en: [
+          'Full branding for Sena · Natural lotus seed milk. Scope includes logo design, packaging, website and brand positioning in the healthy beverage market.',
+          'Position Sena as a premium, natural lotus seed milk brand focused on health and wellness lifestyle.',
+          'Health-conscious consumers, women aged 22–40, fans of plant-based beverages.',
+          "Vietnam's plant milk market lacks a lotus seed brand with a fresh, modern identity.",
+          'Sena, the essence of Vietnamese lotus seeds.',
+          'Pure from nature, good for your health.',
+          'Soft pastel pink tones, playful rounded typography, cohesive logo, packaging and website.'
+        ],
+        resultVi: [
+          'Hoàn thiện bộ nhận diện thương hiệu từ logo, bao bì đến website.',
+          'Sẵn sàng ra mắt thị trường với hình ảnh chuyên nghiệp và đồng bộ.'
+        ],
+        resultEn: [
+          'Completed full brand identity from logo, packaging to website.',
+          'Market-ready with a professional and cohesive brand image.'
+        ]
+      },
+      {
+        name: 'V-Senses Dining · Ẩm Thực Việt',
+        client: 'V-Senses Dining',
+        tagVi: 'Social & Marketing',
+        tagEn: 'Social & Marketing',
+        period: '3 tháng · 2026',
+        img: 'images/campaign/505891427_122117815784851700_4939427835230869475_n-3042d677.jpg',
+        heroImg: 'images/campaign/511024346_122121423248851700_7116131487730531724_n.jpg',
+        heroPos: 'center',
+        execImgs: [
+          'images/campaign/522616400_122127250682851700_4521065404759451277_n.jpg',
+          'images/campaign/511271470_122121185528851700_6795711131349615346_n.jpg',
+          'images/campaign/515439368_122123256686851700_8171676917137238030_n.jpg',
+          'images/campaign/516323680_122124339116851700_4251740690495979852_n.jpg',
+          'images/campaign/515436077_122124572852851700_9174222774614644495_n.jpg',
+          'images/campaign/518276138_122126145506851700_4427604629000733023_n.jpg'
+        ],
+        m: ['—', '1.2K', '—', '320', '8.5%', '3.1%', '+2,800'],
+        vi: [
+          'Đảm nhận Social Media & Marketing cho V-Senses Dining trong 3 tháng đầu tiên, giai đoạn xây dựng nền móng từ con số 0.',
+          'Xây dựng hình ảnh thương hiệu trên mạng xã hội, tăng trưởng organic followers và tương tác tự nhiên thông qua content chất lượng.',
+          'Thực khách yêu ẩm thực Việt đương đại, khách du lịch quốc tế, giới sành ăn 25–50.',
+          'Ẩm thực Việt đương đại cần một giọng nói riêng trên social media, tinh tế nhưng gần gũi.',
+          'Contemporary Authentic Vietnamese Cuisine, trải nghiệm Việt Nam qua từng giác quan.',
+          'Hương vị Việt đích thực, phong cách đương đại.',
+          'Hình ảnh ấm áp, tông vàng gold sang trọng, chụp món ăn close-up kết hợp không gian nhà hàng.'
+        ],
+        en: [
+          'Managed Social Media & Marketing for V-Senses Dining during the first 3 months, the foundation-building phase from scratch.',
+          'Build brand presence on social media, grow organic followers and engagement through quality content.',
+          'Contemporary Vietnamese cuisine lovers, international tourists, foodies aged 25–50.',
+          'Contemporary Vietnamese cuisine needs its own voice on social media, refined yet approachable.',
+          'Contemporary Authentic Vietnamese Cuisine, experience Vietnam through every sense.',
+          'Authentic Vietnamese flavor, contemporary style.',
+          'Warm imagery, luxurious gold tones, close-up food shots combined with restaurant ambiance.'
+        ],
+        resultVi: [
+          '+2,800 followers tăng trưởng tự nhiên trong 3 tháng.',
+          'Tỷ lệ tương tác trung bình 8.5%, cao hơn benchmark ngành F&B.',
+          'Hơn 320 lượt đặt bàn từ social media.',
+          'Xây dựng thành công nền tảng content và hình ảnh thương hiệu đồng bộ.'
+        ],
+        resultEn: [
+          '+2,800 organic followers gained in 3 months.',
+          'Average engagement rate of 8.5%, above F&B industry benchmark.',
+          'Over 320 reservations driven by social media.',
+          'Successfully built a cohesive content foundation and brand image.'
+        ]
+      }
+    ];
+
+    var tagsVi = ['Concept', 'Key visual', 'Social media', 'OOH & Digital', 'Video chiến dịch'];
+    var tagsEn = ['Concepts', 'Key visuals', 'Social media', 'OOH & Digital', 'Campaign video'];
+    var secHeadsVi = ['Bối cảnh', 'Mục tiêu', 'Đối tượng', 'Insight', 'Ý tưởng lớn', 'Thông điệp', 'Định hướng thị giác'];
+    var secHeadsEn = ['Background', 'Objective', 'Audience', 'Insight', 'Big idea', 'Key message', 'Visual direction'];
+    var metricLabelsVi = ['ROAS', 'Tiếp cận', 'Chi phí', 'Chuyển đổi', 'Tương tác', 'CTR', 'Follower mới'];
+    var metricLabelsEn = ['ROAS', 'Reach', 'Spend', 'Conversions', 'Engagement', 'CTR', 'New followers'];
+
+    function getLang() { return document.body.dataset.esmLang || 'vi'; }
+
+    /* ---- Render tags ---- */
+    function renderCampaignTags() {
+      var lang = getLang();
+      var tags = lang === 'vi' ? tagsVi : tagsEn;
+      var container = document.getElementById('esm-campaign-tags');
+      container.innerHTML = tags.map(function(t) {
+        return '<span style="font-size:14px; color:var(--tag);">' + t + '</span>';
+      }).join('');
+    }
+
+    /* ---- Render campaign list cards ---- */
+    function renderCampaignList() {
+      var lang = getLang();
+      var viewText = lang === 'vi' ? 'Xem chiến dịch' : 'View campaign';
+      var mLabels = lang === 'vi' ? metricLabelsVi : metricLabelsEn;
+      var list = document.getElementById('esm-campaign-list');
+
+      list.innerHTML = campaignData.map(function(p, i) {
+        var tag = lang === 'vi' ? p.tagVi : p.tagEn;
+        var hasCustomResults = !!p.resultVi;
+
+        // Build metrics HTML (only for campaigns without custom results)
+        var metricsHtml = '';
+        if (!hasCustomResults) {
+          metricsHtml = '<div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:18px 20px; border-top:1px solid var(--hair); padding-top:20px;">';
+          for (var j = 0; j < p.m.length; j++) {
+            metricsHtml += '<div style="display:flex; flex-direction:column; gap:2px;">' +
+              '<span style="font-size:19px; font-weight:600; color:var(--text); letter-spacing:-0.01em;">' + p.m[j] + '</span>' +
+              '<span style="font-size:12px; color:var(--tag);">' + mLabels[j] + '</span>' +
+            '</div>';
+          }
+          metricsHtml += '</div>';
+        }
+
+        // Build image side
+        var imgHtml = '';
+        if (p.img) {
+          imgHtml = '<img loading="lazy" decoding="async" src="' + p.img + '" style="width:100%; height:100%; object-fit:cover; object-position:center; position:absolute; inset:0;" alt="' + p.name + '">';
+        } else {
+          imgHtml = '<span style="font-size:12px; font-weight:500; color:var(--tag); letter-spacing:0.04em;">Key visual / Video</span>';
+        }
+
+        return '<button onclick="openCampaignDetail(' + i + ')" class="wwd-card" style="display:grid; grid-template-columns:1.05fr 1fr; align-items:stretch; border:1px solid var(--card-line); padding:0; cursor:pointer; border-radius:24px; overflow:hidden; background:var(--card); text-align:left; font-family:var(--font-body);">' +
+          '<div style="overflow:hidden; min-height:400px;">' +
+            '<div class="wwd-visual" style="height:100%; background:var(--deep); display:flex; align-items:center; justify-content:center; position:relative;">' +
+              imgHtml +
+            '</div>' +
+          '</div>' +
+          '<div style="padding:36px 40px; display:flex; flex-direction:column; gap:18px; justify-content:center;">' +
+            '<div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">' +
+              '<span style="font-size:12px; color:var(--tag);">' + tag + '</span>' +
+              '<span style="font-size:12px; color:var(--faint);">·</span>' +
+              '<span style="font-size:12px; color:var(--tag);">' + p.period + '</span>' +
+            '</div>' +
+            '<div style="display:flex; flex-direction:column; gap:6px;">' +
+              '<span style="font-family:var(--font-display); font-weight:400; font-size:32px; line-height:1.15; letter-spacing:-0.02em; color:var(--text);">' + p.name + '</span>' +
+              '<span style="font-size:14px; color:var(--body);">' + p.client + '</span>' +
+            '</div>' +
+            metricsHtml +
+            '<span class="wwd-cta" style="font-size:14px; color:var(--text);">' + viewText + ' →</span>' +
+          '</div>' +
+        '</button>';
+      }).join('');
+    }
+
+    /* ---- Open campaign detail modal ---- */
+    function openCampaignDetail(idx) {
+      var p = campaignData[idx];
+      var lang = getLang();
+      var tag = lang === 'vi' ? p.tagVi : p.tagEn;
+      var heads = lang === 'vi' ? secHeadsVi : secHeadsEn;
+      var texts = lang === 'vi' ? p.vi : p.en;
+
+      document.getElementById('esm-cmodal-tag').textContent = tag + ' · ' + p.client;
+      document.getElementById('esm-cmodal-title').textContent = p.name;
+
+      // Hero image
+      var heroContainer = document.getElementById('esm-cmodal-hero');
+      if (p.heroImg) {
+        heroContainer.innerHTML = '<div style="height:320px; background:var(--deep); border-radius:12px; overflow:hidden; display:flex; align-items:center; justify-content:center; position:relative;">' +
+          '<img loading="lazy" decoding="async" onclick="openLightbox(\'' + p.heroImg + '\')" src="' + p.heroImg + '" alt="' + p.name + '" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:' + p.heroPos + '; border-radius:12px; cursor:zoom-in;">' +
+        '</div>';
+      } else {
+        heroContainer.innerHTML = '<div style="height:320px; background:var(--deep); border-radius:12px; display:flex; align-items:center; justify-content:center;">' +
+          '<span style="font-size:12px; font-weight:500; color:var(--tag); letter-spacing:0.04em;">Campaign hero visual</span>' +
+        '</div>';
+      }
+
+      // Content sections (7 sections)
+      var sectionsContainer = document.getElementById('esm-cmodal-sections');
+      sectionsContainer.innerHTML = heads.map(function(h, i) {
+        return '<div style="display:grid; grid-template-columns:220px 1fr; gap:24px;">' +
+          '<span style="font-size:13px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--tag);">' + h + '</span>' +
+          '<p style="margin:0; font-size:15px; line-height:1.6; color:var(--body); text-wrap:pretty;">' + texts[i] + '</p>' +
+        '</div>';
+      }).join('');
+
+      // Execution images
+      var execContainer = document.getElementById('esm-cmodal-exec');
+      if (p.execImgs && p.execImgs.length) {
+        execContainer.innerHTML = p.execImgs.map(function(src) {
+          return '<div onclick="openLightbox(\'' + src + '\')" style="height:200px; background:var(--deep); border-radius:12px; overflow:hidden; cursor:zoom-in;">' +
+            '<img loading="lazy" decoding="async" src="' + src + '" alt="" style="width:100%; height:100%; object-fit:cover;">' +
+          '</div>';
+        }).join('');
+      } else {
+        execContainer.innerHTML =
+          '<div style="height:160px; background:var(--deep); border-radius:12px; display:flex; align-items:center; justify-content:center;"><span style="font-size:12px; color:var(--tag);">Social</span></div>' +
+          '<div style="height:160px; background:var(--deep); border-radius:12px; display:flex; align-items:center; justify-content:center;"><span style="font-size:12px; color:var(--tag);">OOH</span></div>' +
+          '<div style="height:160px; background:var(--deep); border-radius:12px; display:flex; align-items:center; justify-content:center;"><span style="font-size:12px; color:var(--tag);">Video</span></div>';
+      }
+
+      // Results section
+      var resultsContainer = document.getElementById('esm-cmodal-results');
+      var hasCustomResults = !!p.resultVi;
+      if (hasCustomResults) {
+        var results = lang === 'vi' ? p.resultVi : p.resultEn;
+        resultsContainer.innerHTML = '<div style="display:flex; flex-direction:column; gap:10px;">' +
+          results.map(function(r) {
+            return '<p style="margin:0; font-size:15px; line-height:1.6; color:var(--body); text-wrap:pretty;">' + r + '</p>';
+          }).join('') +
+        '</div>';
+      } else {
+        var mLabels = lang === 'vi' ? metricLabelsVi : metricLabelsEn;
+        resultsContainer.innerHTML = '<div style="display:flex; gap:32px; flex-wrap:wrap;">' +
+          p.m.map(function(v, j) {
+            return '<div style="display:flex; flex-direction:column; gap:4px;">' +
+              '<span style="font-size:24px; font-weight:600; color:var(--text);">' + v + '</span>' +
+              '<span style="font-size:13px; color:var(--tag);">' + mLabels[j] + '</span>' +
+            '</div>';
+          }).join('') +
+        '</div>';
+      }
+
+      document.getElementById('esm-campaign-modal').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeCampaignDetail() {
+      document.getElementById('esm-campaign-modal').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    function openLightbox(src) {
+      var lb = document.getElementById('esm-lightbox');
+      document.getElementById('esm-lightbox-img').src = src;
+      lb.style.display = 'flex';
+      if (event) event.stopPropagation();
+    }
+
+    function closeLightbox() {
+      document.getElementById('esm-lightbox').style.display = 'none';
+    }
+
+    // Initial render
+    renderCampaignTags();
+    renderCampaignList();
+
+    // Re-render on language change
+    document.addEventListener('langChanged', function() {
+      renderCampaignTags();
+      renderCampaignList();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Inter:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;1,8..60,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.cdnfonts.com/css/redaction" rel="stylesheet">
+  <style>
+    @keyframes esmFade { from { opacity:0 } to { opacity:1 } }
+    @keyframes esmSlideL { from { opacity:0; transform:translateX(20px) } to { opacity:1; transform:translateX(0) } }
+    @keyframes esmSlideR { from { opacity:0; transform:translateX(-20px) } to { opacity:1; transform:translateX(0) } }
+    input::placeholder, textarea::placeholder { color: var(--faint); }
+    @media (max-width: 640px) { .esm-modal-card { padding: 24px !important; } }
+    body { --bg:#ffffff; --card:#f2f2f3; --deep:#e4e4e5; --text:#17191c; --body:#777b86; --tag:#979799; --faint:#a3a6af; --line:#17191c; --card-line:transparent; --hair:#ececec; --btn-bg:#17191c; --btn-text:#ffffff; --btn-hover:#000000; --backdrop:rgba(23,25,28,0.45); --modal-bg:#ffffff; --modal-line:transparent; --font-display:'Source Serif 4', serif; --font-body:'Inter', ui-sans-serif, system-ui, sans-serif; --shadow-artifact:0 0 0 1px rgba(4,23,43,0.05), 0 20px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.1); --error:#b44233; --ghost-r:9999px; }
+    body[data-esm-theme="dark"] { --bg:#000000; --card:#191919; --deep:#303030; --text:#eeeeee; --body:#b4b4b4; --tag:#7b7b7b; --faint:#606060; --line:#b4b4b4; --card-line:#b4b4b4; --hair:#303030; --btn-bg:#eeeeee; --btn-text:#050505; --btn-hover:#ffffff; --backdrop:rgba(0,0,0,0.82); --modal-bg:#191919; --modal-line:#b4b4b4; --font-display:'Redaction 10', serif; --font-body:'Geist', sans-serif; --shadow-artifact:none; --error:#e06050; --ghost-r:10px; }
+  </style>
+</helmet>
+
+<div onClick="{{ onClose }}" style="position:fixed; inset:0; z-index:100; background:var(--backdrop); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); overflow-y:auto; padding:48px 20px; display:flex; justify-content:center; animation:esmFade .2s ease;">
+  <div onClick="{{ stopProp }}" class="esm-modal-card" style="background:var(--modal-bg); border:1px solid var(--modal-line); border-radius:24px; max-width:600px; width:100%; padding:40px; box-shadow:var(--shadow-artifact); align-self:flex-start; overflow:hidden;">
+
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:28px;">
+      <div style="display:flex; gap:20px;">
+        <span style="font-size:12px; font-weight:600; letter-spacing:0.04em; color:{{ ind1Color }}; transition:color .3s ease;">01 — {{ t.step1Label }}</span>
+        <span style="font-size:12px; font-weight:600; letter-spacing:0.04em; color:{{ ind2Color }}; transition:color .3s ease;">02 — {{ t.step2Label }}</span>
+      </div>
+      <button onClick="{{ onClose }}" aria-label="Close" style="border:1px solid var(--line); background:transparent; color:var(--text); border-radius:9999px; width:36px; height:36px; cursor:pointer; font-size:15px; display:flex; align-items:center; justify-content:center; font-family:var(--font-body); padding:0; flex:none;" style-hover="opacity:0.7;">✕</button>
+    </div>
+
+    <!-- STEP 1: Info -->
+    <sc-if value="{{ step0 }}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex; flex-direction:column; gap:26px; animation:{{ stepAnim }};">
+        <div style="display:flex; flex-direction:column; gap:8px;">
+          <h2 style="margin:0; font-family:var(--font-display); font-weight:400; font-size:30px; line-height:1.2; letter-spacing:-0.02em; color:var(--text); text-wrap:balance;">{{ t.s1Title }}</h2>
+          <p style="margin:0; font-size:14px; line-height:1.6; color:var(--body);">{{ t.s1Sub }}</p>
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
+          <div style="display:flex; flex-direction:column; gap:5px; grid-column:1 / -1;">
+            <span style="font-size:13px; font-weight:500; color:var(--text);">{{ t.nameLabel }} *</span>
+            <input type="text" value="{{ formName }}" onChange="{{ onNameChange }}" placeholder="{{ t.namePH }}" style="width:100%; box-sizing:border-box; background:var(--card); border:1px solid {{ nameBorder }}; border-radius:16px; padding:12px 14px; font-size:14px; font-family:var(--font-body); color:var(--text); outline:none;" style-focus="border-color:var(--line); box-shadow:0 0 0 3px rgba(128,128,128,0.08);" />
+            <sc-if value="{{ nameError }}" hint-placeholder-val="{{ false }}">
+              <span style="font-size:12px; color:var(--error);">{{ t.errName }}</span>
+            </sc-if>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:5px;">
+            <span style="font-size:13px; font-weight:500; color:var(--text);">Email *</span>
+            <input type="email" value="{{ formEmail }}" onChange="{{ onEmailChange }}" placeholder="you@example.com" style="width:100%; box-sizing:border-box; background:var(--card); border:1px solid {{ emailBorder }}; border-radius:16px; padding:12px 14px; font-size:14px; font-family:var(--font-body); color:var(--text); outline:none;" style-focus="border-color:var(--line); box-shadow:0 0 0 3px rgba(128,128,128,0.08);" />
+            <sc-if value="{{ emailError }}" hint-placeholder-val="{{ false }}">
+              <span style="font-size:12px; color:var(--error);">{{ t.errEmail }}</span>
+            </sc-if>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:5px;">
+            <div style="display:flex; align-items:baseline; gap:5px;">
+              <span style="font-size:13px; font-weight:500; color:var(--text);">{{ t.phoneLabel }}</span>
+              <span style="font-size:11px; color:var(--faint);">{{ t.optional }}</span>
+            </div>
+            <input type="tel" value="{{ formPhone }}" onChange="{{ onPhoneChange }}" placeholder="+84 ..." style="width:100%; box-sizing:border-box; background:var(--card); border:1px solid var(--hair); border-radius:16px; padding:12px 14px; font-size:14px; font-family:var(--font-body); color:var(--text); outline:none;" style-focus="border-color:var(--line); box-shadow:0 0 0 3px rgba(128,128,128,0.08);" />
+          </div>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          <span style="font-size:13px; font-weight:500; color:var(--text);">{{ t.svcLabel }}</span>
+          <div style="display:flex; flex-wrap:wrap; gap:6px;">
+            <sc-for list="{{ serviceChips }}" as="svc" hint-placeholder-count="7">
+              <button onClick="{{ svc.toggle }}" style="border:1px solid {{ svc.border }}; background:{{ svc.bg }}; color:{{ svc.color }}; border-radius:9999px; padding:8px 16px; min-height:36px; font-size:13px; font-family:var(--font-body); font-weight:500; cursor:pointer; transition:all .15s ease;" style-hover="opacity:0.8;">{{ svc.label }}</button>
+            </sc-for>
+          </div>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:8px;">
+          <div style="display:flex; align-items:baseline; gap:5px;">
+            <span style="font-size:13px; font-weight:500; color:var(--text);">{{ t.descLabel }}</span>
+            <span style="font-size:11px; color:var(--faint);">{{ t.optional }}</span>
+          </div>
+          <textarea value="{{ formDesc }}" onChange="{{ onDescChange }}" placeholder="{{ t.descPH }}" style="width:100%; box-sizing:border-box; background:var(--card); border:1px solid var(--hair); border-radius:16px; padding:12px 14px; font-size:14px; font-family:var(--font-body); color:var(--text); outline:none; resize:vertical; min-height:88px;" style-focus="border-color:var(--line); box-shadow:0 0 0 3px rgba(128,128,128,0.08);"></textarea>
+        </div>
+        <button onClick="{{ nextStep }}" style="align-self:flex-start; border:none; background:var(--btn-bg); color:var(--btn-text); border-radius:9999px; padding:12px 28px; min-height:44px; font-size:14px; font-family:var(--font-body); font-weight:600; cursor:pointer; transition:background .15s ease;" style-hover="background:var(--btn-hover);">{{ t.next }} →</button>
+      </div>
+    </sc-if>
+
+    <!-- STEP 2: Confirm -->
+    <sc-if value="{{ step1 }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex; flex-direction:column; gap:26px; animation:{{ stepAnim }};">
+        <div style="display:flex; flex-direction:column; gap:8px;">
+          <h2 style="margin:0; font-family:var(--font-display); font-weight:400; font-size:30px; line-height:1.2; letter-spacing:-0.02em; color:var(--text);">{{ t.s2Title }}</h2>
+          <p style="margin:0; font-size:14px; line-height:1.6; color:var(--body);">{{ t.s2Sub }}</p>
+        </div>
+        <div style="background:var(--card); border:1px solid var(--card-line); border-radius:20px; padding:8px 20px; display:flex; flex-direction:column;">
+          <sc-for list="{{ reviewItems }}" as="ri" hint-placeholder-count="5">
+            <div style="display:grid; grid-template-columns:120px 1fr; gap:12px; padding:13px 0; border-bottom:1px solid {{ ri.rule }};">
+              <span style="font-size:12px; font-weight:600; letter-spacing:0.04em; text-transform:uppercase; color:var(--tag);">{{ ri.label }}</span>
+              <span style="font-size:14px; color:var(--text); line-height:1.5; word-break:break-word;">{{ ri.value }}</span>
+            </div>
+          </sc-for>
+        </div>
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <button onClick="{{ prevStep }}" style="border:1px solid var(--line); background:transparent; color:var(--text); border-radius:9999px; padding:11px 22px; min-height:44px; font-size:14px; font-family:var(--font-body); font-weight:500; cursor:pointer;" style-hover="opacity:0.75;">← {{ t.back }}</button>
+          <button onClick="{{ submitForm }}" style="border:none; background:var(--btn-bg); color:var(--btn-text); border-radius:9999px; padding:12px 28px; min-height:44px; font-size:14px; font-family:var(--font-body); font-weight:600; cursor:pointer; transition:background .15s ease;" style-hover="background:var(--btn-hover);">{{ t.submit }} →</button>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- SUCCESS (within step 2) -->
+    <sc-if value="{{ step2 }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex; flex-direction:column; align-items:center; text-align:center; gap:14px; padding:36px 0; animation:esmSlideL .4s cubic-bezier(0.22,1,0.36,1);">
+        <div style="width:56px; height:56px; border-radius:9999px; background:var(--card); display:flex; align-items:center; justify-content:center; font-size:24px; color:var(--text);">✓</div>
+        <h2 style="margin:0; font-family:var(--font-display); font-weight:400; font-size:30px; line-height:1.2; letter-spacing:-0.02em; color:var(--text);">{{ t.successTitle }}</h2>
+        <p style="margin:0; font-size:15px; line-height:1.6; color:var(--body); max-width:380px; text-wrap:pretty;">{{ t.successBody }}</p>
+        <button onClick="{{ onClose }}" style="margin-top:8px; border:none; background:var(--btn-bg); color:var(--btn-text); border-radius:9999px; padding:12px 24px; min-height:44px; font-size:14px; font-family:var(--font-body); font-weight:600; cursor:pointer;" style-hover="background:var(--btn-hover);">{{ t.done }}</button>
+      </div>
+    </sc-if>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:800,&quot;height&quot;:720},&quot;lang&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;vi&quot;,&quot;options&quot;:[&quot;vi&quot;,&quot;en&quot;],&quot;tsType&quot;:&quot;'vi' | 'en'&quot;},&quot;onClose&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;() =&gt; void&quot;}}">
+class Component extends DCLogic {
+  state = {
+    step: 0, dir: 1,
+    form: { name: '', email: '', phone: '', services: [], description: '' },
+    errors: {}
+  };
+
+  componentDidMount() {
+    this._prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    this._onKey = (e) => { if (e.key === 'Escape') this.props.onClose?.(); };
+    window.addEventListener('keydown', this._onKey);
+  }
+
+  componentWillUnmount() {
+    document.body.style.overflow = this._prevOverflow || '';
+    window.removeEventListener('keydown', this._onKey);
+  }
+
+  renderVals() {
+    const { step, dir, form, errors } = this.state;
+    const lang = this.props.lang ?? 'vi';
+    const vi = lang === 'vi';
+
+    const SERVICES = ['Branding', 'Website', 'UI/UX', 'Packaging', 'Marketing', 'AI / Automation', vi ? 'Khác' : 'Other'];
+    const chip = (sel) => ({ bg: sel ? 'var(--btn-bg)' : 'transparent', color: sel ? 'var(--btn-text)' : 'var(--text)', border: sel ? 'var(--btn-bg)' : 'var(--hair)' });
+    const serviceChips = SERVICES.map((label, i) => {
+      const sel = form.services.includes(i);
+      return { label, ...chip(sel), toggle: () => this.setState(s => ({ form: { ...s.form, services: sel ? s.form.services.filter(x => x !== i) : [...s.form.services, i] } })) };
+    });
+
+    const t = {
+      step1Label: vi ? 'Thông tin' : 'Info',
+      step2Label: vi ? 'Xác nhận' : 'Confirm',
+      s1Title: vi ? 'Hãy nói về dự án của bạn.' : "Let's talk about your project.",
+      s1Sub: vi ? 'Điền thông tin để chúng tôi có thể liên hệ và trao đổi cùng bạn.' : 'Fill in your details so we can reach out and talk it through.',
+      s2Title: vi ? 'Xác nhận thông tin' : 'Confirm your details',
+      s2Sub: vi ? 'Kiểm tra lại thông tin trước khi gửi.' : 'Review your information before sending.',
+      nameLabel: vi ? 'Họ và tên' : 'Full name', namePH: vi ? 'Tên của bạn' : 'Your name',
+      phoneLabel: vi ? 'Số điện thoại' : 'Phone',
+      svcLabel: vi ? 'Bạn quan tâm đến dịch vụ nào?' : 'What services are you interested in?',
+      descLabel: vi ? 'Bạn muốn xây dựng gì?' : 'What are you looking to build?',
+      descPH: vi ? 'Mô tả ngắn về dự án hoặc ý tưởng của bạn...' : 'A short description of your project or idea...',
+      optional: vi ? '(tùy chọn)' : '(optional)',
+      next: vi ? 'Tiếp tục' : 'Continue',
+      back: vi ? 'Quay lại' : 'Back',
+      submit: vi ? 'Gửi yêu cầu' : 'Send request',
+      errName: vi ? 'Vui lòng nhập tên.' : 'Please enter your name.',
+      errEmail: vi ? 'Vui lòng nhập email hợp lệ.' : 'Please enter a valid email.',
+      r_name: vi ? 'Họ và tên' : 'Name', r_phone: vi ? 'Số điện thoại' : 'Phone',
+      r_svc: vi ? 'Dịch vụ' : 'Services', r_proj: vi ? 'Dự án' : 'Project',
+      successTitle: vi ? 'Cảm ơn bạn.' : 'Thank you.',
+      successBody: vi ? 'Chúng tôi đã nhận được thông tin và sẽ liên hệ với bạn sớm.' : "We've received your details and will be in touch soon.",
+      done: vi ? 'Đóng' : 'Done'
+    };
+
+    const dash = '—';
+    const rows = [
+      { label: t.r_name, value: form.name || dash },
+      { label: 'Email', value: form.email || dash },
+      { label: t.r_phone, value: form.phone || dash },
+      { label: t.r_svc, value: form.services.length ? form.services.map(i => SERVICES[i]).join(', ') : dash },
+      { label: t.r_proj, value: form.description || dash }
+    ];
+    const reviewItems = rows.map((r, i) => ({ ...r, rule: i === rows.length - 1 ? 'transparent' : 'var(--hair)' }));
+
+    const scrollTop = () => setTimeout(() => { const el = document.querySelector('.esm-modal-card'); if (el && el.parentElement) el.parentElement.scrollTop = 0; }, 50);
+
+    return {
+      t, serviceChips, reviewItems,
+      step0: step === 0, step1: step === 1, step2: step === 2,
+      ind1Color: step === 0 ? 'var(--text)' : 'var(--tag)',
+      ind2Color: step >= 1 ? 'var(--text)' : 'var(--faint)',
+      stepAnim: (dir === 1 ? 'esmSlideL' : 'esmSlideR') + ' .4s cubic-bezier(0.22,1,0.36,1)',
+      formName: form.name, formEmail: form.email, formPhone: form.phone, formDesc: form.description,
+      nameBorder: errors.name ? 'var(--error)' : 'var(--hair)',
+      emailBorder: errors.email ? 'var(--error)' : 'var(--hair)',
+      nameError: !!errors.name, emailError: !!errors.email,
+      onNameChange: (e) => this.setState(s => ({ form: { ...s.form, name: e.target.value }, errors: { ...s.errors, name: undefined } })),
+      onEmailChange: (e) => this.setState(s => ({ form: { ...s.form, email: e.target.value }, errors: { ...s.errors, email: undefined } })),
+      onPhoneChange: (e) => this.setState(s => ({ form: { ...s.form, phone: e.target.value } })),
+      onDescChange: (e) => this.setState(s => ({ form: { ...s.form, description: e.target.value } })),
+      nextStep: () => {
+        const err = {};
+        if (!form.name.trim()) err.name = true;
+        if (!form.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())) err.email = true;
+        if (Object.keys(err).length) { this.setState({ errors: err }); return; }
+        this.setState({ step: 1, dir: 1, errors: {} }); scrollTop();
+      },
+      prevStep: () => { this.setState({ step: 0, dir: -1, errors: {} }); scrollTop(); },
+      submitForm: () => { this.setState({ step: 2, dir: 1 }); scrollTop(); },
+      onClose: () => this.props.onClose?.(),
+      stopProp: (e) => e.stopPropagation()
+    };
+  }
+}
+</script>
+</body>
+</html>

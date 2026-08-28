@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Inter:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;1,8..60,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.cdnfonts.com/css/redaction" rel="stylesheet">
+  <style>
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: var(--bg); color: var(--body); font-family: var(--font-body); }
+    a { color: var(--tag); text-decoration: none; transition: color .18s ease; }
+    a:hover { color: var(--text); }
+    ::selection { background: var(--deep); color: var(--text); }
+    button:focus-visible, a:focus-visible { outline: 1px solid var(--line); outline-offset: 3px; }
+    @keyframes esmFade { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes esmPulse { 0%, 100% { opacity: 0.35; } 50% { opacity: 1; } }
+      body { --bg:#ffffff; --logo-filter:none; --card:#f2f2f3; --deep:#e4e4e5; --text:#17191c; --body:#777b86; --tag:#979799; --faint:#a3a6af; --line:#17191c; --card-line:transparent; --hair:#ececec; --grad:rgba(255,255,255,0.9); --btn-bg:#17191c; --btn-text:#ffffff; --btn-hover:#000000; --ghost-r:9999px; --nav-bg:rgba(255,255,255,0.8); --backdrop:rgba(23,25,28,0.45); --modal-bg:#ffffff; --modal-line:transparent; --footer-line:#ececec; --footer-bg:#fafafb; --font-display:'Source Serif 4', serif; --font-display-em:'Source Serif 4', serif; --font-body:'Inter', ui-sans-serif, system-ui, sans-serif; --shadow-artifact:0 0 0 1px rgba(4,23,43,0.05), 0 20px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.1); --spark-a:#5d2a1a; --chart-a:#a3a6af; --chart-b:#5d2a1a; --delta:#5d2a1a; --pill-line:#979799; --pill-text:#17191c; }
+    body[data-esm-theme="dark"] { --bg:#000000; --logo-filter:invert(1); --card:#191919; --deep:#303030; --text:#eeeeee; --body:#b4b4b4; --tag:#7b7b7b; --faint:#606060; --line:#b4b4b4; --card-line:#b4b4b4; --hair:#303030; --grad:rgba(0,0,0,0.72); --btn-bg:#eeeeee; --btn-text:#050505; --btn-hover:#ffffff; --ghost-r:10px; --nav-bg:rgba(0,0,0,0.65); --backdrop:rgba(0,0,0,0.82); --modal-bg:#191919; --modal-line:#b4b4b4; --footer-line:#606060; --footer-bg:transparent; --font-display:'Redaction 10', serif; --font-display-em:'Redaction 50', serif; --font-body:'Geist', sans-serif; --shadow-artifact:none; --spark-a:#fbe1d1; --chart-a:#b4b4b4; --chart-b:#fbe1d1; --delta:#fbe1d1; --pill-line:#b4b4b4; --pill-text:#b4b4b4; }
+    @keyframes esm-liq-en { 0% { transform: translateX(0) scaleX(1) scaleY(1); } 28% { transform: translateX(9px) scaleX(1.42) scaleY(0.90); } 62% { transform: translateX(40px) scaleX(1.22) scaleY(0.93); } 86% { transform: translateX(46px) scaleX(0.965) scaleY(1.015); } 100% { transform: translateX(46px) scaleX(1) scaleY(1); } }
+    @keyframes esm-liq-vi { 0% { transform: translateX(46px) scaleX(1) scaleY(1); } 28% { transform: translateX(37px) scaleX(1.42) scaleY(0.90); } 62% { transform: translateX(6px) scaleX(1.22) scaleY(0.93); } 86% { transform: translateX(0) scaleX(0.965) scaleY(1.015); } 100% { transform: translateX(0) scaleX(1) scaleY(1); } }
+  </style>
+</helmet>
+
+<nav style="position:sticky; top:0; z-index:50; background:var(--nav-bg); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);">
+  <div style="max-width:1280px; margin:0 auto; height:72px; padding:0 32px; display:grid; grid-template-columns:1fr auto 1fr; align-items:center; gap:24px;">
+    <a href="Home.dc.html" style="display:inline-flex; align-items:center;"><img src="uploads/bf517465-2789-4e72-8f3b-91faeedda607.png" alt="Esmery" style="height:32px; width:auto; filter:var(--logo-filter);"></a>
+    <button onClick="{{ toggleTheme }}" aria-label="Toggle theme" style="border:1px solid var(--line); background:transparent; color:var(--text); border-radius:9999px; width:34px; height:34px; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; font-size:14px; font-family:var(--font-body); padding:0; justify-self:center;">{{ themeIcon }}</button>
+    <div style="display:flex; align-items:center; gap:12px; justify-self:end;">
+      <button onClick="{{ toggleLang }}" aria-label="{{ langToggleLabel }}" style="position:relative; display:flex; align-items:center; border:1px solid var(--line); border-radius:9999px; padding:2px; gap:2px; background:transparent; cursor:pointer; transition:border-color .25s ease, background-color .25s ease;" style-hover="border-color:var(--text); background:var(--card);">
+        <span aria-hidden="true" style="position:absolute; top:2px; bottom:2px; left:2px; width:44px; border-radius:9999px; background:var(--btn-bg); transform:{{ blobTransform }}; animation:{{ blobAnim }}; will-change:transform; pointer-events:none;"></span>
+        <span style="position:relative; z-index:1; font-family:var(--font-body); font-size:12px; font-weight:600; width:44px; padding:5px 0; text-align:center; border-radius:9999px; color:{{ viColor }}; transition:color .35s ease .1s;">VI</span>
+        <span style="position:relative; z-index:1; font-family:var(--font-body); font-size:12px; font-weight:600; width:44px; padding:5px 0; text-align:center; border-radius:9999px; color:{{ enColor }}; transition:color .35s ease .1s;">EN</span>
+      </button>
+      <a href="Home.dc.html#contact" style="display:inline-flex; align-items:center; font-size:14px; font-weight:600; color:var(--btn-text); background:var(--btn-bg); border-radius:9999px; padding:10px 20px; min-width:118px; justify-content:center;" style-hover="background:var(--btn-hover);">{{ t.ctaGhost }}</a>
+    </div>
+  </div>
+</nav>
+
+<main style="max-width:1280px; margin:0 auto; padding:64px 32px 80px; display:flex; flex-direction:column; gap:48px;">
+  <header data-screen-label="Automation hero" style="display:flex; flex-direction:column; gap:16px;">
+    <a href="Home.dc.html#projects" style="font-size:14px;">← {{ t.back }}</a>
+    <h1 style="margin:0; font-family:var(--font-display); font-weight:400; font-size:56px; line-height:1.1; letter-spacing:-0.036em; color:var(--text); max-width:720px; min-height:2.2em;">{{ t.titlePre }} <em style="font-family:var(--font-display-em); font-style:italic; font-weight:400;">{{ t.titleEm }}</em></h1>
+    <p style="margin:0; font-size:16px; line-height:1.6; color:var(--body); max-width:520px; min-height:3.2em; text-wrap:pretty;">{{ t.sub }}</p>
+    <div style="display:flex; align-items:center; gap:24px; flex-wrap:wrap; margin-top:8px;">
+      <sc-for list="{{ tags }}" as="tag" hint-placeholder-count="5">
+        <span style="font-size:14px; color:var(--tag);">{{ tag }}</span>
+      </sc-for>
+    </div>
+  </header>
+
+  <section data-screen-label="Automation systems" style="display:flex; flex-direction:column; gap:24px;">
+    <sc-for list="{{ systems }}" as="sys" hint-placeholder-count="4">
+      <article style="background:var(--card); border:1px solid var(--hair); border-radius:24px; padding:32px; display:flex; flex-direction:column; gap:24px;">
+        <div style="display:flex; justify-content:space-between; align-items:baseline; gap:24px; flex-wrap:wrap;">
+          <div style="display:flex; align-items:baseline; gap:16px;">
+            <span style="font-size:14px; font-weight:600; color:var(--tag);">{{ sys.num }}</span>
+            <h3 style="margin:0; font-size:22px; font-weight:600; color:var(--text); letter-spacing:-0.01em;">{{ sys.name }}</h3>
+          </div>
+          <span style="font-size:13px; color:var(--tag);">{{ sys.metric }}</span>
+        </div>
+        <div style="display:grid; grid-template-columns:1fr auto 1fr auto 1fr auto 1fr; gap:12px; align-items:stretch;">
+          <div style="background:var(--deep); border-radius:16px; padding:20px; display:flex; flex-direction:column; gap:6px;">
+            <span style="font-size:11px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--faint);">{{ t.step1 }}</span>
+            <span style="font-size:14px; line-height:1.5; min-height:6em; color:var(--body);">{{ sys.problem }}</span>
+          </div>
+          <span style="align-self:center; color:var(--faint); font-size:16px; animation:esmPulse 2.4s ease-in-out infinite;">→</span>
+          <div style="background:var(--deep); border-radius:16px; padding:20px; display:flex; flex-direction:column; gap:6px;">
+            <span style="font-size:11px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--faint);">{{ t.step2 }}</span>
+            <span style="font-size:14px; line-height:1.5; min-height:6em; color:var(--body);">{{ sys.workflow }}</span>
+          </div>
+          <span style="align-self:center; color:var(--faint); font-size:16px; animation:esmPulse 2.4s ease-in-out infinite; animation-delay:.4s;">→</span>
+          <div style="background:var(--deep); border-radius:16px; padding:20px; display:flex; flex-direction:column; gap:6px;">
+            <span style="font-size:11px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--faint);">{{ t.step3 }}</span>
+            <span style="font-size:14px; line-height:1.5; min-height:6em; color:var(--body);">{{ sys.automation }}</span>
+          </div>
+          <span style="align-self:center; color:var(--faint); font-size:16px; animation:esmPulse 2.4s ease-in-out infinite; animation-delay:.8s;">→</span>
+          <div style="background:var(--deep); border:1px solid var(--line); border-radius:16px; padding:20px; display:flex; flex-direction:column; gap:6px;">
+            <span style="font-size:11px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--body);">{{ t.step4 }}</span>
+            <span style="font-size:14px; line-height:1.5; min-height:6em; color:var(--text);">{{ sys.result }}</span>
+          </div>
+        </div>
+        <div style="height:180px; background:var(--deep); border-radius:12px; display:flex; align-items:center; justify-content:center;">
+          <span style="font-size:12px; font-weight:500; color:var(--tag); letter-spacing:0.04em;">{{ sys.placeholder }}</span>
+        </div>
+      </article>
+    </sc-for>
+  </section>
+</main>
+
+<footer data-screen-label="Footer" style="border-top:1px solid var(--footer-line); background:var(--footer-bg);">
+  <div style="max-width:1280px; margin:0 auto; padding:64px 32px 40px; display:grid; grid-template-columns:2fr 1fr 1fr; gap:48px;">
+    <div style="display:flex; flex-direction:column; gap:16px;">
+      <img src="uploads/bf517465-2789-4e72-8f3b-91faeedda607.png" alt="Esmery" style="height:85px; width:509px; max-width:100%; object-fit:contain; object-position:left; filter:var(--logo-filter);">
+      <p style="margin:0; font-size:14px; line-height:1.6; color:var(--tag); max-width:300px; min-height:3.2em; text-wrap:pretty;">{{ t.footerTagline }}</p>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:12px;">
+      <span style="font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--faint);">{{ t.footerLinksTitle }}</span>
+      <sc-for list="{{ navLinks }}" as="lnk" hint-placeholder-count="5">
+        <a href="{{ lnk.href }}" style="font-size:14px;">{{ lnk.label }}</a>
+      </sc-for>
+    </div>
+
+    <div style="display:flex; flex-direction:column; gap:12px;">
+      <span style="font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--faint);">{{ t.footerSocialTitle }}</span>
+      <sc-for list="{{ socials }}" as="s" hint-placeholder-count="4">
+        <a href="{{ s.href }}" style="font-size:14px;">{{ s.label }}</a>
+      </sc-for>
+    </div>
+  </div>
+  <div style="max-width:1280px; margin:0 auto; padding:0 32px 32px;">
+    <span style="font-size:12px; color:var(--faint);">{{ t.rights }}</span>
+  </div>
+</footer>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;defaultLang&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;vi&quot;,&quot;options&quot;:[&quot;vi&quot;,&quot;en&quot;],&quot;tsType&quot;:&quot;'vi' | 'en'&quot;,&quot;section&quot;:&quot;Language&quot;},&quot;defaultTheme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;light&quot;,&quot;options&quot;:[&quot;light&quot;,&quot;dark&quot;],&quot;tsType&quot;:&quot;'light' | 'dark'&quot;,&quot;section&quot;:&quot;Theme&quot;}}">
+class Component extends DCLogic {
+  state = { lang: localStorage.getItem('esm-lang') ?? this.props.defaultLang ?? 'vi', langAnimated: false, theme: localStorage.getItem('esm-theme') ?? this.props.defaultTheme ?? 'light' };
+
+  componentDidMount() { document.body.dataset.esmTheme = this.state.theme; }
+
+  componentDidUpdate() { document.body.dataset.esmTheme = this.state.theme; }
+
+  renderVals() {
+    const lang = this.state.lang;
+    const S = {
+      vi: {
+        ctaGhost: 'Liên hệ', ctaPrimary: 'Bắt đầu',
+        back: 'Trang chủ',
+        titlePre: 'Phòng thí nghiệm', titleEm: 'tự động hóa',
+        sub: 'Xem hệ thống vận hành thay vì đọc mô tả: Vấn đề → Quy trình → Tự động hóa → Kết quả.',
+        step1: 'Vấn đề', step2: 'Quy trình', step3: 'Tự động hóa', step4: 'Kết quả',
+        footerTagline: 'Studio thiết kế & marketing sáng tạo tại Việt Nam.',
+        footerLinksTitle: 'Điều hướng', footerContactTitle: 'Liên hệ', footerSocialTitle: 'Mạng xã hội',
+        city: 'TP. Hồ Chí Minh, Việt Nam',
+        rights: '© 2026 Esmery.',
+        nav: ['Trang chủ', 'Về chúng tôi', 'Liên hệ']
+      },
+      en: {
+        ctaGhost: 'Contact', ctaPrimary: 'Get started',
+        back: 'Home',
+        titlePre: 'The automation', titleEm: 'laboratory',
+        sub: 'See the systems work instead of reading about them: Problem → Workflow → Automation → Result.',
+        step1: 'Problem', step2: 'Workflow', step3: 'Automation', step4: 'Result',
+        footerTagline: 'A creative design & marketing studio based in Vietnam.',
+        footerLinksTitle: 'Navigate', footerContactTitle: 'Contact', footerSocialTitle: 'Social',
+        city: 'Ho Chi Minh City, Vietnam',
+        rights: '© 2026 Esmery.',
+        nav: ['Home', 'About', 'Contact']
+      }
+    };
+    const t = S[lang];
+    const data = [
+      { num: '01',
+        nameVi: 'Chăm sóc khách hàng tiềm năng', nameEn: 'Lead generation & nurturing',
+        metricVi: '3x tốc độ phản hồi', metricEn: '3x faster response',
+        phVi: 'Sơ đồ hệ thống / demo', phEn: 'System map / demo',
+        vi: ['Khách hỏi qua 4 kênh, phản hồi chậm, bỏ sót lead.', 'Gom mọi tin nhắn về một hộp thư trung tâm.', 'AI phân loại, trả lời câu hỏi thường gặp, chấm điểm lead.', 'Đội sales chỉ nhận lead nóng, kèm toàn bộ ngữ cảnh.'],
+        en: ['Enquiries across 4 channels, slow replies, lost leads.', 'Every message routed into one central inbox.', 'AI classifies, answers FAQs and scores each lead.', 'Sales only sees hot leads, with full context attached.'] },
+      { num: '02',
+        nameVi: 'Sản xuất nội dung tự động', nameEn: 'Automated content production',
+        metricVi: '20+ bài/tháng, 1 người duyệt', metricEn: '20+ posts/month, 1 reviewer',
+        phVi: 'Quy trình nội dung / demo', phEn: 'Content pipeline / demo',
+        vi: ['Lịch đăng dày nhưng đội thiết kế nhỏ.', 'Kho template thiết kế module hóa theo nhận diện.', 'AI viết caption đa phiên bản, tự lắp nội dung vào template.', 'Mỗi bài chỉ cần một lần duyệt trước khi lên lịch.'],
+        en: ['A heavy posting calendar with a small design team.', 'A modular template library built on the brand system.', 'AI drafts multi-variant captions and assembles posts from templates.', 'Each post needs one approval before scheduling.'] },
+      { num: '03',
+        nameVi: 'Báo cáo & dữ liệu', nameEn: 'Data & reporting',
+        metricVi: 'Báo cáo tuần trong 5 phút', metricEn: 'Weekly reports in 5 minutes',
+        phVi: 'Dashboard / demo', phEn: 'Dashboard / demo',
+        vi: ['Số liệu nằm rải rác trên từng nền tảng quảng cáo.', 'Kết nối API các kênh về một kho dữ liệu duy nhất.', 'Tự động tổng hợp, phát hiện bất thường, viết nhận xét.', 'Một dashboard trực tiếp + báo cáo tuần gửi tự động.'],
+        en: ['Metrics scattered across every ad platform.', 'Channel APIs piped into a single data store.', 'Auto-aggregation, anomaly detection, written summaries.', 'One live dashboard + an auto-sent weekly report.'] },
+      { num: '04',
+        nameVi: 'Hành trình khách hàng', nameEn: 'Customer journey automation',
+        metricVi: '+28% khách quay lại', metricEn: '+28% returning customers',
+        phVi: 'Bản đồ hành trình / demo', phEn: 'Journey map / demo',
+        vi: ['Khách mua một lần rồi không quay lại.', 'Vẽ lại hành trình từ lần mua đầu đến lần mua thứ hai.', 'Chuỗi email/tin nhắn cá nhân hóa kích hoạt theo hành vi.', 'Khách quay lại đúng thời điểm, với đúng ưu đãi.'],
+        en: ['Customers bought once and never returned.', 'The journey mapped from first to second purchase.', 'Personalized email/message flows triggered by behavior.', 'Customers return at the right moment, with the right offer.'] }
+    ];
+    return {
+      t,
+      socials: [
+        { label: 'Instagram', href: '#' },
+        { label: 'Behance', href: '#' },
+        { label: 'Facebook', href: '#' },
+        { label: 'TikTok', href: '#' }
+      ],
+      tags: lang === 'vi'
+        ? ['AI workflow', 'Marketing automation', 'AI agent', 'Dữ liệu & báo cáo', 'Quy trình doanh nghiệp']
+        : ['AI workflows', 'Marketing automation', 'AI agents', 'Data & reporting', 'Business processes'],
+      systems: data.map(d => ({
+        num: d.num,
+        name: lang === 'vi' ? d.nameVi : d.nameEn,
+        metric: lang === 'vi' ? d.metricVi : d.metricEn,
+        placeholder: lang === 'vi' ? d.phVi : d.phEn,
+        problem: (lang === 'vi' ? d.vi : d.en)[0],
+        workflow: (lang === 'vi' ? d.vi : d.en)[1],
+        automation: (lang === 'vi' ? d.vi : d.en)[2],
+        result: (lang === 'vi' ? d.vi : d.en)[3]
+      })),
+      navLinks: t.nav.map((label, i) => ({ label, href: ['Home.dc.html', 'About.dc.html', 'Home.dc.html#contact'][i] })),
+      toggleTheme: () => this.setState(s => { const theme = s.theme === 'light' ? 'dark' : 'light'; localStorage.setItem('esm-theme', theme); return { theme }; }),
+      themeIcon: this.state.theme === 'light' ? '☾' : '☀',
+      toggleLang: () => this.setState(s => { const lang = s.lang === 'vi' ? 'en' : 'vi'; localStorage.setItem('esm-lang', lang); return { lang, langAnimated: true }; }),
+      langToggleLabel: lang === 'vi' ? 'Switch to English' : 'Chuyển sang tiếng Việt',
+      blobTransform: lang === 'vi' ? 'translateX(0)' : 'translateX(46px)',
+      blobAnim: this.state.langAnimated ? (lang === 'en' ? 'esm-liq-en 520ms cubic-bezier(0.22, 1, 0.36, 1) both' : 'esm-liq-vi 520ms cubic-bezier(0.22, 1, 0.36, 1) both') : 'none',
+      viColor: lang === 'vi' ? 'var(--btn-text)' : 'var(--body)',
+      enColor: lang === 'en' ? 'var(--btn-text)' : 'var(--body)'
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;family=Inter:wght@400;500&amp;family=Source+Serif+4:ital,opsz,wght@0,8..60,400;1,8..60,400&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.cdnfonts.com/css/redaction" rel="stylesheet">
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@700&amp;display=swap" rel="stylesheet">
+  <style>
+    html { scroll-behavior: smooth; }
+    #esm-hero-video { opacity: 0; transition: opacity .45s ease; }
+    body[data-esm-theme="dark"] #esm-hero-video { opacity: 1; }
+    #esm-hero-video-light { opacity: 1; transition: opacity .45s ease; }
+    body[data-esm-theme="dark"] #esm-hero-video-light { opacity: 0; }
+    #esm-collage { display: none; }
+    body { --fab-logo-filter: invert(1); }
+    body[data-esm-theme="dark"] { --fab-logo-filter: none; }
+    .esm-hv-pc { display: block; }
+    .esm-hv-mb { display: none; }
+    @media (max-width: 768px) {
+      .esm-hv-pc { display: none; }
+      .esm-hv-mb { display: block; }
+    }
+    body { margin: 0; background: var(--bg); color: var(--body); font-family: var(--font-body); }
+    a { color: var(--tag); text-decoration: none; transition: color .18s ease; }
+    a:hover { color: var(--text); }
+    ::selection { background: var(--deep); color: var(--text); }
+    button:focus-visible, a:focus-visible { outline: 1px solid var(--line); outline-offset: 3px; }
+    .wwd-card .wwd-visual { transition: transform .7s cubic-bezier(.2,.6,.2,1); }
+    .wwd-card:hover .wwd-visual { transform: scale(1.035); }
+    .wwd-card .wwd-cta { opacity: 0; transform: translateY(6px); transition: opacity .35s ease, transform .35s ease; }
+    .wwd-card:hover .wwd-cta { opacity: 1; transform: translateY(0); }
+    @keyframes esm-liq-en {
+      0%   { transform: translateX(0) scaleX(1) scaleY(1); }
+      28%  { transform: translateX(9px) scaleX(1.42) scaleY(0.90); }
+      62%  { transform: translateX(40px) scaleX(1.22) scaleY(0.93); }
+      86%  { transform: translateX(46px) scaleX(0.965) scaleY(1.015); }
+      100% { transform: translateX(46px) scaleX(1) scaleY(1); }
+    }
+    @keyframes esm-liq-vi {
+      0%   { transform: translateX(46px) scaleX(1) scaleY(1); }
+      28%  { transform: translateX(37px) scaleX(1.42) scaleY(0.90); }
+      62%  { transform: translateX(6px) scaleX(1.22) scaleY(0.93); }
+      86%  { transform: translateX(0) scaleX(0.965) scaleY(1.015); }
+      100% { transform: translateX(0) scaleX(1) scaleY(1); }
+    }
+    @keyframes esm-pre-logo { from { opacity: 0; filter: blur(12px) brightness(0.1); } to { opacity: 1; filter: blur(0) brightness(1); } }
+    @keyframes esm-pre-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+    @keyframes esm-pre-text { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    @media (prefers-reduced-motion: reduce) { .esm-pre, .esm-pre * { animation: none !important; transition-duration: 1ms !important; } }
+      body { --bg:#ffffff; --card:#f2f2f3; --deep:#e4e4e5; --text:#17191c; --body:#777b86; --tag:#979799; --faint:#a3a6af; --line:#17191c; --card-line:transparent; --hair:#ececec; --hello-filter:invert(1); --hello-blend:multiply; --logo-filter:none; --grad:rgba(255,255,255,0.9); --btn-bg:#17191c; --btn-text:#ffffff; --btn-hover:#000000; --ghost-r:9999px; --nav-bg:rgba(255,255,255,0.8); --backdrop:rgba(23,25,28,0.45); --modal-bg:#ffffff; --modal-line:transparent; --footer-line:#ececec; --footer-bg:#fafafb; --font-display:'Source Serif 4', serif; --font-display-em:'Source Serif 4', serif; --font-body:'Inter', ui-sans-serif, system-ui, sans-serif; --shadow-artifact:0 0 0 1px rgba(4,23,43,0.05), 0 20px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.1); --spark-a:#5d2a1a; --chart-a:#a3a6af; --chart-b:#5d2a1a; --delta:#5d2a1a; --pill-line:#979799; --pill-text:#17191c; }
+    body[data-esm-theme="dark"] { --bg:#000000; --card:#191919; --deep:#303030; --text:#eeeeee; --body:#b4b4b4; --tag:#7b7b7b; --faint:#606060; --line:#b4b4b4; --card-line:#b4b4b4; --hair:#303030; --hello-filter:none; --hello-blend:screen; --logo-filter:invert(1); --grad:rgba(0,0,0,0.72); --btn-bg:#eeeeee; --btn-text:#050505; --btn-hover:#ffffff; --ghost-r:10px; --nav-bg:rgba(0,0,0,0.65); --backdrop:rgba(0,0,0,0.82); --modal-bg:#191919; --modal-line:#b4b4b4; --footer-line:#606060; --footer-bg:transparent; --font-display:'Redaction 10', serif; --font-display-em:'Redaction 50', serif; --font-body:'Geist', sans-serif; --shadow-artifact:none; --spark-a:#fbe1d1; --chart-a:#b4b4b4; --chart-b:#fbe1d1; --delta:#fbe1d1; --pill-line:#b4b4b4; --pill-text:#b4b4b4; }
+  </style>
+</helmet>
+
+<sc-if value="{{ preShow }}" hint-placeholder-val="{{ true }}">
+  <div class="esm-pre" data-screen-label="Preloader" style="position:fixed; inset:0; z-index:1000; background:#FBF8EA; color:#17191c; display:flex; align-items:center; justify-content:center; overflow:hidden; clip-path:{{ preClip }}; transition:clip-path 950ms cubic-bezier(0.76, 0, 0.24, 1);">
+    <div style="display:flex; flex-direction:column; align-items:center; gap:32px; padding:0 24px; opacity:{{ preContentOp }}; transform:{{ preContentT }}; transition:opacity .5s ease, transform .9s cubic-bezier(0.22, 1, 0.36, 1);">
+      <div style="animation:esm-pre-logo 1.7s cubic-bezier(0.22, 1, 0.36, 1) both;">
+        <img src="uploads/bf517465-2789-4e72-8f3b-91faeedda607.png" alt="Esmery Saigon" style="height:64px; width:auto; display:block; animation:esm-pre-float 6s ease-in-out 1.7s infinite;">
+      </div>
+      <div style="width:224px; max-width:64vw; display:flex; flex-direction:column; gap:14px; animation:esm-pre-text .9s ease .8s both;">
+        <div style="height:1px; background:rgba(23,25,28,0.14); position:relative; overflow:hidden;">
+          <div style="position:absolute; inset:0; background:#17191c; transform-origin:left center; transform:{{ preBarT }}; transition:transform .35s ease;"></div>
+        </div>
+        <div style="display:flex; justify-content:space-between; align-items:baseline; gap:16px;">
+          <span style="font-size:10px; font-weight:500; letter-spacing:0.22em; text-transform:uppercase; font-family:'Inter', ui-sans-serif, system-ui, sans-serif; white-space:nowrap;">{{ preMsg }}</span>
+          <span style="font-family:'Source Serif 4', serif; font-style:italic; font-size:14px; font-variant-numeric:tabular-nums;">{{ prePct }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</sc-if>
+
+<nav style="position:sticky; top:0; z-index:50; background:var(--nav-bg); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);">
+  <div style="max-width:1280px; margin:0 auto; height:72px; padding:0 32px; display:grid; grid-template-columns:1fr auto 1fr; align-items:center; gap:24px;">
+    <a href="#top" style="display:inline-flex; align-items:center;"><img src="uploads/bf517465-2789-4e72-8f3b-91faeedda607.png" alt="Esmery" style="height:32px; width:auto; filter:var(--logo-filter);"></a>
+    <button onClick="{{ toggleTheme }}" aria-label="Toggle theme" style="border:1px solid var(--line); background:transparent; color:var(--text); border-radius:9999px; width:34px; height:34px; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; font-size:14px; font-family:var(--font-body); padding:0; justify-self:center;">{{ themeIcon }}</button>
+    <div style="display:flex; align-items:center; gap:12px; justify-self:end;">
+      <button onClick="{{ toggleLang }}" aria-label="{{ langToggleLabel }}" style="position:relative; display:flex; align-items:center; border:1px solid var(--line); border-radius:9999px; padding:2px; gap:2px; background:transparent; cursor:pointer; transition:border-color .25s ease, background-color .25s ease;" style-hover="border-color:var(--text); background:var(--card);">
+        <span aria-hidden="true" style="position:absolute; top:2px; bottom:2px; left:2px; width:44px; border-radius:9999px; background:var(--btn-bg); transform:{{ blobTransform }}; animation:{{ blobAnim }}; will-change:transform; pointer-events:none;"></span>
+        <span style="position:relative; z-index:1; font-family:var(--font-body); font-size:12px; font-weight:600; width:44px; padding:5px 0; text-align:center; border-radius:9999px; color:{{ viColor }}; transition:color .35s ease .1s;">VI</span>
+        <span style="position:relative; z-index:1; font-family:var(--font-body); font-size:12px; font-weight:600; width:44px; padding:5px 0; text-align:center; border-radius:9999px; color:{{ enColor }}; transition:color .35s ease .1s;">EN</span>
+      </button>
+      <button onClick="{{ openBooking }}" style="display:inline-flex; align-items:center; font-size:14px; font-weight:600; color:var(--btn-text); background:var(--btn-bg); border:none; border-radius:9999px; padding:10px 20px; min-width:118px; justify-content:center; cursor:pointer; font-family:var(--font-body);" style-hover="background:var(--btn-hover);">{{ t.ctaGhost }}</button>
+    </div>
+  </div>
+</nav>
+
+<header id="top" data-screen-label="Hero" style="position:relative; overflow:hidden; min-height:88vh; display:flex; align-items:center; justify-content:center;">
+  <div id="esm-hero-video" aria-hidden="true" style="position:absolute; inset:0; z-index:1; overflow:hidden; pointer-events:none;">
+    <video class="esm-hv-pc" src="assets/hero-pc.webm" loop="loop" muted="muted" playsinline="playsinline" preload="metadata" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;"></video>
+    <video class="esm-hv-mb" src="assets/hero-mobile.webm" loop="loop" muted="muted" playsinline="playsinline" preload="metadata" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;"></video>
+  </div>
+  <div id="esm-hero-video-light" aria-hidden="true" style="position:absolute; inset:0; z-index:1; overflow:hidden; pointer-events:none;">
+    <video class="esm-hv-pc" src="assets/hero-light-pc.webm" loop="loop" muted="muted" playsinline="playsinline" preload="metadata" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;"></video>
+    <video class="esm-hv-mb" src="assets/hero-light-mobile.webm" loop="loop" muted="muted" playsinline="playsinline" preload="metadata" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;"></video>
+  </div>
+  <div id="esm-collage" style="position:absolute; inset:0; z-index:1;">
+    <div data-depth="20" data-rot="-5" style="position:absolute; left:5%; top:14%; width:210px; height:260px; background:var(--deep); border-radius:24px; transform:rotate(-5deg); display:flex; align-items:center; justify-content:center;">
+      <span style="font-size:12px; font-weight:500; color:var(--tag); letter-spacing:0.04em;">Image</span>
+    </div>
+    <div data-depth="14" data-rot="4" style="position:absolute; right:6%; top:10%; width:200px; transform:rotate(4deg); display:flex; flex-direction:column; gap:3px;">
+      <div style="height:126px; background:var(--deep); border-radius:24px; display:flex; align-items:center; justify-content:center;"><span style="font-size:12px; font-weight:500; color:var(--tag); letter-spacing:0.04em;">Video</span></div>
+      <div style="height:148px; background:var(--deep); border-radius:24px; display:flex; align-items:center; justify-content:center;"><span style="font-size:12px; font-weight:500; color:var(--tag); letter-spacing:0.04em;">Image</span></div>
+    </div>
+    <div data-depth="26" data-rot="3" style="position:absolute; left:11%; bottom:9%; width:170px; height:170px; background:var(--deep); border-radius:24px; transform:rotate(3deg); display:flex; align-items:center; justify-content:center;">
+      <span style="font-size:12px; font-weight:500; color:var(--tag); letter-spacing:0.04em;">Image</span>
+    </div>
+    <div data-depth="22" data-rot="-3" style="position:absolute; right:12%; bottom:12%; width:240px; height:160px; background:var(--deep); border-radius:24px; transform:rotate(-3deg); display:flex; align-items:center; justify-content:center;">
+      <span style="font-size:12px; font-weight:500; color:var(--tag); letter-spacing:0.04em;">Video</span>
+    </div>
+    <div data-depth="30" data-rot="6" style="position:absolute; left:40%; bottom:-4%; width:150px; height:190px; background:var(--deep); border-radius:24px; transform:rotate(6deg); display:flex; align-items:center; justify-content:center;">
+      <span style="font-size:12px; font-weight:500; color:var(--tag); letter-spacing:0.04em;">Image</span>
+    </div>
+  </div>
+  <div style="position:relative; z-index:2; text-align:center; max-width:820px; padding:64px 32px; display:flex; flex-direction:column; align-items:center; gap:24px;">
+    <h1 style="margin:0; font-family:var(--font-display); font-weight:400; font-size:56px; line-height:1.1; letter-spacing:-0.036em; color:var(--text); min-height:2.2em;">{{ t.heroLine1 }}<br>{{ t.heroLine2Pre }}<em style="font-family:var(--font-display-em); font-style:italic; font-weight:400;">{{ t.heroEm }}</em></h1>
+    <p style="margin:0; font-size:16px; font-weight:400; line-height:1.6; color:var(--body); max-width:520px; min-height:3.2em; text-wrap:pretty;">{{ t.heroSub }}</p>
+  </div>
+</header>
+
+<section id="intro" data-screen-label="Intro" style="max-width:840px; margin:0 auto; padding:104px 32px 40px; text-align:center; display:flex; flex-direction:column; align-items:center; gap:16px;">
+  <img loading="lazy" decoding="async" src="assets/hello.png" alt="hello" style="width:min(460px, 78vw); height:auto; filter:var(--hello-filter); mix-blend-mode:var(--hello-blend);">
+  <span style="font-family:var(--font-display); font-weight:400; font-size:38px; line-height:1.15; letter-spacing:-0.03em; color:var(--text);">{{ t.introWho }}</span>
+  <p style="margin:16px 0 0; font-size:16px; font-weight:400; line-height:1.7; color:var(--body); max-width:640px; text-wrap:pretty;">{{ t.introBody }}</p>
+  <a href="About.dc.html" style="margin-top:20px; display:inline-flex; align-items:center; gap:8px; font-size:14px; font-weight:500; color:var(--text); background:transparent; border:1px solid var(--line); border-radius:var(--ghost-r); padding:11px 24px;" style-hover="opacity:0.75;">{{ t.introCta }} →</a>
+</section>
+
+<section id="projects" data-screen-label="What we do" style="max-width:1280px; margin:0 auto; padding:48px 32px 80px;">
+  <h2 style="margin:0 0 12px; font-family:var(--font-display); font-weight:400; font-size:42px; line-height:1.1; letter-spacing:-0.036em; color:var(--text);">{{ t.whatPre }} <em style="font-family:var(--font-display-em); font-style:italic; font-weight:400;">{{ t.whatEm }}</em> {{ t.whatPost }}</h2>
+    <p style="margin:0 0 40px; font-size:15px; color:var(--tag); max-width:480px;">{{ t.whatSub }}</p>
+  <div style="display:flex; flex-direction:column; gap:24px;">
+    <a href="Design.dc.html" class="wwd-card" style="position:relative; display:block; border-radius:24px; overflow:hidden; background:var(--card); text-decoration:none;">
+      <div class="wwd-visual" onMouseEnter="{{ dbEnter }}" onMouseLeave="{{ dbLeave }}" style="position:relative; height:520px; background:var(--deep); overflow:hidden;">
+        <sc-for list="{{ dbImgs }}" as="im" hint-placeholder-count="1">
+          <img loading="lazy" decoding="async" src="{{ im.src }}" alt="Design &amp; Branding work" style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; object-position:center; opacity:{{ im.op }}; transition:opacity 0.15s ease;">
+        </sc-for>
+      </div>
+      <div style="position:absolute; left:0; right:0; bottom:0; padding:32px; display:flex; justify-content:space-between; align-items:flex-end; background:linear-gradient(transparent, var(--grad));">
+        <div style="display:flex; align-items:baseline; gap:16px;">
+          <span style="font-size:14px; font-weight:600; color:var(--tag);">01</span>
+          <span style="font-size:30px; font-weight:600; color:var(--text); letter-spacing:-0.02em;">{{ t.wwd1 }}</span>
+        </div>
+        <span class="wwd-cta" style="font-size:14px; font-weight:500; color:var(--text);">{{ t.enter }} →</span>
+      </div>
+    </a>
+    <a href="Website.dc.html" class="wwd-card" style="position:relative; display:block; border-radius:24px; overflow:hidden; background:var(--card); text-decoration:none;">
+      <div class="wwd-visual" style="height:520px; background:var(--deep); display:flex; align-items:center; justify-content:center;">
+        <span style="font-size:12px; font-weight:500; color:var(--tag); letter-spacing:0.04em;">Image / Video</span>
+      </div>
+      <div style="position:absolute; left:0; right:0; bottom:0; padding:32px; display:flex; justify-content:space-between; align-items:flex-end; background:linear-gradient(transparent, var(--grad));">
+        <div style="display:flex; align-items:baseline; gap:16px;">
+          <span style="font-size:14px; font-weight:600; color:var(--tag);">02</span>
+          <span style="font-size:30px; font-weight:600; color:var(--text); letter-spacing:-0.02em;">{{ t.wwd2 }}</span>
+        </div>
+        <span class="wwd-cta" style="font-size:14px; font-weight:500; color:var(--text);">{{ t.enter }} →</span>
+      </div>
+    </a>
+    <div style="display:flex; align-items:baseline; gap:16px; margin-top:24px;">
+      <span style="font-size:14px; font-weight:600; color:var(--tag);">03</span>
+      <span style="font-size:30px; font-weight:600; color:var(--text); letter-spacing:-0.02em;">{{ t.wwd3 }}</span>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:24px;">
+      <a href="Campaign.dc.html" class="wwd-card" style="position:relative; display:block; border-radius:24px; overflow:hidden; background:var(--card); text-decoration:none;">
+        <div class="wwd-visual" onMouseEnter="{{ campEnter }}" onMouseLeave="{{ campLeave }}" style="position:relative; height:560px; background:var(--deep); overflow:hidden;">
+          <sc-for list="{{ campImgs }}" as="ci" hint-placeholder-count="1">
+            <img loading="lazy" decoding="async" src="{{ ci.src }}" alt="Campaign work" style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; object-position:center; opacity:{{ ci.op }}; transition:opacity 0.15s ease;">
+          </sc-for>
+        </div>
+        <div style="position:absolute; left:0; right:0; bottom:0; padding:24px; display:flex; justify-content:space-between; align-items:flex-end; background:linear-gradient(transparent, var(--grad));">
+          <span style="font-size:18px; font-weight:600; color:var(--text); letter-spacing:-0.01em;">{{ t.c1 }}</span>
+          <span class="wwd-cta" style="font-size:14px; color:var(--text);">→</span>
+        </div>
+      </a>
+      <a href="AI-Video.dc.html" class="wwd-card" style="position:relative; display:block; border-radius:24px; overflow:hidden; background:var(--card); text-decoration:none;">
+        <div class="wwd-visual" onMouseEnter="{{ aiVidEnter }}" onMouseLeave="{{ aiVidLeave }}" style="position:relative; height:560px; background:var(--deep); overflow:hidden;">
+          <img loading="lazy" decoding="async" src="uploads/0826 (1)(2)_frame1.png" alt="AI Video" style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; object-position:center; opacity:{{ aiVidThumbOp }}; transition:opacity 0.15s ease;">
+          <video ref="{{ aiVidRef }}" muted="muted" playsinline="playsinline" loop="loop" preload="none" style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; object-position:center; opacity:{{ aiVidVidOp }}; transition:opacity 0.15s ease;"></video>
+        </div>
+        <div style="position:absolute; left:0; right:0; bottom:0; padding:24px; display:flex; justify-content:space-between; align-items:flex-end; background:linear-gradient(transparent, var(--grad));">
+          <span style="font-size:18px; font-weight:600; color:var(--text); letter-spacing:-0.01em;">{{ t.c2 }}</span>
+          <span class="wwd-cta" style="font-size:14px; color:var(--text);">→</span>
+        </div>
+      </a>
+      <a href="In-house.dc.html" class="wwd-card" style="position:relative; display:block; border-radius:24px; overflow:hidden; background:var(--card); text-decoration:none;">
+        <div class="wwd-visual" onMouseEnter="{{ inhouseEnter }}" onMouseLeave="{{ inhouseLeave }}" style="position:relative; height:560px; background:var(--deep); overflow:hidden;">
+          <sc-for list="{{ inhouseImgs }}" as="ii" hint-placeholder-count="1">
+            <img loading="lazy" decoding="async" src="{{ ii.src }}" alt="In-house photography" style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; object-position:center; opacity:{{ ii.op }}; transition:opacity 0.15s ease;">
+          </sc-for>
+        </div>
+        <div style="position:absolute; left:0; right:0; bottom:0; padding:24px; display:flex; justify-content:space-between; align-items:flex-end; background:linear-gradient(transparent, var(--grad));">
+          <span style="font-size:18px; font-weight:600; color:var(--text); letter-spacing:-0.01em;">{{ t.c3 }}</span>
+          <span class="wwd-cta" style="font-size:14px; color:var(--text);">→</span>
+        </div>
+      </a>
+    </div>
+    <a href="Automation.dc.html" class="wwd-card" style="position:relative; display:block; border-radius:24px; overflow:hidden; background:var(--card); text-decoration:none;">
+      <div class="wwd-visual" style="height:520px; background:var(--deep); overflow:hidden; position:relative;">
+        <img loading="lazy" decoding="async" src="uploads/1-95d700ff.png" alt="Tự động hóa" style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; object-position:center;">
+      </div>
+      <div style="position:absolute; left:0; right:0; bottom:0; padding:32px; display:flex; justify-content:space-between; align-items:flex-end; background:linear-gradient(transparent, var(--grad));">
+        <div style="display:flex; align-items:baseline; gap:16px;">
+          <span style="font-size:14px; font-weight:600; color:var(--tag);">04</span>
+          <span style="font-size:30px; font-weight:600; color:var(--text); letter-spacing:-0.02em;">{{ t.wwd4 }}</span>
+        </div>
+        <span class="wwd-cta" style="font-size:14px; font-weight:500; color:var(--text);">{{ t.enter }} →</span>
+      </div>
+    </a>
+  </div>
+</section>
+
+<sc-if value="{{ showBooking }}" hint-placeholder-val="{{ false }}">
+  <dc-import name="Consultation" lang="{{ lang }}" on-close="{{ closeBooking }}" hint-size="100%,100%"></dc-import>
+</sc-if>
+
+<button onClick="{{ scrollTop }}" aria-label="Back to top" style="position:fixed; right:24px; bottom:24px; z-index:60; width:56px; height:56px; border-radius:9999px; border:none; background:var(--btn-bg); cursor:pointer; display:inline-flex; align-items:center; justify-content:center; padding:0; box-shadow:0 8px 24px rgba(0,0,0,0.12); transition:transform .25s cubic-bezier(.2,.6,.2,1), box-shadow .25s ease;" style-hover="transform:translateY(-3px); box-shadow:0 12px 32px rgba(0,0,0,0.18);" style-active="transform:scale(0.94);">
+  <img loading="lazy" decoding="async" src="uploads/71cefad5-a670-4497-a36a-2203fb32790f.png" alt="" style="width:32px; height:32px; object-fit:contain; filter:var(--fab-logo-filter, none); pointer-events:none;">
+</button>
+
+<footer id="contact" data-screen-label="Footer" style="border-top:1px solid var(--footer-line); background:var(--footer-bg);">
+  <div style="max-width:1280px; margin:0 auto; padding:64px 32px 40px; display:grid; grid-template-columns:2fr 1fr 1fr; gap:48px;">
+    <div style="display:flex; flex-direction:column; gap:16px;">
+      
+      <img src="uploads/bf517465-2789-4e72-8f3b-91faeedda607.png" alt="Esmery" style="height: 85px; width: 509px; object-fit: contain; object-position: left; filter: var(--logo-filter)"><p style="margin:0; font-size:14px; line-height:1.6; color:var(--tag); max-width:300px; min-height:3.2em; text-wrap:pretty;">{{ t.footerTagline }}</p>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:12px;">
+      <span style="font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--faint);">{{ t.footerLinksTitle }}</span>
+      <sc-for list="{{ navLinks }}" as="lnk" hint-placeholder-count="5">
+        <a href="{{ lnk.href }}" style="font-size:14px;">{{ lnk.label }}</a>
+      </sc-for>
+    </div>
+
+    <div style="display:flex; flex-direction:column; gap:12px;">
+      <span style="font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--faint);">{{ t.footerSocialTitle }}</span>
+      <sc-for list="{{ socials }}" as="s" hint-placeholder-count="4">
+        <a href="{{ s.href }}" style="font-size:14px;">{{ s.label }}</a>
+      </sc-for>
+    </div>
+  </div>
+  <div style="max-width:1280px; margin:0 auto; padding:0 32px 32px;">
+    <span style="font-size:12px; color:var(--faint);">{{ t.rights }}</span>
+  </div>
+</footer>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;defaultLang&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;vi&quot;,&quot;options&quot;:[&quot;vi&quot;,&quot;en&quot;],&quot;tsType&quot;:&quot;'vi' | 'en'&quot;,&quot;section&quot;:&quot;Language&quot;},&quot;parallax&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Hero&quot;},&quot;defaultTheme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;light&quot;,&quot;options&quot;:[&quot;light&quot;,&quot;dark&quot;],&quot;tsType&quot;:&quot;'light' | 'dark'&quot;,&quot;section&quot;:&quot;Theme&quot;}}">
+class Component extends DCLogic {
+  state = { lang: localStorage.getItem('esm-lang') ?? this.props.defaultLang ?? 'vi', theme: localStorage.getItem('esm-theme') ?? this.props.defaultTheme ?? 'light', showBooking: false, langAnimated: false, aiVidHover: false, preShow: true, preProg: 0, preDone: false, preWelcome: false };
+  _aiVidRef = React.createRef();
+  _aiVidSrcSet = false;
+
+  componentDidUpdate() { document.body.dataset.esmTheme = this.state.theme; this._syncHeroVideos(); }
+
+  _syncHeroVideos() {
+    const mobile = window.matchMedia('(max-width: 768px)').matches;
+    const dark = this.state.theme === 'dark';
+    document.querySelectorAll('#esm-hero-video video, #esm-hero-video-light video').forEach(v => {
+      const isLight = v.parentElement.id === 'esm-hero-video-light';
+      const active = (isLight ? !dark : dark) && (v.classList.contains('esm-hv-mb') === mobile);
+      if (active) { v.muted = true; if (v.paused) v.play().catch(() => {}); }
+      else if (!v.paused) v.pause();
+    });
+  }
+
+  componentDidMount() {
+    document.body.dataset.esmTheme = this.state.theme;
+    this._heroMq = window.matchMedia('(max-width: 768px)');
+    this._heroMq.addEventListener('change', () => this._syncHeroVideos());
+    document.querySelectorAll('#esm-hero-video video, #esm-hero-video-light video').forEach(v => {
+      v.addEventListener('error', () => { v.load(); this._syncHeroVideos(); });
+    });
+    this._syncHeroVideos();
+    this._initPreloader();
+    if ((this.props.parallax ?? true) === false) return;
+    const root = document.getElementById('esm-collage');
+    if (!root) return;
+    const items = Array.from(root.querySelectorAll('[data-depth]'));
+    this._tx = 0; this._ty = 0; this._cx = 0; this._cy = 0;
+    this._onMove = (e) => {
+      this._tx = e.clientX / window.innerWidth - 0.5;
+      this._ty = e.clientY / window.innerHeight - 0.5;
+    };
+    const tick = () => {
+      this._cx += (this._tx - this._cx) * 0.06;
+      this._cy += (this._ty - this._cy) * 0.06;
+      for (const el of items) {
+        const d = parseFloat(el.dataset.depth);
+        el.style.transform = 'translate(' + (-this._cx * d) + 'px,' + (-this._cy * d) + 'px) rotate(' + el.dataset.rot + 'deg)';
+      }
+      this._raf = requestAnimationFrame(tick);
+    };
+    window.addEventListener('mousemove', this._onMove);
+    tick();
+  }
+
+  _initPreloader() {
+    this._preLockScroll = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    this._preStart = performance.now();
+    this._preReady = false;
+    const mark = () => { this._preReady = true; };
+    const vid = document.querySelector('#esm-hero-video-light video.esm-hv-pc') || document.querySelector('#esm-hero-video video');
+    const vidReady = new Promise(res => {
+      if (!vid || vid.readyState >= 3) return res();
+      vid.addEventListener('canplaythrough', res, { once: true });
+      vid.addEventListener('loadeddata', res, { once: true });
+      setTimeout(res, 4500);
+    });
+    const fontsReady = (document.fonts && document.fonts.ready) ? document.fonts.ready : Promise.resolve();
+    Promise.race([
+      Promise.all([fontsReady, vidReady]),
+      new Promise(res => window.addEventListener('load', res, { once: true }))
+    ]).then(mark);
+    setTimeout(mark, 6500); // fallback: never stuck
+    const finish = () => {
+      clearInterval(this._preTimer);
+      this.setState({ preProg: 100, preWelcome: true });
+      setTimeout(() => this.setState({ preDone: true }), 850);
+      setTimeout(() => { document.body.style.overflow = this._preLockScroll || ''; this.setState({ preShow: false }); }, 1900);
+    };
+    this._preTimer = setInterval(() => {
+      const el = performance.now() - this._preStart;
+      const p = this.state.preProg;
+      const canFinish = this._preReady && el > 2400;
+      const target = canFinish ? 101 : Math.min(92, el / 42);
+      const next = Math.min(canFinish ? 100 : 92, p + Math.max(0.35, (target - p) * 0.085));
+      if (next >= 100) { finish(); return; }
+      if (next > p) this.setState({ preProg: next });
+    }, 90);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this._preTimer);
+    window.removeEventListener('mousemove', this._onMove);
+    cancelAnimationFrame(this._raf);
+    clearInterval(this._dbT);
+    clearInterval(this._campT);
+    clearInterval(this._inhouseT);
+  }
+
+  renderVals() {
+    const lang = this.state.lang;
+    const dbSrcs = [
+      'uploads/2-33864b6c.png',
+      'uploads/2-8ab671f6.png',
+      'uploads/1-6b690a7d.png',
+      'uploads/1787649734800_4224458604903737060_4224458604903737060_0386d03e894e84b53987f5c80000c5ae.jpg',
+      'uploads/1787649733314_4224458604903737060_4224458604903737060_80fad362da27188b1e5c37ff0e88be40.jpg',
+      'uploads/Untitled-1.PNG',
+      'uploads/Untitled-5.PNG'
+    ];
+    const dbIdx = this.state.dbIdx ?? 0;
+    const dbImgs = dbSrcs.map((src, i) => ({ src, op: i === dbIdx ? 1 : 0 }));
+    const campSrcs = [
+      'uploads/magnific_fill-lai-background-tu-an_1lw5cqnr4r.png',
+      'uploads/magnific_fill-lai-background-tu-an_4RGOIxD9Aa.png',
+      'uploads/Untitled design (1).png',
+      'uploads/magnific_fill-lai-background-tu-an_fHKhyNlCDY.png'
+    ];
+    const campIdx = this.state.campIdx ?? 0;
+    const campImgs = campSrcs.map((src, i) => ({ src, op: i === campIdx ? 1 : 0 }));
+    const inhouseSrcs = [
+      'uploads/VUS_9039.JPEG',
+      'uploads/VUS_9155.JPG',
+      'uploads/VUS_9147.JPEG',
+      'uploads/VUS_9156.PNG',
+      'uploads/VUS_9166.PNG',
+      'uploads/magnific_them-bang-djirian-007-cua_6AA7eK5iJO.png',
+      'uploads/BINJ2442.JPG',
+      'uploads/BINJ2410.JPG',
+      'uploads/1786685017944_135796295198072742_6432886473194611458_8b925fd43afec92e57fbd7d8eef27ec0.jpg'
+    ];
+    const inhouseIdx = this.state.inhouseIdx ?? 0;
+    const inhouseImgs = inhouseSrcs.map((src, i) => ({ src, op: i === inhouseIdx ? 1 : 0 }));
+    const dbEnter = () => {
+      clearInterval(this._dbT);
+      this._dbT = setInterval(() => this.setState(s => ({ dbIdx: ((s.dbIdx ?? 0) + 1) % dbSrcs.length })), 400);
+    };
+    const dbLeave = () => {
+      clearInterval(this._dbT);
+      this._dbT = null;
+      this.setState({ dbIdx: 0 });
+    };
+    const S = {
+      vi: {
+        ctaGhost: 'Liên hệ', ctaPrimary: 'Bắt đầu',
+        heroLine1: 'Esmery biến ý tưởng', heroLine2Pre: 'thành ', heroEm: 'hình ảnh',
+        heroSub: '',
+        whatPre: 'Chúng tôi', whatEm: 'làm', whatPost: 'gì',
+        whatSub: '',
+        enter: 'Vào xem', wwd1: 'Thiết kế & Thương hiệu', wwd2: 'Website', wwd3: 'Ads & Marketing', wwd4: 'Tự động hóa',
+        c1: 'Chiến dịch', c2: 'Video AI', c3: 'In-house',
+        introWho: 'Chúng tôi là Esmery',
+        introCta: 'Tìm hiểu thêm',
+        introBody: 'Esmery là studio thiết kế & marketing sáng tạo. Chúng tôi tin rằng mỗi thương hiệu đều có một câu chuyện riêng và công việc của chúng tôi là kể câu chuyện đó bằng hình ảnh, website và những chiến dịch chỉn chu.',
+        footerTagline: 'Studio thiết kế & marketing sáng tạo tại Việt Nam.',
+        footerLinksTitle: 'Điều hướng', footerContactTitle: 'Liên hệ', footerSocialTitle: 'Mạng xã hội',
+        city: 'TP. Hồ Chí Minh, Việt Nam',
+        rights: '',
+        nav: ['Trang chủ', 'Về chúng tôi', 'Liên hệ']
+      },
+      en: {
+        ctaGhost: 'Contact', ctaPrimary: 'Get started',
+        heroLine1: 'Esmery turns ideas', heroLine2Pre: 'into ', heroEm: 'visuals',
+        heroSub: 'Esmery is an agency with serving in creative design & marketing social media, branding, AI video and websites for your brand.',
+        whatPre: 'What we', whatEm: 'do', whatPost: '',
+        whatSub: '',
+        enter: 'Enter', wwd1: 'Design & Branding', wwd2: 'Website', wwd3: 'Ads & Marketing', wwd4: 'Automation',
+        c1: 'Campaign', c2: 'AI Video', c3: 'In-house',
+        introWho: "We're Esmery",
+        introBody: 'Esmery is a creative design & marketing studio. We believe every brand has a story worth telling our job is to tell it through visuals, websites and carefully crafted campaigns.',
+        footerTagline: 'A creative design & marketing studio based in Vietnam.',
+        footerLinksTitle: 'Navigate', footerContactTitle: 'Contact', footerSocialTitle: 'Social',
+        city: 'Ho Chi Minh City, Vietnam',
+        rights: '© 2026 Esmery. All rights reserved.',
+        introCta: 'Learn more',
+        nav: ['Home', 'About', 'Contact']
+      }
+    };
+    const t = S[lang];
+    const hrefs = ['#top', 'About.dc.html', '#contact'];
+    const aiVidEnter = () => {
+      const v = this._aiVidRef.current;
+      if (v) {
+        if (!this._aiVidSrcSet) { v.src = 'uploads/0826 (1)(2)_compressed.mp4'; this._aiVidSrcSet = true; }
+        v.currentTime = 0;
+        v.play().catch(() => {});
+      }
+      this.setState({ aiVidHover: true });
+    };
+    const aiVidLeave = () => {
+      const v = this._aiVidRef.current;
+      if (v) { v.pause(); v.currentTime = 0; }
+      this.setState({ aiVidHover: false });
+    };
+    const campEnter = () => {
+      clearInterval(this._campT);
+      this._campT = setInterval(() => this.setState(s => ({ campIdx: ((s.campIdx ?? 0) + 1) % campSrcs.length })), 400);
+    };
+    const campLeave = () => {
+      clearInterval(this._campT);
+      this._campT = null;
+      this.setState({ campIdx: 0 });
+    };
+    const inhouseEnter = () => {
+      clearInterval(this._inhouseT);
+      this._inhouseT = setInterval(() => this.setState(s => ({ inhouseIdx: ((s.inhouseIdx ?? 0) + 1) % inhouseSrcs.length })), 400);
+    };
+    const inhouseLeave = () => {
+      clearInterval(this._inhouseT);
+      this._inhouseT = null;
+      this.setState({ inhouseIdx: 0 });
+    };
+    return {
+      t,
+      dbImgs, dbEnter, dbLeave,
+      campImgs, campEnter, campLeave,
+      inhouseImgs, inhouseEnter, inhouseLeave,
+      aiVidRef: this._aiVidRef,
+      aiVidEnter, aiVidLeave,
+      aiVidThumbOp: this.state.aiVidHover ? 0 : 1,
+      aiVidVidOp: this.state.aiVidHover ? 1 : 0,
+      navLinks: t.nav.map((label, i) => ({ label, href: hrefs[i] })),
+      socials: [
+        { label: 'Instagram', href: '#' },
+        { label: 'Behance', href: '#' },
+        { label: 'Facebook', href: '#' },
+        { label: 'TikTok', href: '#' }
+      ],
+      preShow: this.state.preShow,
+      prePct: String(Math.max(1, Math.round(this.state.preProg))).padStart(2, '0') + '%',
+      preBarT: 'scaleX(' + (Math.max(1, this.state.preProg) / 100) + ')',
+      preMsg: this.state.preWelcome ? 'Welcome to Esmery' : (this.state.preProg < 35 ? 'Entering Esmery' : this.state.preProg < 68 ? 'Preparing the experience' : this.state.preProg < 88 ? 'Loading the archive' : 'Almost there'),
+      preClip: this.state.preDone ? 'inset(0 0 100% 0)' : 'inset(0 0 0% 0)',
+      preContentOp: this.state.preDone ? 0 : 1,
+      preContentT: this.state.preDone ? 'translateY(-48px) scale(0.92)' : 'translateY(0) scale(1)',
+      toggleTheme: () => this.setState(s => { const theme = s.theme === 'light' ? 'dark' : 'light'; localStorage.setItem('esm-theme', theme); return { theme }; }),
+      themeIcon: this.state.theme === 'light' ? '☾' : '☀',
+      toggleLang: () => this.setState(s => { const lang = s.lang === 'vi' ? 'en' : 'vi'; localStorage.setItem('esm-lang', lang); return { lang, langAnimated: true }; }),
+      langToggleLabel: lang === 'vi' ? 'Switch to English' : 'Chuyển sang tiếng Việt',
+      viColor: lang === 'vi' ? 'var(--btn-text)' : 'var(--body)',
+      enColor: lang === 'en' ? 'var(--btn-text)' : 'var(--body)',
+      blobTransform: lang === 'vi' ? 'translateX(0)' : 'translateX(46px)',
+      blobAnim: this.state.langAnimated
+        ? (lang === 'en'
+          ? 'esm-liq-en 520ms cubic-bezier(0.22, 1, 0.36, 1) both'
+          : 'esm-liq-vi 520ms cubic-bezier(0.22, 1, 0.36, 1) both')
+        : 'none',
+      showBooking: this.state.showBooking,
+      lang: this.state.lang,
+      scrollTop: () => window.scrollTo({ top: 0, behavior: 'smooth' }),
+      openBooking: () => this.setState({ showBooking: true }),
+      closeBooking: () => this.setState({ showBooking: false })
+    };
+  }
+}
+</script>
+</body>
+</html>

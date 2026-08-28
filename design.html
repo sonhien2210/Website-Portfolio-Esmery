@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Thiết kế & Thương hiệu | Esmery Studio</title>
+  <meta name="description" content="Một kho lưu trữ thị giác, mỗi dự án là một tác phẩm, mỗi tác phẩm đều có một câu chuyện riêng.">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <style>
+    @keyframes esmFade { from { opacity: 0; } to { opacity: 1; } }
+  </style>
+</head>
+<body data-esm-theme="light" data-esm-lang="vi">
+
+  <!-- UNIVERSAL NAVBAR -->
+  <nav class="esm-nav">
+    <div class="esm-nav-inner">
+      <a href="index.html" class="esm-nav-logo" aria-label="Esmery Home">
+        <img src="images/shared/bf517465-2789-4e72-8f3b-91faeedda607.png" alt="Esmery">
+      </a>
+      <button class="esm-theme-btn" aria-label="Toggle theme">☾</button>
+      <div class="esm-nav-actions">
+        <button class="esm-lang-toggle" aria-label="Toggle language">
+          <span class="esm-lang-blob" aria-hidden="true"></span>
+          <span class="esm-lang-item esm-lang-vi">VI</span>
+          <span class="esm-lang-item esm-lang-en">EN</span>
+        </button>
+        <button class="esm-cta-btn" data-open-modal="consultation" data-vi="Liên hệ" data-en="Contact">Liên hệ</button>
+      </div>
+    </div>
+  </nav>
+
+  <main style="max-width:1280px; margin:0 auto; padding:64px 32px 80px; display:flex; flex-direction:column; gap:48px;">
+
+    <!-- HEADER -->
+    <header style="display:flex; flex-direction:column; gap:16px;">
+      <a href="index.html#projects" style="font-size:14px; color:var(--tag);" data-vi="← Trang chủ" data-en="← Home">← Trang chủ</a>
+      <h1 style="font-size:clamp(36px, 5.5vw, 56px); line-height:1.1; letter-spacing:-0.036em; color:var(--text); max-width:720px;" data-vi="Thiết kế & <em>Thương hiệu</em>" data-en="Design & <em>Branding</em>">
+        Thiết kế & <em>Thương hiệu</em>
+      </h1>
+      <p style="margin:0; font-size:16px; line-height:1.6; color:var(--body); max-width:520px; text-wrap:pretty;" data-vi="Một kho lưu trữ thị giác. Mỗi dự án là một tác phẩm, mỗi tác phẩm đều có một câu chuyện riêng." data-en="A visual archive, every project is an artwork, and every artwork has its own story.">
+        Một kho lưu trữ thị giác. Mỗi dự án là một tác phẩm, mỗi tác phẩm đều có một câu chuyện riêng.
+      </p>
+      <div id="esm-design-tags" style="display:flex; align-items:center; gap:24px; flex-wrap:wrap; margin-top:8px;">
+      </div>
+    </header>
+
+    <!-- GALLERY GRID: 2 columns -->
+    <section id="esm-design-gallery" style="display:grid; grid-template-columns:repeat(2, 1fr); gap:24px;">
+    </section>
+
+  </main>
+
+  <!-- DESIGN DETAIL MODAL -->
+  <div id="esm-design-modal" class="esm-modal-backdrop">
+    <div class="esm-modal-card" style="max-width:920px; padding:40px;" onclick="event.stopPropagation()">
+      <div style="position:sticky; top:-40px; z-index:10; background:var(--modal-bg); padding:40px 0 16px; margin:-40px 0 0; border-bottom:1px solid var(--hair); display:flex; justify-content:space-between; align-items:flex-start; gap:24px;">
+        <div style="display:flex; flex-direction:column; gap:6px;">
+          <span id="esm-dmodal-tag" style="font-size:13px; color:var(--tag);">—</span>
+          <h2 id="esm-dmodal-title" style="margin:0; font-family:var(--font-display); font-weight:400; font-size:42px; line-height:1.1; letter-spacing:-0.036em; color:var(--text);">—</h2>
+        </div>
+        <button onclick="closeDesignDetail()" style="border:1px solid var(--line); background:transparent; color:var(--text); border-radius:9999px; width:40px; height:40px; cursor:pointer; font-size:16px; flex-shrink:0;">✕</button>
+      </div>
+      <div id="esm-dmodal-hero" style="margin:32px 0;"></div>
+      <div id="esm-dmodal-sections" style="display:flex; flex-direction:column; gap:28px;"></div>
+      <div style="display:grid; grid-template-columns:220px 1fr; gap:24px; margin-top:28px;">
+        <span style="font-size:13px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--tag);" data-vi="Sản phẩm" data-en="Our work">Sản phẩm</span>
+        <div id="esm-dmodal-work" style="display:grid; grid-template-columns:repeat(2, 1fr); gap:12px;"></div>
+      </div>
+      <div style="display:grid; grid-template-columns:220px 1fr; gap:24px; margin-top:28px;">
+        <span style="font-size:13px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--tag);" data-vi="Kết quả" data-en="Final result">Kết quả</span>
+        <div style="height:260px; background:var(--deep); border-radius:12px; display:flex; align-items:center; justify-content:center;"><span style="font-size:12px; color:var(--tag);">Final identity / deliverables</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LIGHTBOX -->
+  <div id="esm-lightbox" style="display:none; position:fixed; inset:0; z-index:200; background:rgba(0,0,0,0.9); align-items:center; justify-content:center; padding:24px; cursor:zoom-out; animation:esmFade .2s ease;" onclick="closeLightbox()">
+    <img id="esm-lightbox-img" src="" alt="" style="max-width:90vw; max-height:90vh; object-fit:contain; border-radius:8px; pointer-events:none;">
+  </div>
+
+  <!-- UNIVERSAL FOOTER -->
+  <footer class="esm-footer">
+    <div class="esm-footer-inner">
+      <div class="esm-footer-brand">
+        <img src="images/shared/bf517465-2789-4e72-8f3b-91faeedda607.png" alt="Esmery">
+        <p class="esm-footer-tagline" data-vi="Studio thiết kế & marketing sáng tạo tại Việt Nam." data-en="A creative design & marketing studio based in Vietnam.">Studio thiết kế & marketing sáng tạo tại Việt Nam.</p>
+      </div>
+      <div class="esm-footer-col">
+        <span class="esm-footer-title" data-vi="Điều hướng" data-en="Navigate">Điều hướng</span>
+        <a href="index.html" data-vi="Trang chủ" data-en="Home">Trang chủ</a>
+        <a href="about.html" data-vi="Về chúng tôi" data-en="About us">Về chúng tôi</a>
+        <a href="design.html" data-vi="Thiết kế & Thương hiệu" data-en="Design & Branding">Thiết kế & Thương hiệu</a>
+        <a href="ai-video.html" data-vi="Triển lãm Video AI" data-en="AI Video Exhibition">Triển lãm Video AI</a>
+        <a href="campaign.html" data-vi="Chiến dịch & Truyền thông" data-en="Campaign & Social">Chiến dịch & Truyền thông</a>
+        <a href="report.html" data-vi="Báo cáo số liệu" data-en="Performance Report">Báo cáo số liệu</a>
+      </div>
+      <div class="esm-footer-col">
+        <span class="esm-footer-title" data-vi="Mạng xã hội" data-en="Social">Mạng xã hội</span>
+        <a href="https://instagram.com" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://behance.net" target="_blank" rel="noopener">Behance</a>
+        <a href="https://facebook.com" target="_blank" rel="noopener">Facebook</a>
+        <a href="https://tiktok.com" target="_blank" rel="noopener">TikTok</a>
+      </div>
+    </div>
+    <div class="esm-footer-bottom">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+        <span>© 2026 Esmery. <span data-vi="Bảo lưu mọi quyền." data-en="All rights reserved.">Bảo lưu mọi quyền.</span></span>
+        <span data-vi="TP. Hồ Chí Minh, Việt Nam" data-en="Ho Chi Minh City, Vietnam">TP. Hồ Chí Minh, Việt Nam</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- BACK TO TOP BUTTON -->
+  <button class="esm-fab-top" aria-label="Back to top">
+    <img src="images/home/71cefad5-a670-4497-a36a-2203fb32790f.png" alt="Top">
+  </button>
+
+  <!-- UNIVERSAL CONSULTATION MODAL -->
+  <div id="esm-consultation-modal" class="esm-modal-backdrop">
+    <div class="esm-modal-card" onclick="event.stopPropagation()">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:28px;">
+        <div style="display:flex; gap:20px;">
+          <span id="esm-modal-ind-1" style="font-size:12px; font-weight:600; letter-spacing:0.04em; color:var(--text);" data-vi="01. Thông tin" data-en="01. Information">01. Thông tin</span>
+          <span id="esm-modal-ind-2" style="font-size:12px; font-weight:600; letter-spacing:0.04em; color:var(--faint);" data-vi="02. Xác nhận" data-en="02. Confirm">02. Xác nhận</span>
+        </div>
+        <button data-close-modal aria-label="Close" style="border:1px solid var(--line); background:transparent; color:var(--text); border-radius:9999px; width:36px; height:36px; cursor:pointer; font-size:15px; display:flex; align-items:center; justify-content:center; padding:0; flex:none;">✕</button>
+      </div>
+      <div id="esm-modal-step-1" style="display:flex; flex-direction:column; gap:24px;">
+        <div style="display:flex; flex-direction:column; gap:8px;">
+          <h2 style="font-size:30px; line-height:1.2; letter-spacing:-0.02em;" data-vi="Hãy kể cho chúng tôi về dự án của bạn" data-en="Tell us about your project">Hãy kể cho chúng tôi về dự án của bạn</h2>
+          <p style="margin:0; font-size:14px; line-height:1.6; color:var(--body);" data-vi="Điền thông tin bên dưới, chúng tôi sẽ phản hồi trong vòng 24 giờ." data-en="Fill in the details below and we'll get back to you within 24 hours.">Điền thông tin bên dưới, chúng tôi sẽ phản hồi trong vòng 24 giờ.</p>
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
+          <div style="display:flex; flex-direction:column; gap:5px; grid-column:1 / -1;">
+            <label style="font-size:13px; font-weight:500; color:var(--text);" data-vi="Họ và tên *" data-en="Your Name *">Họ và tên *</label>
+            <input type="text" id="esm-form-name" placeholder="Nguyễn Văn A" data-vi="Nguyễn Văn A" data-en="Jane Doe" style="width:100%; background:var(--card); border:1px solid var(--hair); border-radius:16px; padding:12px 14px; font-size:14px; font-family:var(--font-body); color:var(--text); outline:none;">
+            <span id="esm-err-name" style="font-size:12px; color:var(--error); display:none;" data-vi="Vui lòng nhập họ và tên" data-en="Please enter your name">Vui lòng nhập họ và tên</span>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:5px;">
+            <label style="font-size:13px; font-weight:500; color:var(--text);">Email *</label>
+            <input type="email" id="esm-form-email" placeholder="you@example.com" style="width:100%; background:var(--card); border:1px solid var(--hair); border-radius:16px; padding:12px 14px; font-size:14px; font-family:var(--font-body); color:var(--text); outline:none;">
+            <span id="esm-err-email" style="font-size:12px; color:var(--error); display:none;" data-vi="Email không hợp lệ" data-en="Invalid email address">Email không hợp lệ</span>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:5px;">
+            <div style="display:flex; align-items:baseline; gap:5px;">
+              <label style="font-size:13px; font-weight:500; color:var(--text);" data-vi="Số điện thoại" data-en="Phone">Số điện thoại</label>
+              <span style="font-size:11px; color:var(--faint);" data-vi="(tùy chọn)" data-en="(optional)">(tùy chọn)</span>
+            </div>
+            <input type="tel" id="esm-form-phone" placeholder="+84 ..." style="width:100%; background:var(--card); border:1px solid var(--hair); border-radius:16px; padding:12px 14px; font-size:14px; font-family:var(--font-body); color:var(--text); outline:none;">
+          </div>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          <label style="font-size:13px; font-weight:500; color:var(--text);" data-vi="Dịch vụ bạn quan tâm" data-en="Services you need">Dịch vụ bạn quan tâm</label>
+          <div style="display:flex; flex-wrap:wrap; gap:6px;">
+            <button type="button" class="esm-service-chip" data-service="Branding">Branding</button>
+            <button type="button" class="esm-service-chip" data-service="Website">Website</button>
+            <button type="button" class="esm-service-chip" data-service="UI/UX">UI/UX</button>
+            <button type="button" class="esm-service-chip" data-service="Packaging">Packaging</button>
+            <button type="button" class="esm-service-chip" data-service="Marketing">Marketing</button>
+            <button type="button" class="esm-service-chip" data-service="AI / Automation">AI / Automation</button>
+            <button type="button" class="esm-service-chip" data-service="Khác / Other" data-vi="Khác" data-en="Other">Khác</button>
+          </div>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:8px;">
+          <div style="display:flex; align-items:baseline; gap:5px;">
+            <label style="font-size:13px; font-weight:500; color:var(--text);" data-vi="Mô tả dự án" data-en="Project description">Mô tả dự án</label>
+            <span style="font-size:11px; color:var(--faint);" data-vi="(tùy chọn)" data-en="(optional)">(tùy chọn)</span>
+          </div>
+          <textarea id="esm-form-desc" placeholder="Mục tiêu, ngân sách dự kiến, thời gian triển khai..." data-vi="Mục tiêu, ngân sách dự kiến, thời gian triển khai..." data-en="Goals, timeline, budget..." style="width:100%; background:var(--card); border:1px solid var(--hair); border-radius:16px; padding:12px 14px; font-size:14px; font-family:var(--font-body); color:var(--text); outline:none; resize:vertical; min-height:88px;"></textarea>
+        </div>
+        <button type="button" id="esm-form-next-btn" class="esm-cta-btn" style="align-self:flex-start; padding:12px 28px;" data-vi="Tiếp theo →" data-en="Next →">Tiếp theo →</button>
+      </div>
+      <div id="esm-modal-step-2" style="display:none; flex-direction:column; gap:24px;">
+        <div style="display:flex; flex-direction:column; gap:8px;">
+          <h2 style="font-size:30px; line-height:1.2; letter-spacing:-0.02em;" data-vi="Xác nhận thông tin" data-en="Review your details">Xác nhận thông tin</h2>
+          <p style="margin:0; font-size:14px; line-height:1.6; color:var(--body);" data-vi="Vui lòng kiểm tra lại trước khi gửi yêu cầu." data-en="Please verify your information before submitting.">Vui lòng kiểm tra lại trước khi gửi yêu cầu.</p>
+        </div>
+        <div style="background:var(--card); border:1px solid var(--card-line); border-radius:20px; padding:12px 20px; display:flex; flex-direction:column;">
+          <div style="display:grid; grid-template-columns:120px 1fr; gap:12px; padding:12px 0; border-bottom:1px solid var(--hair);">
+            <span style="font-size:12px; font-weight:600; text-transform:uppercase; color:var(--tag);" data-vi="Họ tên" data-en="Name">Họ tên</span>
+            <span id="esm-rev-name" style="font-size:14px; color:var(--text); font-weight:500;">—</span>
+          </div>
+          <div style="display:grid; grid-template-columns:120px 1fr; gap:12px; padding:12px 0; border-bottom:1px solid var(--hair);">
+            <span style="font-size:12px; font-weight:600; text-transform:uppercase; color:var(--tag);">Email</span>
+            <span id="esm-rev-email" style="font-size:14px; color:var(--text); font-weight:500;">—</span>
+          </div>
+          <div style="display:grid; grid-template-columns:120px 1fr; gap:12px; padding:12px 0; border-bottom:1px solid var(--hair);">
+            <span style="font-size:12px; font-weight:600; text-transform:uppercase; color:var(--tag);" data-vi="Điện thoại" data-en="Phone">Điện thoại</span>
+            <span id="esm-rev-phone" style="font-size:14px; color:var(--text);">—</span>
+          </div>
+          <div style="display:grid; grid-template-columns:120px 1fr; gap:12px; padding:12px 0; border-bottom:1px solid var(--hair);">
+            <span style="font-size:12px; font-weight:600; text-transform:uppercase; color:var(--tag);" data-vi="Dịch vụ" data-en="Services">Dịch vụ</span>
+            <span id="esm-rev-services" style="font-size:14px; color:var(--text);">—</span>
+          </div>
+          <div style="display:grid; grid-template-columns:120px 1fr; gap:12px; padding:12px 0;">
+            <span style="font-size:12px; font-weight:600; text-transform:uppercase; color:var(--tag);" data-vi="Mô tả" data-en="Notes">Mô tả</span>
+            <span id="esm-rev-desc" style="font-size:14px; color:var(--body); line-height:1.5;">—</span>
+          </div>
+        </div>
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <button type="button" id="esm-form-prev-btn" style="border:1px solid var(--line); background:transparent; color:var(--text); border-radius:9999px; padding:11px 22px; font-size:14px; font-family:var(--font-body); font-weight:500; cursor:pointer;" data-vi="← Quay lại" data-en="← Back">← Quay lại</button>
+          <button type="button" id="esm-form-submit-btn" class="esm-cta-btn" style="padding:12px 28px;" data-vi="Gửi yêu cầu →" data-en="Submit →">Gửi yêu cầu →</button>
+        </div>
+      </div>
+      <div id="esm-modal-step-success" style="display:none; flex-direction:column; align-items:center; text-align:center; gap:14px; padding:36px 0; animation:esmSlideL .4s cubic-bezier(0.22,1,0.36,1);">
+        <div style="width:56px; height:56px; border-radius:9999px; background:var(--card); display:flex; align-items:center; justify-content:center; font-size:24px; color:var(--text);">✓</div>
+        <h2 style="font-size:30px; line-height:1.2; letter-spacing:-0.02em;" data-vi="Đã gửi thành công!" data-en="Request Sent Successfully!">Đã gửi thành công!</h2>
+        <p style="margin:0; font-size:15px; line-height:1.6; color:var(--body); max-width:380px;" data-vi="Cảm ơn bạn đã liên hệ với Esmery. Đội ngũ của chúng tôi sẽ xem xét và phản hồi qua email sớm nhất." data-en="Thank you for reaching out to Esmery. Our team will review your message and reply via email shortly.">Cảm ơn bạn đã liên hệ với Esmery. Đội ngũ của chúng tôi sẽ xem xét và phản hồi qua email sớm nhất.</p>
+        <button type="button" id="esm-form-done-btn" class="esm-cta-btn" style="margin-top:8px;" data-vi="Hoàn tất" data-en="Done">Hoàn tất</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+  <script>
+    var designProjects = [
+      { name: 'Djirian', client: 'Djirian', tagVi: 'Nhận diện & bao bì', tagEn: 'Brand identity & packaging',
+        span: 'span 2', h: '520px', img: 'uploads/hình 3.png', imgPos: 'center',
+        hero: 'images/design/magnific_product-mockup-photo-a-dj_ovhTI9K829.png', heroPos: 'center',
+        work: ['uploads/hình 1.png', 'uploads/hình 2.png', 'uploads/hình 4.png', 'uploads/hình 5.png'],
+        workPos: ['center', 'center', 'center', 'center'],
+        vi: ['Nhận diện và bao bì cho thương hiệu sầu riêng sấy thăng hoa từ Di Linh, Lâm Đồng.', 'Đưa sầu riêng Việt lên kệ quốc tế với hình ảnh tự nhiên, đáng tin cậy.', 'Múi sầu riêng vàng ôm trong vỏ gai xanh, logo kể trọn câu chuyện của trái cây.', '100% tự nhiên: một loại trái, một vùng trồng.', 'Xanh lá đậm và vàng múi sầu, nhãn giấy kem, nhiếp ảnh sản phẩm giữa vườn sầu riêng.'],
+        en: ['Identity and packaging for a freeze-dried durian brand from Di Linh, Lam Dong.', 'Putting Vietnamese durian on international shelves with a natural, trustworthy look.', 'A golden durian pod cradled in a spiky green husk, the logo tells the fruit’s whole story.', '100% natural: one fruit, one growing region.', 'Deep leaf green and durian yellow, cream paper labels, product photography set in the orchard.'] },
+      { name: 'Sena Milk', client: 'Sena Milk', tagVi: 'Thiết kế bao bì', tagEn: 'Packaging design',
+        span: 'auto', h: '440px', img: 'images/design/Untitled-11.PNG', imgPos: 'center',
+        hero: 'images/design/Untitled-8.PNG', heroPos: 'center 60%',
+        work: ['images/shared/Untitled-1.PNG', 'images/design/Untitled-3.PNG', 'images/design/Untitled-6.jpg', 'images/design/Untitled-4.PNG'],
+        workPos: ['center', 'center', 'center', 'center'],
+        vi: ['Thiết kế bao bì cho thương hiệu sữa hạt sen Sena Milk.', 'Đưa sữa hạt sen đến gần hơn với người tiêu dùng trẻ.', 'Hình minh họa thủ công kết hợp tone màu tươi sáng theo từng vị.', 'Thiên nhiên trong từng hộp sữa.', 'Ba vị: Nguyên bản, Dâu tây, Socolate, mỗi vị một bảng màu riêng.'],
+        en: ['Packaging design for Sena Milk, a lotus seed milk brand.', 'Bringing lotus seed milk closer to young consumers.', 'Hand-drawn illustrations paired with vibrant flavor-coded colors.', 'Nature in every carton.', 'Three flavors: Original, Strawberry, Chocolate, each with its own color palette.'] },
+      { name: 'Tri Kien Spices', client: 'Tri Kien Spices', tagVi: 'Chụp ảnh sản phẩm', tagEn: 'Product photography',
+        span: 'auto', h: '440px', img: 'images/design/VUS_9319.JPG', imgPos: 'center 30%',
+        hero: 'images/design/VUS_9290.JPG', heroPos: 'center 40%',
+        work: ['images/design/VUS_9298.JPG', 'images/design/VUS_9241.JPG', 'images/design/VUS_9272.JPG', 'images/design/VUS_9264.JPG'],
+        workPos: ['center', 'center', 'center', 'center'],
+        vi: ['Chụp ảnh sản phẩm cho thương hiệu gia vị Tri Kien Spices.', 'Truyền tải chất lượng cao cấp cho dòng sa tế tôm.', 'Bố cục sản phẩm kết hợp nguyên liệu tự nhiên gồm ớt, tỏi, hành tím.', 'Hương vị truyền thống, chất lượng hiện đại.', 'Tone tối, ánh sáng ấm, nhấn mạnh chi tiết hũ sa tế và nguyên liệu.'],
+        en: ['Product photography for Tri Kien Spices brand.', 'Communicating premium quality for the shrimp satay line.', 'Product composition with natural ingredients: chili, garlic, shallots.', 'Traditional flavor, modern quality.', 'Dark tones, warm lighting, emphasis on jar details and ingredients.'] },
+      { name: 'The Fan', client: 'The Fan', tagVi: 'Chụp ảnh sản phẩm', tagEn: 'Product photography',
+        span: 'auto', h: '440px',
+        img: 'images/design/1765948906591_187963989490343589_5430947014159569504_d31827b9bf84ef138398e7f3c18b24ec.jpg', imgPos: 'center 55%',
+        hero: 'images/design/1765948906607_187963989490343589_5430947014159569504_70b6856855c183ef0008d28a2aae3acb.jpg', heroPos: 'center 60%',
+        work: [
+          'images/design/1765948906582_187963989490343589_5430947014159569504_cc2a77e287bfa1eb2bcd13d88c69f919.jpg',
+          'images/design/1765948906597_187963989490343589_5430947014159569504_0dadd1157aa5a13acab45c56cfe1125b.jpg',
+          'images/design/1765948906602_187963989490343589_5430947014159569504_338f7379fff5107b28f09546f6fdbad8.jpg',
+          'images/design/1765948906612_187963989490343589_5430947014159569504_df409b527e4ebf3522670bd136029587.jpg'
+        ],
+        workPos: ['center 55%', 'center 50%', 'center 55%', 'center 55%'],
+        vi: ['Chụp ảnh món ăn cho nhà hàng The Fan (bộ sưu tập Giáng sinh).', 'Truyền tải sự tinh tế và sang trọng trong từng đĩa.', 'Bố cục đĩa kết hợp trang trí Giáng sinh: nhung xanh, ruy-băng đỏ, quế và thông.', 'Mỗi món ăn là một tác phẩm nghệ thuật trên bàn tiệc.', 'Tone tối, ánh sáng ấm, nhấn mạnh chi tiết và chất liệu món ăn.'],
+        en: ['Food photography for The Fan restaurant (Christmas collection).', 'Conveying elegance and luxury in every plate.', 'Plate composition with Christmas styling: green velvet, red ribbons, cinnamon and pine.', 'Every dish is a work of art on the dinner table.', 'Dark tones, warm lighting, emphasis on food texture and detail.'] },
+      { name: 'Way Up Station Coffee', client: 'Way Up Coffee', tagVi: 'Thiết kế social media', tagEn: 'Social media design',
+        span: 'auto', h: '440px',
+        img: 'images/design/60555144-e649-4b91-b75d-cb4e66925614.png', imgPos: 'center 35%',
+        hero: 'images/design/Artboard 1 copy 28.png', heroPos: 'center 30%',
+        work: [
+          'images/design/Artboard 1 copy 26.png',
+          'images/design/Artboard 1 copy 25.png',
+          'images/design/Artboard 1 copy 29.png',
+          'images/design/Artboard 1 copy 27-5c28aa3c.png'
+        ],
+        workPos: ['center', 'center', 'center', 'center'],
+        vi: ['Thiết kế ấn phẩm social media cho Way Up Station Coffee.', 'Thu hút khách hàng trẻ với phong cách tươi mới, năng động.', 'Typography vui nhộn kết hợp hình ảnh sản phẩm thật, từ combo xíu mại đến croissant.', 'Mỗi poster một câu chuyện: best seller, kem mùa hè, lễ hội, combo mới.', 'Tone xanh dương chủ đạo, chữ viết tay, bố cục bắt mắt trên feed.'],
+        en: ['Social media design for Way Up Station Coffee.', 'Attracting young customers with a fresh, dynamic style.', 'Playful typography combined with real product photography, from xiu mai combos to croissants.', 'Every poster tells a story: best sellers, summer ice cream, holidays, new combos.', 'Signature blue tones, handwritten text, eye-catching feed layouts.'] }
+    ];
+
+    var tagsVi = ['Nhận diện thương hiệu', 'Logo', 'Bao bì', 'Ấn phẩm đồ họa', 'Social media', 'Key visual'];
+    var tagsEn = ['Brand identity', 'Logo', 'Packaging', 'Graphic design', 'Social media', 'Key visuals'];
+    var secHeadsVi = ['Tổng quan', 'Đề bài', 'Ý tưởng', 'Thông điệp', 'Định hướng thị giác'];
+    var secHeadsEn = ['Overview', 'The brief', 'The idea', 'The message', 'Visual direction'];
+
+    function getLang() { return document.body.dataset.esmLang || 'vi'; }
+
+    function renderTags() {
+      var lang = getLang();
+      var tags = lang === 'vi' ? tagsVi : tagsEn;
+      var container = document.getElementById('esm-design-tags');
+      container.innerHTML = tags.map(function(t) {
+        return '<span style="font-size:14px; color:var(--tag);">' + t + '</span>';
+      }).join('');
+    }
+
+    function renderGallery() {
+      var lang = getLang();
+      var gallery = document.getElementById('esm-design-gallery');
+      gallery.innerHTML = designProjects.map(function(p, i) {
+        var tag = lang === 'vi' ? p.tagVi : p.tagEn;
+        var viewText = lang === 'vi' ? 'Xem dự án' : 'View project';
+        return '<button onclick="openDesignDetail(' + i + ')" class="wwd-card" style="grid-column:' + p.span + '; position:relative; display:block; border:none; padding:0; cursor:pointer; border-radius:24px; overflow:hidden; background:var(--card); text-align:left; font-family:var(--font-body);">' +
+          '<div class="wwd-visual" role="img" aria-label="' + p.name + '" style="height:' + p.h + '; width:100%; background-image:url(\'' + p.img + '\'); background-size:cover; background-position:' + p.imgPos + ';"></div>' +
+          '<div style="position:absolute; left:0; right:0; bottom:0; padding:24px; display:flex; justify-content:space-between; align-items:flex-end; background:linear-gradient(transparent, var(--grad));">' +
+            '<div style="display:flex; flex-direction:column; gap:4px;">' +
+              '<span style="font-size:12px; color:var(--tag);">' + tag + '</span>' +
+              '<span style="font-size:20px; font-weight:600; color:var(--text); letter-spacing:-0.01em;">' + p.name + '</span>' +
+            '</div>' +
+            '<span class="wwd-cta" style="font-size:14px; color:var(--text);">' + viewText + ' →</span>' +
+          '</div>' +
+        '</button>';
+      }).join('');
+    }
+
+    function openDesignDetail(idx) {
+      var p = designProjects[idx];
+      var lang = getLang();
+      var tag = lang === 'vi' ? p.tagVi : p.tagEn;
+      var heads = lang === 'vi' ? secHeadsVi : secHeadsEn;
+      var texts = lang === 'vi' ? p.vi : p.en;
+
+      document.getElementById('esm-dmodal-tag').textContent = tag + ' · ' + p.client;
+      document.getElementById('esm-dmodal-title').textContent = p.name;
+
+      var heroContainer = document.getElementById('esm-dmodal-hero');
+      if (p.hero) {
+        heroContainer.innerHTML = '<div onclick="openLightbox(\'' + p.hero + '\')" role="img" aria-label="' + p.name + '" style="height:320px; width:100%; background-image:url(\'' + p.hero + '\'); background-size:cover; background-position:' + p.heroPos + '; border-radius:12px; cursor:zoom-in;"></div>';
+      } else {
+        heroContainer.innerHTML = '<div style="height:320px; background:var(--deep); border-radius:12px; display:flex; align-items:center; justify-content:center;"><span style="font-size:12px; font-weight:500; color:var(--tag); letter-spacing:0.04em;">Hero visual</span></div>';
+      }
+
+      var sectionsContainer = document.getElementById('esm-dmodal-sections');
+      sectionsContainer.innerHTML = heads.map(function(h, i) {
+        return '<div style="display:grid; grid-template-columns:220px 1fr; gap:24px;">' +
+          '<span style="font-size:13px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--tag);">' + h + '</span>' +
+          '<p style="margin:0; font-size:15px; line-height:1.6; color:var(--body); text-wrap:pretty;">' + texts[i] + '</p>' +
+        '</div>';
+      }).join('');
+
+      var workContainer = document.getElementById('esm-dmodal-work');
+      if (p.work && p.work.length) {
+        workContainer.innerHTML = p.work.map(function(src, i) {
+          var pos = p.workPos[i] || 'center';
+          return '<div onclick="openLightbox(\'' + src + '\')" role="img" style="height:180px; width:100%; background-image:url(\'' + src + '\'); background-size:cover; background-position:' + pos + '; border-radius:12px; cursor:zoom-in;"></div>';
+        }).join('');
+      } else {
+        workContainer.innerHTML = [0,1,2,3].map(function() {
+          return '<div style="height:180px; background:var(--deep); border-radius:12px; display:flex; align-items:center; justify-content:center;"><span style="font-size:12px; color:var(--tag);">Image</span></div>';
+        }).join('');
+      }
+
+      document.getElementById('esm-design-modal').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeDesignDetail() {
+      document.getElementById('esm-design-modal').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    function openLightbox(src) {
+      var lb = document.getElementById('esm-lightbox');
+      document.getElementById('esm-lightbox-img').src = src;
+      lb.style.display = 'flex';
+      event.stopPropagation();
+    }
+
+    function closeLightbox() {
+      document.getElementById('esm-lightbox').style.display = 'none';
+    }
+
+    renderTags();
+    renderGallery();
+
+    var _origLangApply = window.LangManager && window.LangManager.prototype ? null : null;
+    document.addEventListener('langChanged', function() {
+      renderTags();
+      renderGallery();
+    });
+  </script>
+</body>
+</html>
