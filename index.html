@@ -8,6 +8,11 @@
   <link rel="stylesheet" href="css/styles.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <script>
+    if (sessionStorage.getItem('esm_intro_shown')) {
+      document.documentElement.classList.add('esm-skip-preloader');
+    }
+  </script>
 </head>
 <body data-esm-theme="light" data-esm-lang="vi">
 
@@ -330,9 +335,20 @@
   <!-- SCRIPTS -->
   <script src="js/main.js"></script>
   <script>
-    // PRELOADER PROGRESS SCRIPT FOR HOMEPAGE
+    // PRELOADER PROGRESS SCRIPT FOR HOMEPAGE (Only runs once per session)
     (function() {
       const preloader = document.getElementById('esm-preloader');
+      if (!preloader) return;
+
+      // Check if user has already seen the intro in this browsing session
+      if (sessionStorage.getItem('esm_intro_shown')) {
+        preloader.style.display = 'none';
+        return;
+      }
+
+      // First time visiting: run smooth loading animation and mark as shown
+      sessionStorage.setItem('esm_intro_shown', '1');
+
       const bar = document.getElementById('esm-pre-bar');
       const pct = document.getElementById('esm-pre-pct');
       const msg = document.getElementById('esm-pre-msg');
@@ -343,8 +359,8 @@
       
       const timer = setInterval(() => {
         const elapsed = performance.now() - start;
-        const target = Math.min(100, elapsed / 22);
-        prog = Math.min(100, prog + Math.max(1.2, (target - prog) * 0.15));
+        const target = Math.min(100, elapsed / 16);
+        prog = Math.min(100, prog + Math.max(1.8, (target - prog) * 0.2));
         
         if (bar) bar.style.transform = `scaleX(${prog / 100})`;
         if (pct) pct.textContent = `${String(Math.round(prog)).padStart(2, '0')}%`;
@@ -355,12 +371,10 @@
             content.style.opacity = '0';
             content.style.transform = 'translateY(-32px) scale(0.95)';
           }
-          if (preloader) {
-            preloader.style.clipPath = 'inset(0 0 100% 0)';
-            setTimeout(() => { preloader.style.display = 'none'; }, 950);
-          }
+          preloader.style.clipPath = 'inset(0 0 100% 0)';
+          setTimeout(() => { preloader.style.display = 'none'; }, 850);
         }
-      }, 30);
+      }, 25);
     })();
   </script>
 </body>
