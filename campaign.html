@@ -447,8 +447,8 @@
           imgHtml = '<span style="font-size:12px; font-weight:500; color:var(--tag); letter-spacing:0.04em;">Key visual / Video</span>';
         }
 
-        return '<button onclick="openCampaignDetail(' + i + ')" class="wwd-card" style="display:grid; grid-template-columns:1.05fr 1fr; align-items:stretch; border:1px solid var(--card-line); padding:0; cursor:pointer; border-radius:24px; overflow:hidden; background:var(--card); text-align:left; font-family:var(--font-body);">' +
-          '<div style="overflow:hidden; min-height:400px;">' +
+        return '<button onclick="openCampaignDetail(' + i + ')" class="wwd-card esm-campaign-card" style="display:grid; grid-template-columns:1.05fr 1fr; align-items:stretch; border:1px solid var(--card-line); padding:0; cursor:pointer; border-radius:24px; overflow:hidden; background:var(--card); text-align:left; font-family:var(--font-body);">' +
+          '<div class="esm-campaign-visual-wrap" style="overflow:hidden; min-height:360px;">' +
             '<div class="wwd-visual" style="height:100%; background:var(--deep); display:flex; align-items:center; justify-content:center; position:relative;">' +
               imgHtml +
             '</div>' +

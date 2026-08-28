@@ -591,25 +591,357 @@ body[data-esm-theme="dark"] #esm-hero-video-light {
 }
 
 /* ==========================================================================
-   RESPONSIVE LAYOUT
+   RESPONSIVE LAYOUT & MOBILE OPTIMIZATION
    ========================================================================== */
+
+/* Tablet & Smaller Desktops */
 @media (max-width: 1024px) {
   .esm-footer-inner {
     grid-template-columns: 1fr 1fr;
   }
 }
 
+/* Mobile & Small Tablets */
 @media (max-width: 768px) {
+  /* Global reset for mobile */
+  html, body {
+    overflow-x: hidden;
+    width: 100%;
+    position: relative;
+  }
+
+  /* Typography flow & text wrapping */
+  h1, h2, h3, h4 {
+    text-wrap: balance;
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
+
+  p {
+    text-wrap: pretty;
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
+
+  /* Remove unnatural hard breaks on narrow screens */
+  h1 br, h2 br, h3 br {
+    display: inline !important;
+  }
+
+  /* Main containers */
+  main {
+    padding: 36px 18px 60px !important;
+    gap: 36px !important;
+  }
+
+  /* Navbar */
   .esm-nav-inner {
-    padding: 0 16px;
-    gap: 12px;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    height: 60px !important;
+    padding: 0 16px !important;
+    gap: 8px !important;
   }
-  .esm-footer-inner {
-    grid-template-columns: 1fr;
-    gap: 32px;
-    padding: 48px 16px 32px;
+
+  .esm-nav-logo img {
+    height: 26px !important;
   }
+
+  .esm-theme-btn {
+    width: 32px !important;
+    height: 32px !important;
+    font-size: 13px !important;
+    flex-shrink: 0 !important;
+  }
+
+  .esm-nav-actions {
+    gap: 8px !important;
+    flex-shrink: 0 !important;
+  }
+
+  .esm-lang-toggle {
+    padding: 2px !important;
+    gap: 1px !important;
+  }
+
+  .esm-lang-blob {
+    width: 34px !important;
+    top: 2px !important;
+    bottom: 2px !important;
+    left: 2px !important;
+  }
+
+  body[data-esm-lang="en"] .esm-lang-blob {
+    transform: translateX(35px) !important;
+  }
+
+  .esm-lang-item {
+    width: 34px !important;
+    font-size: 11px !important;
+    padding: 4px 0 !important;
+  }
+
+  .esm-cta-btn {
+    min-width: auto !important;
+    padding: 8px 14px !important;
+    font-size: 13px !important;
+    white-space: nowrap !important;
+  }
+
+  /* Hero & Homepage Sections */
+  #top {
+    min-height: 65vh !important;
+  }
+
+  #top > div {
+    padding: 40px 16px 28px !important;
+    gap: 18px !important;
+  }
+
+  #top h1 {
+    font-size: clamp(28px, 7.5vw, 42px) !important;
+    line-height: 1.18 !important;
+  }
+
+  #intro {
+    padding: 48px 16px 24px !important;
+    gap: 14px !important;
+  }
+
+  #intro img {
+    width: min(300px, 72vw) !important;
+  }
+
+  #intro h2 {
+    font-size: 28px !important;
+  }
+
+  #projects {
+    padding: 32px 16px 60px !important;
+  }
+
+  /* Cards on Mobile */
+  .wwd-card {
+    border-radius: 20px !important;
+  }
+
+  .wwd-card .wwd-visual {
+    height: 300px !important;
+    max-height: 320px !important;
+  }
+
+  .wwd-card .wwd-cta {
+    opacity: 1 !important;
+    transform: none !important;
+    font-size: 13px !important;
+  }
+
+  .wwd-card > div[style*="position:absolute"][style*="bottom:0"] {
+    padding: 18px 20px !important;
+  }
+
+  /* Campaign Page & Cards */
+  #esm-campaign-list > button,
+  #esm-campaign-list .wwd-card {
+    display: flex !important;
+    flex-direction: column !important;
+    grid-template-columns: 1fr !important;
+    border-radius: 20px !important;
+  }
+
+  #esm-campaign-list .esm-campaign-visual-wrap,
+  #esm-campaign-list .esm-campaign-card > div:first-child {
+    min-height: 220px !important;
+    height: 220px !important;
+    width: 100% !important;
+  }
+
+  #esm-campaign-list .wwd-visual {
+    height: 100% !important;
+    min-height: 100% !important;
+    width: 100% !important;
+  }
+
+  #esm-campaign-list .wwd-card > div:last-child {
+    padding: 22px 18px !important;
+    gap: 14px !important;
+  }
+
+  #esm-campaign-list [style*="grid-template-columns:repeat(4, 1fr)"],
+  #esm-campaign-list [style*="grid-template-columns: repeat(4, 1fr)"] {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px 14px !important;
+    padding-top: 14px !important;
+  }
+
+  /* Gallery Grids (Design, Website, AI Video) */
+  #esm-design-gallery,
+  #esm-website-gallery,
+  section[style*="grid-template-columns:repeat(auto-fit, minmax(320px, 1fr))"],
+  section[style*="grid-template-columns: repeat(auto-fit, minmax(320px, 1fr))"] {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+  }
+
+  #esm-design-gallery .wwd-visual,
+  #esm-website-gallery .wwd-visual {
+    height: 280px !important;
+  }
+
+  #esm-inhouse-gallery {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+  }
+
+  /* Modals (Universal & Detail) */
+  .esm-modal-backdrop {
+    padding: 16px 10px !important;
+  }
+
   .esm-modal-card {
-    padding: 24px !important;
+    padding: 20px 16px !important;
+    border-radius: 20px !important;
+    max-width: 100% !important;
+  }
+
+  .esm-modal-card [style*="position:sticky"] {
+    top: -20px !important;
+    padding: 20px 0 12px !important;
+    margin: -20px 0 0 !important;
+  }
+
+  #esm-cmodal-title,
+  #esm-dmodal-title,
+  #esm-wmodal-title {
+    font-size: 26px !important;
+    line-height: 1.2 !important;
+  }
+
+  #esm-cmodal-hero > div,
+  #esm-dmodal-hero > div,
+  #esm-wmodal-hero > div {
+    height: 200px !important;
+    margin: 20px 0 !important;
+  }
+
+  /* Detail Modal Rows (convert 220px 1fr to stacked 1fr) */
+  .esm-modal-card [style*="grid-template-columns:220px 1fr"],
+  .esm-modal-card [style*="grid-template-columns: 220px 1fr"],
+  #esm-cmodal-sections > div,
+  #esm-dmodal-sections > div,
+  #esm-wmodal-sections > div {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 6px !important;
+    margin-top: 16px !important;
+  }
+
+  #esm-cmodal-exec,
+  #esm-dmodal-work {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 8px !important;
+  }
+
+  #esm-cmodal-exec > div,
+  #esm-dmodal-work > div {
+    height: 130px !important;
+  }
+
+  /* Consultation Booking Modal Form */
+  .esm-modal-card [style*="grid-template-columns:1fr 1fr"],
+  .esm-modal-card [style*="grid-template-columns: 1fr 1fr"] {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+
+  .esm-modal-card [style*="grid-template-columns:120px 1fr"],
+  .esm-modal-card [style*="grid-template-columns: 120px 1fr"] {
+    grid-template-columns: 84px 1fr !important;
+    gap: 8px !important;
+    padding: 8px 0 !important;
+    font-size: 13px !important;
+  }
+
+  .esm-modal-card input,
+  .esm-modal-card textarea {
+    font-size: 16px !important; /* Prevents auto-zoom in iOS Safari */
+    padding: 10px 12px !important;
+    border-radius: 12px !important;
+  }
+
+  .esm-service-chip {
+    padding: 6px 12px !important;
+    font-size: 12px !important;
+    min-height: 32px !important;
+  }
+
+  /* Report Page & KPI Grid */
+  section[style*="grid-template-columns:repeat(auto-fit, minmax(240px, 1fr))"],
+  section[style*="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr))"] {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 12px !important;
+  }
+
+  section[style*="grid-template-columns:repeat(auto-fit, minmax(240px, 1fr))"] article,
+  section[style*="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr))"] article {
+    padding: 16px !important;
+    border-radius: 16px !important;
+    gap: 6px !important;
+  }
+
+  section[style*="grid-template-columns:repeat(auto-fit, minmax(240px, 1fr))"] span[style*="font-size:32px"],
+  section[style*="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr))"] span[style*="font-size:32px"] {
+    font-size: 24px !important;
+  }
+
+  /* Footer */
+  .esm-footer {
+    margin-top: 40px !important;
+  }
+
+  .esm-footer-inner {
+    grid-template-columns: 1fr !important;
+    gap: 28px !important;
+    padding: 40px 18px 24px !important;
+  }
+
+  .esm-footer-bottom {
+    padding: 0 18px 24px !important;
+  }
+
+  /* Back to top FAB */
+  .esm-fab-top {
+    width: 46px !important;
+    height: 46px !important;
+    right: 16px !important;
+    bottom: 16px !important;
+  }
+
+  .esm-fab-top img {
+    width: 26px !important;
+    height: 26px !important;
+  }
+}
+
+/* Extra Small Phones (< 400px) */
+@media (max-width: 400px) {
+  .esm-nav-inner {
+    padding: 0 12px !important;
+  }
+
+  .esm-cta-btn {
+    padding: 7px 11px !important;
+    font-size: 12px !important;
+  }
+
+  .esm-theme-btn {
+    width: 30px !important;
+    height: 30px !important;
+  }
+
+  section[style*="grid-template-columns:repeat(auto-fit, minmax(240px, 1fr))"],
+  section[style*="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr))"] {
+    grid-template-columns: 1fr !important;
   }
 }
