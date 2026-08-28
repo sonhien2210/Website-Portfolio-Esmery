@@ -140,6 +140,22 @@ h1 em, h2 em, h3 em {
   font-weight: 400;
 }
 
+img, video {
+  max-width: 100%;
+  height: auto;
+  transform: translateZ(0);
+}
+
+.wwd-card {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+#projects, .esm-footer {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 600px;
+}
+
 /* ==========================================================================
    ANIMATIONS
    ========================================================================== */

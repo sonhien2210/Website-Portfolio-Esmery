@@ -56,13 +56,38 @@
 
         if (shouldPlay) {
           v.muted = true;
-          if (v.paused) v.play().catch(() => {});
+          // Only play if hero is in viewport
+          const hero = document.getElementById('top');
+          if (!hero || hero.dataset.inView !== 'false') {
+            if (v.paused) v.play().catch(() => {});
+          }
         } else if (!v.paused) {
           v.pause();
         }
       });
     }
   };
+
+  // Setup IntersectionObserver for Hero section to stop background video rendering when off-screen
+  function initHeroVideoObserver() {
+    const hero = document.getElementById('top');
+    if (!hero) return;
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        hero.dataset.inView = entry.isIntersecting ? 'true' : 'false';
+        if (entry.isIntersecting) {
+          ThemeManager.syncHeroVideos();
+        } else {
+          document.querySelectorAll('#esm-hero-video video, #esm-hero-video-light video').forEach(v => {
+            if (!v.paused) v.pause();
+          });
+        }
+      });
+    }, { threshold: 0.05 });
+
+    observer.observe(hero);
+  }
 
   // ---------------------------------------------------------------------------
   // 2. LANGUAGE MANAGER (Vietnamese / English)
@@ -148,38 +173,38 @@
         }
       });
 
-      // Service chip toggles
+      // Bind service chips selection
       modal.querySelectorAll('.esm-service-chip').forEach(chip => {
         chip.addEventListener('click', () => {
+          const service = chip.getAttribute('data-service') || chip.textContent.trim();
           chip.classList.toggle('selected');
-          const val = chip.getAttribute('data-service');
           if (chip.classList.contains('selected')) {
-            if (!this.services.includes(val)) this.services.push(val);
+            if (!this.services.includes(service)) this.services.push(service);
           } else {
-            this.services = this.services.filter(s => s !== val);
+            this.services = this.services.filter(s => s !== service);
           }
         });
       });
 
-      // Next button (Step 1 -> Step 2)
+      // Form Step 1 "Next" button
       const nextBtn = document.getElementById('esm-form-next-btn');
       if (nextBtn) {
-        nextBtn.addEventListener('click', () => this.validateAndNext());
+        nextBtn.addEventListener('click', () => this.validateAndReview());
       }
 
-      // Prev button (Step 2 -> Step 1)
+      // Form Step 2 "Back" button
       const prevBtn = document.getElementById('esm-form-prev-btn');
       if (prevBtn) {
         prevBtn.addEventListener('click', () => this.goToStep(0));
       }
 
-      // Submit button
+      // Form Step 2 "Submit" button
       const submitBtn = document.getElementById('esm-form-submit-btn');
       if (submitBtn) {
         submitBtn.addEventListener('click', () => this.submit());
       }
 
-      // Done button
+      // Done button in Step 3
       const doneBtn = document.getElementById('esm-form-done-btn');
       if (doneBtn) {
         doneBtn.addEventListener('click', () => this.close());
@@ -199,51 +224,62 @@
       if (!modal) return;
       modal.classList.remove('active');
       document.body.style.overflow = '';
+      setTimeout(() => this.goToStep(0), 300);
     },
 
-    goToStep(stepNum) {
-      this.step = stepNum;
-      const step1El = document.getElementById('esm-modal-step-1');
-      const step2El = document.getElementById('esm-modal-step-2');
-      const step3El = document.getElementById('esm-modal-step-success');
+    goToStep(n) {
+      this.step = n;
+      const s1 = document.getElementById('esm-modal-step-1');
+      const s2 = document.getElementById('esm-modal-step-2');
+      const s3 = document.getElementById('esm-modal-step-success');
       const ind1 = document.getElementById('esm-modal-ind-1');
       const ind2 = document.getElementById('esm-modal-ind-2');
 
-      if (step1El) step1El.style.display = stepNum === 0 ? 'flex' : 'none';
-      if (step2El) step2El.style.display = stepNum === 1 ? 'flex' : 'none';
-      if (step3El) step3El.style.display = stepNum === 2 ? 'flex' : 'none';
+      if (s1) s1.style.display = n === 0 ? 'flex' : 'none';
+      if (s2) s2.style.display = n === 1 ? 'flex' : 'none';
+      if (s3) s3.style.display = n === 2 ? 'flex' : 'none';
 
       if (ind1 && ind2) {
-        ind1.style.color = stepNum === 0 ? 'var(--text)' : 'var(--faint)';
-        ind2.style.color = stepNum === 1 ? 'var(--text)' : 'var(--faint)';
+        if (n === 0) {
+          ind1.style.color = 'var(--text)';
+          ind2.style.color = 'var(--faint)';
+        } else if (n === 1) {
+          ind1.style.color = 'var(--faint)';
+          ind2.style.color = 'var(--text)';
+        } else {
+          ind1.style.color = 'var(--faint)';
+          ind2.style.color = 'var(--faint)';
+        }
       }
     },
 
-    validateAndNext() {
+    validateAndReview() {
       const nameInput = document.getElementById('esm-form-name');
       const emailInput = document.getElementById('esm-form-email');
       const phoneInput = document.getElementById('esm-form-phone');
       const descInput = document.getElementById('esm-form-desc');
-      const nameErr = document.getElementById('esm-err-name');
-      const emailErr = document.getElementById('esm-err-email');
+      const errName = document.getElementById('esm-err-name');
+      const errEmail = document.getElementById('esm-err-email');
 
       let valid = true;
-      if (!nameInput || !nameInput.value.trim()) {
-        if (nameErr) nameErr.style.display = 'block';
-        if (nameInput) nameInput.style.borderColor = 'var(--error)';
+
+      if (!nameInput.value.trim()) {
+        if (errName) errName.style.display = 'block';
+        nameInput.style.borderColor = 'var(--error)';
         valid = false;
       } else {
-        if (nameErr) nameErr.style.display = 'none';
-        if (nameInput) nameInput.style.borderColor = 'var(--hair)';
+        if (errName) errName.style.display = 'none';
+        nameInput.style.borderColor = 'var(--hair)';
       }
 
-      if (!emailInput || !emailInput.value.includes('@')) {
-        if (emailErr) emailErr.style.display = 'block';
-        if (emailInput) emailInput.style.borderColor = 'var(--error)';
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(emailInput.value.trim())) {
+        if (errEmail) errEmail.style.display = 'block';
+        emailInput.style.borderColor = 'var(--error)';
         valid = false;
       } else {
-        if (emailErr) emailErr.style.display = 'none';
-        if (emailInput) emailInput.style.borderColor = 'var(--hair)';
+        if (errEmail) errEmail.style.display = 'none';
+        emailInput.style.borderColor = 'var(--hair)';
       }
 
       if (!valid) return;
@@ -271,20 +307,27 @@
   };
 
   // ---------------------------------------------------------------------------
-  // 4. BACK TO TOP BUTTON
+  // 4. BACK TO TOP BUTTON (Smooth & Throttled)
   // ---------------------------------------------------------------------------
   function initBackToTop() {
     const fab = document.querySelector('.esm-fab-top');
     if (!fab) return;
 
+    let ticking = false;
     window.addEventListener('scroll', () => {
-      if (window.scrollY > 300) {
-        fab.style.opacity = '1';
-        fab.style.pointerEvents = 'auto';
-      } else {
-        fab.style.opacity = '0.6';
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          if (window.scrollY > 350) {
+            fab.style.opacity = '1';
+            fab.style.pointerEvents = 'auto';
+          } else {
+            fab.style.opacity = '0.6';
+          }
+          ticking = false;
+        });
+        ticking = true;
       }
-    });
+    }, { passive: true });
 
     fab.addEventListener('click', () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -354,6 +397,7 @@
     ConsultationModal.init();
     initBackToTop();
     initInteractiveCards();
+    initHeroVideoObserver();
 
     // Listen for resize to update hero video
     window.matchMedia('(max-width: 768px)').addEventListener('change', () => {
